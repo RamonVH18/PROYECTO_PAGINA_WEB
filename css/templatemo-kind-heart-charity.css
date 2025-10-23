@@ -661,7 +661,6 @@ strong {
   background-color: var(--primary-color);
 }
 
-
 /*---------------------------------------
   FEATURE BLOCK              
 -----------------------------------------*/
@@ -1093,8 +1092,8 @@ strong {
   padding-bottom: 25px;
 }
 
-.site-footer-bottom a {
-  color: var(--white-color);
+.site-footer-bottom a, .site-footer a {
+  color: var(--p-color);
 }
 
 .site-footer-bottom a:hover {
@@ -1135,7 +1134,7 @@ strong {
 
 .footer-menu-link {
   font-size: var(--p-font-size);
-  color: var(--dark-color);
+  color: var(--p-color);
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
