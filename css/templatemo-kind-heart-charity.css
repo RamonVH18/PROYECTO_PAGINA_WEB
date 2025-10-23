@@ -50,7 +50,7 @@ https://templatemo.com/tm-581-kind-heart-charity
 :root {
   --white-color:                  #ffffff;
   --primary-color:                #f7b92a;
-  --secondary-color:              #5a6f80;
+  --secondary-color:              #ffea8e;
   --section-bg-color:             #f9f8f3;
   --site-footer-bg-color:         #ffe260;
   --custom-btn-bg-color:          #f7b92a;
@@ -60,6 +60,7 @@ https://templatemo.com/tm-581-kind-heart-charity
   --border-color:                 #e9eaeb;
 
   --body-font-family:             'Metropolis', sans-serif;
+  --second-font-family:             'Poppins', sans-serif;
 
   --h1-font-size:                 52px;
   --h2-font-size:                 46px;
@@ -116,8 +117,9 @@ h1 {
 }
 
 h2 {
-  color: var(--secondary-color);
+  color: var(--primary-color);
   font-size: var(--h2-font-size);
+  padding-top: 20px;
   letter-spacing: -2px;
 }
 
@@ -358,8 +360,9 @@ strong {
 }
 
 .navbar-brand {
+  font-family: var(--second-font-family);
   color: var(--primary-color);
-  font-size: var(--h6-font-size);
+  font-size: var(--h4-font-size);
   font-weight: var(--font-weight-bold);
 }
 
@@ -401,6 +404,11 @@ strong {
 .navbar-nav .nav-link:hover {
   background: transparent;
   color: var(--primary-color);
+  
+}
+
+.navbar-nav .nav-link.active {
+  font-weight: var(--font-weight-bold);
 }
 
 .dropdown-menu {
@@ -559,8 +567,8 @@ strong {
   HERO & HERO SLIDE         
 -----------------------------------------*/
 .hero-section-full-height {
-  height: 680px;
-  min-height: 680px;
+  height: 500px;
+  min-height: 500px;
   position: relative;
 }
 
@@ -569,29 +577,25 @@ strong {
   opacity: 1;
 }
 
-#hero-slide .carousel-item {
-  height: 680px;
-  min-height: 680px;
+#hero-slide {
+  padding-top: 70px;
+  max-width: 1200px; 
+  margin: 0 auto; 
+  overflow: hidden;
 }
 
-#hero-slide .carousel-caption {
-  background: var(--white-color);
-  clip-path: polygon(100% 100%, 100% 150px, 0 100%);
-  color: var(--secondary-color);
-  top: 1px;
-  bottom: -1px;
-  right: 0;
-  left: auto;
-  text-align: right;
-  min-width: 680px;
-  min-height: 680px;
-  padding: 100px 100px 50px 100px;
+#hero-slide .carousel-item {
+  height: 500px;
+  min-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .carousel-image {
   display: block;
-  width: 100%;
-  min-height: 680px;
+  width: auto;
+  height: 500px;
 }
 
 #hero-slide .carousel-indicators-wrap {
@@ -777,163 +781,6 @@ strong {
   overflow: hidden;
   padding: 50px;
 }
-
-
-/*---------------------------------------
-  NEWS         
------------------------------------------*/
-.news-detail-header-section {
-  background-image: url('../img/news/close-up-volunteer-oganizing-stuff-donation.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-  padding-top: 150px;
-  padding-bottom: 150px;
-}
-
-.news-block-top {
-  border-radius: var(--border-radius-medium);
-  position: relative;
-  overflow: hidden;
-}
-
-.news-block-two-col-image-wrap {
-  border-radius: var(--border-radius-small);
-  position: relative;
-  overflow: hidden;
-  width: 150px;
-  margin-right: 20px;
-}
-
-.news-category-block {
-  background: var(--secondary-color);
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  padding: 10px 20px;
-}
-
-.news-category-block .category-block-link {
-  color: var(--white-color);
-  margin-right: 10px;
-}
-
-.news-block-info {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.news-block-title-link {
-  color: var(--dark-color);
-}
-
-.news-detail-image {
-  display: block;
-  border-radius: var(--border-radius-medium);
-}
-
-blockquote {
-  background: var(--section-bg-color);
-  border-radius: var(--border-radius-small);
-  font-size: var(--h5-font-size);
-  font-weight: var(--font-weight-semibold);
-  color: var(--site-footer-bg-color);
-  margin-top: 30px;
-  margin-bottom: 30px;
-  padding: 90px 50px 50px 50px;
-  text-align: center;
-}
-
-blockquote::before {
-  content: "“";
-  color: var(--custom-btn-bg-color);
-  font-size: 100px;
-  line-height: 1rem;
-  display: block;
-}
-
-.author-comment-link {
-  font-size: var(--copyright-font-size);
-  font-weight: var(--font-weight-semibold);
-}
-
-.search-form {
-  margin-top: 20px;
-}
-
-.category-block,
-.subscribe-form {
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-
-.category-block-link {
-  font-size: var(--copyright-font-size);
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.category-block-link:hover {
-  color: var(--primary-color);
-}
-
-.badge {
-  background: var(--secondary-color);
-  border-radius: var(--border-radius-medium);
-  font-weight: var(--font-weight-normal);
-  line-height: normal;
-  padding-bottom: 2px;
-}
-
-.tags-block-link {
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius-medium);
-  display: inline-block;
-  font-size: var(--copyright-font-size);
-  line-height: normal;
-  margin-right: 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  padding: 8px 15px;
-}
-
-.tags-block-link:hover {
-  border-color: var(--dark-color);
-  color: var(--dark-color);
-}
-
-.cta-section {
-  position: relative;
-  overflow: hidden;
-}
-
-.cta-section::before {
-  content: "";
-  background-color: var(--primary-color);
-  border-radius: 50%;
-  position: absolute;
-  top: -100px;
-  left: -30px;
-  margin: auto;
-  width: 200px;
-  height: 200px;
-}
-
-.cta-section::after {
-  content: "";
-  border: 20px solid var(--custom-btn-bg-color);
-  border-radius: 50%;
-  position: absolute;
-  bottom: -100px;
-  right: 0;
-  left: 0;
-  margin: auto;
-  width: 150px;
-  height: 150px;
-}
-
 
 /*---------------------------------------
   TESTIMONIAL CAROUSEL              
@@ -1281,7 +1128,7 @@ blockquote::before {
 }
 
 .site-footer-bottom {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   position: relative;
   z-index: 2;
   margin-top: 70px;
@@ -1332,7 +1179,7 @@ blockquote::before {
 
 .footer-menu-link {
   font-size: var(--p-font-size);
-  color: var(--white-color);
+  color: var(--dark-color);
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
@@ -1352,6 +1199,11 @@ blockquote::before {
   list-style: none;
   display: inline-block;
   vertical-align: top;
+}
+
+.social-icon-item img {
+  width: 20px;
+  height: 20px;
 }
 
 .social-icon-link {
