@@ -830,7 +830,7 @@ url("../fonts/bootstrap-icons.woff?30af91bf14e37666a085fb8a161ff36d") format("wo
 .bi-image-alt::before { content: "\f428"; }
 .bi-image-fill::before { content: "\f429"; }
 .bi-image::before { content: "\f42a"; }
-.bi-images::before { content: "\f42b"; }
+.bi-img::before { content: "\f42b"; }
 .bi-inbox-fill::before { content: "\f42c"; }
 .bi-inbox::before { content: "\f42d"; }
 .bi-inboxes-fill::before { content: "\f42e"; }

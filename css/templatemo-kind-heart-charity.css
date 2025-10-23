@@ -49,12 +49,12 @@ https://templatemo.com/tm-581-kind-heart-charity
 -----------------------------------------*/
 :root {
   --white-color:                  #ffffff;
-  --primary-color:                #5bc1ac;
+  --primary-color:                #f7b92a;
   --secondary-color:              #5a6f80;
-  --section-bg-color:             #f0f8ff;
-  --site-footer-bg-color:         #44525d;
-  --custom-btn-bg-color:          #597081;
-  --custom-btn-bg-hover-color:    #5bc1ac;
+  --section-bg-color:             #f9f8f3;
+  --site-footer-bg-color:         #ffe260;
+  --custom-btn-bg-color:          #f7b92a;
+  --custom-btn-bg-hover-color:    #ffe260;
   --dark-color:                   #000000;
   --p-color:                      #717275;
   --border-color:                 #e9eaeb;
@@ -351,7 +351,7 @@ strong {
   NAVIGATION              
 -----------------------------------------*/
 .navbar {
-  background: var(--white-color);
+  background: var(--section-bg-color);
   z-index: 9;
   padding-top: 0;
   padding-bottom: 0;
@@ -371,13 +371,13 @@ strong {
 .navbar-brand small {
   color: var(--secondary-color);
   display: block;
-  font-size: 10px;
+  font-size: 13px;
   line-height: normal;
-  text-transform: uppercase;
+  font-weight: var(--font-weight-light);
 }
 
 .logo {
-  width: 80px;
+  width: 120px;
   height: auto;
 }
 
@@ -761,7 +761,7 @@ strong {
   DONATE              
 -----------------------------------------*/
 .donate-section {
-  background-image: url('../images/different-people-doing-volunteer-work.jpg');
+  background-image: url('../img/different-people-doing-volunteer-work.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -783,7 +783,7 @@ strong {
   NEWS         
 -----------------------------------------*/
 .news-detail-header-section {
-  background-image: url('../images/news/close-up-volunteer-oganizing-stuff-donation.jpg');
+  background-image: url('../img/news/close-up-volunteer-oganizing-stuff-donation.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
