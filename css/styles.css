@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: "Metropolis";
   src: url("../fonts/Metropolis/Metropolis-Regular.woff2") format("woff2"),
@@ -172,20 +171,6 @@ strong {
 
 .section-bg {
   background-color: var(--section-bg-color);
-}
-
-.section-overlay {
-  background: rgba(0, 0, 0, 0.35);
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  width: 100%;
-  height: 100%;
-}
-
-.section-overlay + .container {
-  position: relative;
 }
 
 #section_2 {
@@ -608,7 +593,6 @@ strong {
   transition: all 0.5s;
 }
 
-
 /*---------------------------------------
   CONTACT FORM              
 -----------------------------------------*/
@@ -770,7 +754,8 @@ strong {
   padding-bottom: 25px;
 }
 
-.site-footer-bottom a, .site-footer a {
+.site-footer-bottom a,
+.site-footer a {
   color: var(--p-color);
 }
 
@@ -908,10 +893,6 @@ strong {
     padding-bottom: 40px;
   }
 
-  .donate-form {
-    padding: 35px;
-  }
-
   .navbar {
     padding-top: 6px;
     padding-bottom: 6px;
@@ -966,11 +947,6 @@ strong {
     height: 60px;
   }
 
-  .news-detail-header-section {
-    padding-top: 100px;
-    padding-bottom: 100px;
-  }
-
   .cta-section::before {
     width: 150px;
     height: 150px;
@@ -992,29 +968,6 @@ strong {
     height: 300px;
   }
 
-  .testimonial-section::before {
-    width: 150px;
-    height: 150px;
-  }
-
-  .testimonial-section::after {
-    width: 200px;
-    height: 200px;
-  }
-
-  #testimonial-carousel .carousel-caption {
-    padding-top: 0;
-  }
-
-  blockquote {
-    padding: 70px 30px 30px 30px;
-  }
-
-  .about-image {
-    width: inherit;
-    height: 450px;
-  }
-
   .volunteer-image {
     width: 250px;
     height: 250px;
@@ -1028,10 +981,6 @@ strong {
   .custom-text-box,
   .volunteer-form {
     padding: 30px;
-  }
-
-  .contact-info-wrap {
-    padding-top: 0;
   }
 
   .site-footer {
@@ -1108,25 +1057,5 @@ strong {
   .volunteer-section::after {
     width: 200px;
     height: 200px;
-  }
-
-  .testimonial-section::before {
-    top: -50px;
-    width: 100px;
-    height: 100px;
-  }
-
-  .testimonial-section::after {
-    bottom: -150px;
-    width: 200px;
-    height: 200px;
-  }
-
-  .social-share .tags-block {
-    margin-bottom: 10px;
-  }
-
-  .donate-form {
-    padding: 25px;
   }
 }
