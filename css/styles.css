@@ -1,10 +1,3 @@
-/*
-
-TemplateMo 581 Kind Heart Charity
-
-https://templatemo.com/tm-581-kind-heart-charity
-
-*/
 
 @font-face {
   font-family: "Metropolis";
@@ -244,27 +237,6 @@ strong {
 }
 
 /*---------------------------------------
-  CUSTOM ICON COLOR               
------------------------------------------*/
-.custom-icon {
-  color: var(--secondary-color);
-}
-
-/*---------------------------------------
-  CUSTOM LIST               
------------------------------------------*/
-.custom-list {
-  margin-bottom: 0;
-  padding-left: 0;
-}
-
-.custom-list-item {
-  list-style: none;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-/*---------------------------------------
   CUSTOM TEXT BOX               
 -----------------------------------------*/
 .tutorial-section {
@@ -303,42 +275,12 @@ strong {
   padding: 40px 70px 40px 0;
 }
 
-.custom-text-box-image {
-  border-radius: var(--border-radius-medium);
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.custom-text-box-icon {
-  background: var(--section-bg-color);
-  border-radius: var(--border-radius-large);
-  color: var(--secondary-color);
-  font-size: var(--h6-font-size);
-  text-align: center;
-  display: inline-block;
-  vertical-align: middle;
-  width: 25px;
-  height: 25px;
-  line-height: 30px;
-}
-
 .custom-text-box h5 {
   color: var(--dark-color);
 }
 
 .custom-text-box p {
   font-family: var(--second-font-family);
-}
-
-/*---------------------------------------
-  AVATAR IMAGE - TESTIMONIAL, AUTHOR               
------------------------------------------*/
-.avatar-image {
-  border-radius: var(--border-radius-large);
-  width: 65px;
-  height: 65px;
-  object-fit: cover;
 }
 
 /*---------------------------------------
@@ -363,19 +305,6 @@ strong {
 
 .custom-btn:hover {
   background: var(--primary-color);
-  color: var(--white-color);
-}
-
-.custom-border-btn {
-  background: transparent;
-  border: 2px solid var(--custom-btn-bg-color);
-  color: var(--primary-color);
-}
-
-.navbar-expand-lg .navbar-nav .nav-link.custom-btn:hover,
-.custom-border-btn:hover {
-  background: var(--custom-btn-bg-hover-color);
-  border-color: transparent;
   color: var(--white-color);
 }
 
@@ -412,12 +341,6 @@ strong {
 .logo {
   width: 120px;
   height: auto;
-}
-
-.navbar-expand-lg .navbar-nav .nav-link {
-  margin-right: 0;
-  margin-left: 0;
-  padding: 20px;
 }
 
 .navbar-nav .nav-link {
@@ -627,19 +550,6 @@ strong {
   height: 500px;
 }
 
-#hero-slide .carousel-indicators-wrap {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-}
-
-#hero-slide .carousel-indicators {
-  margin-right: 0;
-  margin-left: 22px;
-  justify-content: inherit;
-}
-
 .carousel-control-next,
 .carousel-control-prev {
   opacity: 1;
@@ -692,57 +602,15 @@ strong {
 }
 
 .featured-block-text {
-  color: var(--primary-color);
+  color: var(--dark-color);
   font-size: var(--h5-font-size);
   margin-top: 20px;
   transition: all 0.5s;
 }
 
-/*---------------------------------------
-  ABOUT              
------------------------------------------*/
-.about-section {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-
-.about-image {
-  border-radius: var(--border-radius-medium);
-  display: block;
-  width: 350px;
-  height: 400px;
-  object-fit: cover;
-}
-
-.custom-text-block {
-  padding: 60px 40px;
-}
 
 /*---------------------------------------
-  COUNTER NUMBERS              
------------------------------------------*/
-.counter-thumb {
-  margin: 20px;
-  margin-bottom: 0;
-}
-
-.counter-number,
-.counter-text {
-  color: var(--secondary-color);
-  display: block;
-}
-
-.counter-number,
-.counter-number-text {
-  color: var(--primary-color);
-  font-size: var(--h1-font-size);
-  font-weight: var(--font-weight-bold);
-  line-height: normal;
-}
-
-/*---------------------------------------
-  VOLUNTEER              
+  CONTACT FORM              
 -----------------------------------------*/
 .volunteer-section {
   background: var(--secondary-color);
@@ -783,27 +651,6 @@ strong {
 
 .volunteer-section .custom-block-body p {
   line-height: 1.7;
-}
-
-/*---------------------------------------
-  DONATE              
------------------------------------------*/
-.donate-section {
-  background-image: url("../img/different-people-doing-volunteer-work.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-  padding-top: 150px;
-  padding-bottom: 150px;
-}
-
-.donate-form {
-  background: var(--white-color);
-  border-radius: var(--border-radius-medium);
-  position: relative;
-  overflow: hidden;
-  padding: 50px;
 }
 
 /*---------------------------------------
@@ -858,45 +705,18 @@ strong {
   font-weight: var(--font-weight-semibold);
 }
 
-/* Alejar las flechas de los bordes del carrusel */
 #places-carousel .carousel-control-prev {
-  left: -150px; /* ajusta según necesites */
+  left: -150px;
 }
 
 #places-carousel .carousel-control-next {
-  right: -150px; /* ajusta según necesites */
-}
-
-/*---------------------------------------
-  CONTACT               
------------------------------------------*/
-.contact-section {
-  background: var(--white-color);
-}
-
-.contact-form {
-  background: var(--section-bg-color);
-  border-radius: var(--border-radius-small);
-  padding: 40px;
-}
-
-.contact-info-wrap {
-  padding-top: 40px;
-}
-
-.contact-image-wrap {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  margin-top: 20px;
-  margin-bottom: 30px;
-  padding-bottom: 30px;
-  width: 100%;
+  right: -150px;
 }
 
 /*---------------------------------------
   CUSTOM FORM               
 -----------------------------------------*/
-.custom-form .form-control,
-.input-group-file {
+.custom-form .form-control {
   background-color: var(--section-bg-color);
   box-shadow: none;
   border: 0;
@@ -916,104 +736,6 @@ strong {
   margin-bottom: 10px;
 }
 
-.custom-form .form-check-group {
-  margin-bottom: 20px;
-}
-
-.donate-form .form-check-group-donation-frequency {
-  padding-right: 0;
-}
-
-.form-check-group-donation-frequency + .form-check-group-donation-frequency {
-  padding-right: 12px;
-  padding-left: 0;
-}
-
-.form-check-group-donation-frequency .form-check-label {
-  font-weight: var(--font-weight-semibold);
-}
-
-#DonationFrequencyOne {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-#DonationFrequencyMonthly {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.custom-form .form-check-radio {
-  position: relative;
-  height: 100%;
-  padding-left: 0;
-}
-
-.custom-form .input-group-text {
-  background: var(--secondary-color);
-  border: 0;
-  color: var(--white-color);
-}
-
-.custom-form .form-check-radio .form-check-label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-
-.form-check-radio .form-check-input[type="radio"] {
-  background-color: var(--section-bg-color);
-  border-radius: 0.25rem;
-  border: 0;
-  box-shadow: none;
-  outline: none;
-  width: 100%;
-  margin-top: 0;
-  margin-left: 0;
-  padding: 25px 50px;
-  transition: all 0.5s;
-}
-
-.form-check-radio .form-check-input:checked[type="radio"] {
-  background-image: none;
-}
-
-.form-check-radio .form-check-input:checked[type="radio"] + .form-check-label,
-.form-check-radio .form-check-input:hover + .form-check-label,
-.form-check-radio .form-check-input:checked + .form-check-label {
-  color: var(--white-color);
-}
-
-.form-check-radio .form-check-input:hover,
-.form-check-radio .form-check-input:checked {
-  background-color: var(--secondary-color);
-  border-color: var(--white-color);
-}
-
-.input-group-file {
-  border-radius: 0.25rem;
-  padding: 13px 0.75rem;
-}
-
-.input-group-file input[type="file"] {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
-  padding: 0;
-}
-
-.input-group-file .input-group-text {
-  background: transparent;
-  color: inherit;
-  margin-bottom: 0;
-  padding: 0;
-}
-
 .custom-form button[type="submit"] {
   background: var(--custom-btn-bg-color);
   border: none;
@@ -1029,50 +751,6 @@ strong {
 .custom-form button[type="submit"]:focus {
   background: var(--custom-btn-bg-hover-color);
   border-color: transparent;
-}
-
-/*---------------------------------------
-  CONTACT SEARCH & DONATE & SUBCRIBE FORM              
------------------------------------------*/
-.contact-form .form-control {
-  background: var(--white-color);
-}
-
-.search-form {
-  position: relative;
-}
-
-.search-form .form-control {
-  padding-right: 50px;
-}
-
-.search-form button[type="submit"] {
-  background: transparent;
-  position: absolute;
-  top: 0;
-  right: 0;
-  color: var(--p-color);
-  width: 50px;
-  padding: 12px;
-}
-
-.search-form button[type="submit"]:hover {
-  background: transparent;
-  color: var(--dark-color);
-}
-
-.subscribe-form {
-  background: var(--section-bg-color);
-  border-radius: var(--border-radius-small);
-  padding: 30px;
-}
-
-.subscribe-form .form-control {
-  background: var(--white-color);
-}
-
-.donate-form .form-control {
-  margin-bottom: 0;
 }
 
 /*---------------------------------------
@@ -1108,14 +786,6 @@ strong {
   color: var(--section-bg-color);
   font-size: var(--copyright-font-size);
   margin-right: 30px;
-}
-
-.site-footer .custom-btn {
-  font-size: var(--copyright-font-size);
-}
-
-.site-footer .custom-btn:hover {
-  background: var(--primary-color);
 }
 
 /*---------------------------------------
@@ -1358,11 +1028,6 @@ strong {
   .custom-text-box,
   .volunteer-form {
     padding: 30px;
-  }
-
-  .counter-number,
-  .counter-number-text {
-    font-size: var(--h2-font-size);
   }
 
   .contact-info-wrap {
