@@ -1,0 +1,183 @@
+/* Estilos adicionales que definen la estructura del Dashboard */
+/* Ancho del sidebar. */
+:root {
+    --sidebar-width: 250px;
+    --transition-duration: 0.3s;
+}
+
+/* 0. Estilos del Checkbox Oculto */
+#sidebar-toggle-checkbox {
+    display: none;
+}
+
+/* 1. Navbar Superior y Toggle en Escritorio */
+@media (min-width: 992px) {
+    /* Mueve el label/botón a la izquierda del logo */
+    .toggle-label {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 1051; /* Para estar encima del sidebar */
+        display: flex !important;
+        align-items: center;
+        padding-left: 15px;
+    }
+    
+    /* Mueve la navbar a la derecha del sidebar (Estado Visible por defecto) */
+    .navbar.fixed-top {
+        margin-left: var(--sidebar-width);
+        width: calc(100% - var(--sidebar-width));
+        transition: margin var(--transition-duration), width var(--transition-duration);
+    }
+    
+    /* ESTADO OCULTO: Cuando el checkbox NO está checked */
+    #sidebar-toggle-checkbox:not(:checked) ~ .navbar {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+/* 2. Sidebar (Barra Lateral) */
+.sidebar {
+    width: var(--sidebar-width);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1050; 
+    padding-top: 56px; 
+    background-color: var(--white-color);
+    border-right: 1px solid var(--border-color);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: margin var(--transition-duration); /* Añadir transición */
+}
+
+/* ESTADO OCULTO: Cuando el checkbox NO está checked */
+@media (min-width: 992px) {
+    #sidebar-toggle-checkbox:not(:checked) ~ #wrapper .sidebar {
+        margin-left: calc(var(--sidebar-width) * -1); /* Mueve el sidebar fuera de la pantalla */
+    }
+}
+
+/* 3. Cuerpo y Contenido Principal */
+
+/* Estado Visible por defecto (margen a la derecha del sidebar) */
+@media (min-width: 992px) {
+    .main-content {
+        margin-left: var(--sidebar-width);
+        transition: margin var(--transition-duration);
+    }
+
+    /* ESTADO OCULTO: Cuando el checkbox NO está checked */
+    #sidebar-toggle-checkbox:not(:checked) ~ #wrapper .main-content {
+        margin-left: 0 !important;
+    }
+}
+
+.main-content {
+    /* Asegura que el contenido empiece DESPUÉS del Header, usando un padding más generoso */
+    padding-top: 150px !important; 
+    min-height: 100vh;
+    background-color: var(--section-bg-color); 
+}
+
+/* 4. Estilos de Marca */
+.navbar {
+    padding-left: 50px !important; 
+}
+
+.navbar-brand span small {
+    color: var(--p-color); 
+    font-weight: var(--font-weight-normal);
+}
+
+.sidebar .nav-link {
+    font-weight: var(--font-weight-normal);
+    color: var(--dark-color);
+    padding: 12px 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar .nav-link:hover {
+    background-color: var(--secondary-color);
+    color: var(--dark-color);
+}
+
+.sidebar .nav-link.active {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    font-weight: var(--font-weight-semibold);
+    border-radius: 0; 
+}
+
+.sidebar .nav-link.active i {
+    color: var(--white-color);
+}
+
+.sidebar i {
+    margin-right: 10px;
+    font-size: 1.1em;
+}
+
+/* Adaptación para pantallas pequeñas (móvil) */
+@media (max-width: 991.98px) {
+    /* Oculta el toggle de CSS en móvil, ya que usamos el de Bootstrap */
+    .toggle-label {
+        display: none !important;
+    }
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding-top: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .main-content {
+        margin-left: 0 !important;
+        padding-top: 10px !important; 
+    }
+}
+
+/* --- ESTILOS DE COMPONENTES --- */
+
+.main-content h1 {
+    color: var(--dark-color);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -1px;
+}
+
+.breadcrumb-item a {
+    color: var(--p-color);
+}
+.breadcrumb-item a:hover {
+    color: var(--primary-color);
+}
+.breadcrumb-item.active {
+    color: var(--primary-color);
+    font-weight: var(--font-weight-semibold);
+}
+
+.card {
+    border-radius: var(--border-radius-medium);
+    border: none; 
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-header {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--h6-font-size);
+    border-radius: var(--border-radius-medium) var(--border-radius-medium) 0 0 !important;
+    padding: 15px 20px;
+}
+
+.card-body .btn {
+    border-radius: var(--border-radius-large); 
+    font-weight: var(--font-weight-semibold);
+    padding: 8px 20px;
+}
