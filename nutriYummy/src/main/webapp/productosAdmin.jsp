@@ -124,6 +124,32 @@
                     </button>
                 </div>
 
+                <!-- Mensajes de confirmación --> 
+                <%
+                    if (session != null) {
+                        if (session.getAttribute("mensajeExito") != null) {
+                %>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <%= session.getAttribute("mensajeExito")%>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+                <%
+                        session.removeAttribute("mensajeExito");
+                    }
+
+                    if (session.getAttribute("mensajeError") != null) {
+                %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <%= session.getAttribute("mensajeError")%>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+                <%
+                            session.removeAttribute("mensajeError");
+                        }
+                    }
+                %>
+                
+                <!-- Tabla de productos -->
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered align-middle">
                         <thead class="table-warning">
@@ -134,14 +160,15 @@
                                 <th>Precio</th>
                                 <th>Stock</th>
                                 <th>Tipo</th>
+                                <th>Ruta (imagen)</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
 
                         <tbody>
+                            <!-- Cargar productos desde controlador -->
                             <%= controladorProducto.getAllProductosTabla()%>
                         </tbody>
-
                     </table>
                 </div>
             </main>
@@ -159,6 +186,10 @@
 
                     <div class="modal-body">
                         <form action="AgregarProducto" method="POST">
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Número</label>
+                                <input type="text" class="form-control" id="numero" name="numero" required>
+                            </div>
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" name="nombre" required>
@@ -183,6 +214,10 @@
                                     <option value="CHIPS">Chips</option>
                                     <option value="OTROS">Otros</option>
                                 </select>
+                            </div>
+                            <div class='mb-3'>
+                                <label class='form-label'>Imagen (nombre del archivo)</label>
+                                <input type='text' name='img' id="img" class='form-control' required>
                             </div>
                             <button type="submit" class="btn btn-success w-100">Guardar</button>
                         </form>

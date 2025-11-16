@@ -19,7 +19,7 @@ import modelo.enums.TipoProducto;
  *
  * @author rocha
  */
-public class EditarProducto extends HttpServlet {
+public class AgregarProducto extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,17 +33,15 @@ public class EditarProducto extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
         // Configurar codificación
         request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
         
         ModeloProducto modeloProducto = new ModeloProducto();
 
         try {
             // Crear objeto Producto con los datos del formulario
             Producto producto = new Producto(
-                    Integer.parseInt(request.getParameter("id")),
                     Integer.parseInt(request.getParameter("numero")),
                     request.getParameter("nombre"),
                     request.getParameter("descripcion"),
@@ -54,21 +52,22 @@ public class EditarProducto extends HttpServlet {
             );
 
             // Pasarlo al modelo
-            boolean actualizado = modeloProducto.editarProducto(producto);
+            boolean exito = modeloProducto.insertarProducto(producto);
 
             // Usar la sesión para almacenar mensajes
             HttpSession session = request.getSession();
      
-            if (actualizado) {
-                session.setAttribute("mensajeExito", "Producto actualizado correctamente.");
+            System.out.println(exito);
+            if (exito) {
+                session.setAttribute("mensajeExito", "Producto agregado correctamente.");
             } else {
-                session.setAttribute("mensajeError", "No se pudo actualizar el producto.");
+                session.setAttribute("mensajeError", "No se pudo agregar el producto.");
             }
 
             response.sendRedirect("productosAdmin.jsp");
         } catch (NumberFormatException e) {
             HttpSession session = request.getSession();
-            session.setAttribute("mensajeError", "Error al editar producto: " + e.getMessage());
+            session.setAttribute("mensajeError", "Error al insertar producto: " + e.getMessage());
             response.sendRedirect("productosAdmin.jsp");
         }
     }
