@@ -1,0 +1,42 @@
+CREATE DATABASE nutriYummy;
+USE nutriYummy;
+
+CREATE TABLE IF NOT EXISTS productos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    numero INT UNIQUE NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    descripcion VARCHAR(100) NOT NULL,
+    precio FLOAT NOT NULL,
+    stock INT NOT NULL DEFAULT 0,
+    img VARCHAR(255) NOT NULL,
+    tipo ENUM("OBLEAS", "MAICITOS", "CHIPS", "OTROS") NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS usuarios (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    numero INT UNIQUE NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    apellidoPaterno VARCHAR(50) NOT NULL,
+    apellidoMaterno VARCHAR(50),
+    email VARCHAR(50) UNIQUE NOT NULL,
+    rol ENUM("ADMIN", "CLIENTE") NOT NULL DEFAULT "CLIENTE"
+);
+
+CREATE TABLE IF NOT EXISTS ventas (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    folio VARCHAR(8) UNIQUE NOT NULL,
+    fechaHora DATETIME NOT NULL DEFAULT NOW(),
+    idUsuario INT NOT NULL,
+    FOREIGN KEY (idUsuario) REFERENCES usuarios(id)
+);
+
+CREATE TABLE IF NOT EXISTS detalles_ventas (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    cantidad INT NOT NULL,
+    precio FLOAT NOT NULL,
+    iva FLOAT NOT NULL,
+    idProducto INT NOT NULL,
+    idVenta INT NOT NULL,
+    FOREIGN KEY (idProducto) REFERENCES productos(id),
+    FOREIGN KEY (idVenta) REFERENCES ventas(id)
+);
