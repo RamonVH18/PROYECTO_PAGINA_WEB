@@ -13,13 +13,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Panel de administrador | Nutri Yummy</title>
 
+    <!-- Icono -->
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
+    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
+    <!-- CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- CSS files -->
     <link href="css/styles.css" rel="stylesheet">
     <link href="css/adminStyles.css" rel="stylesheet">
 </head>
@@ -77,7 +81,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="productos.jsp">
+                        <a class="nav-link" href="productosAdmin.jsp">
                             <i class="bi-bag-fill"></i> Productos
                         </a>
                     </li>
@@ -102,49 +106,43 @@
 
         <main class="main-content flex-grow-1 p-3 p-md-4">
             
-            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Administrador</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                </ol>
-            </nav>
-
-            <p class="lead mb-4">Panel principal ADMINISTRADOR de NutriYummy. Desde aquí puedes gestionar productos, usuarios y pedidos.</p>
+            <p class="lead mb-4">Panel principal de <strong>administrador</strong> de NutriYummy. Desde aquí puedes gestionar productos, usuarios y pedidos.</p>
 
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card border-success shadow-sm">
-                        <div class="card-header bg-success text-white">Gestionar productos</div>
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-warning text-white">Gestionar productos</div>
                         <div class="card-body">
                             <p class="card-text">Consulta, agrega, edita o elimina productos.</p>
-                            <a href="productos.jsp" class="custom-btn btn btn-success">Ir a Productos</a> 
+                            <a href="productosAdmin.jsp" class="custom-btn btn">Ir a Productos</a> 
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card border-warning shadow-sm">
-                        <div class="card-header bg-warning text-dark">Gestionar usuarios</div>
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-warning text-white">Gestionar usuarios</div>
                         <div class="card-body">
                             <p class="card-text">Administra cuentas, roles y accesos al sistema.</p>
-                            <a href="usuarios.jsp" class="custom-btn btn btn-warning text-dark">Gestionar Usuarios</a>
+                            <a href="usuarios.jsp" class="custom-btn btn">Gestionar Usuarios</a>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card border-primary shadow-sm">
-                        <div class="card-header bg-primary text-white">Pedidos</div>
+                    <div class="card shadow-sm">
+
+                            <div class="card-header bg-warning text-white">Pedidos</div>
                         <div class="card-body">
                             <p class="card-text">Gestiona el historial de pedidos</p>
-                            <a href="pedidos.jsp" class="custom-btn btn btn-primary">Ir a Pedidos</a>
+                            <a href="pedidos.jsp" class="custom-btn btn">Ir a Pedidos</a>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="card border-info shadow-sm">
-                <div class="card-header bg-info text-white">Ventas Semanales 📈</div>
+                <div class="card-header bg-warning text-white">Ventas Semanales 📈</div>
                 <div class="card-body">
                     <canvas id="templatemo-line-chart" height="120" class="w-100"></canvas>
                 </div>
