@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.ModeloUsuario;
+import modelo.Usuario;
+import modelo.enums.RolUsuario;
 
 /**
  *
@@ -30,31 +32,52 @@ public class EliminarUsuario extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        
+        HttpSession session = request.getSession();
         ModeloUsuario modeloUsuario = new ModeloUsuario();
         
         try {
             int id = Integer.parseInt(request.getParameter("id"));
+            
+            Usuario usuario = modeloUsuario.getUsuario(id);
+            
+            if (usuario == null) {
+                error(session, response, "No existe el usuario para eliminar.");
+                return;
+            }
 
+            if (usuario.getRol() == RolUsuario.ADMIN) {
+                boolean hayMasAdmins = modeloUsuario.hayMasAdmins();
+
+                if (!hayMasAdmins) {
+                    error(session, response, "Es el único usuario administrador del sistema. No se permite eliminar el usuario.");
+                    return;
+                }
+            }
+            
             // Pasarlo al modelo
             boolean eliminado = modeloUsuario.eliminarUsuario(id);
-
-            // Usar la sesión para almacenar mensajes
-            HttpSession session = request.getSession();
+            String numeroFormateado = String.format("%05d", usuario.getNumero());
      
             if (eliminado) {
-                session.setAttribute("mensajeExito", "Usuario eliminado con éxito.");
+                session.setAttribute("mensajeExito", "Usuario #" + numeroFormateado + " eliminado con éxito.");
             } else {
                 session.setAttribute("mensajeError", "No se pudo eliminar el usuario.");
             }
 
             response.sendRedirect("usuariosAdmin.jsp");
         } catch (NumberFormatException e) {
-            HttpSession session = request.getSession();
             session.setAttribute("mensajeError", "Error al eliminar usuario: " + e.getMessage());
             response.sendRedirect("usuariosAdmin.jsp");
         }
     }
 
+    private void error(HttpSession session, HttpServletResponse response, String msg) throws IOException {
+        session.setAttribute("mensajeError", msg);
+        response.sendRedirect("usuariosAdmin.jsp");
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

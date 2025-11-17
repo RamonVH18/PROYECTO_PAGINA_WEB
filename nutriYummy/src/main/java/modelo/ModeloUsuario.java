@@ -195,4 +195,22 @@ public class ModeloUsuario extends Conexion {
         
         return existe;
     }
+    
+    public boolean hayMasAdmins() {
+        String sql = "select hayMasAdmins() as total";
+        boolean resultado = false;
+        
+        try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql);) {
+            ResultSet rs = pst.executeQuery();
+            
+            if (rs.next()) {
+                resultado = rs.getInt("total") == 1;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al verificar si hay más administradores en el sistema: " + e.getMessage());
+            return false;
+        }
+        
+        return resultado;
+    }
 }

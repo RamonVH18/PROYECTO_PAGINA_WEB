@@ -104,7 +104,6 @@ public class EditarUsuario extends HttpServlet {
 
         try {
             int id = Integer.parseInt(idStr);
-            System.out.println(id);
             int numero = Integer.parseInt(numeroStr);
             
             String numeroFormateado = String.format("%05d", numero);
@@ -115,6 +114,15 @@ public class EditarUsuario extends HttpServlet {
                 error(session, response, "No existe el usuario #" + numeroFormateado + " para editar.");
                 return;
             }
+            
+            if (!usuarioViejo.getRol().name().equals(rol) && usuarioViejo.getRol() == RolUsuario.ADMIN) {
+                boolean hayMasAdmins = modeloUsuario.hayMasAdmins();
+
+                if (!hayMasAdmins) {
+                    error(session, response, "Es el único usuario administrador del sistema. No se permite editar el rol del usuario.");
+                    return;
+                }
+            }
 
             // Validar email único
             if (!usuarioViejo.getEmail().equals(email) && modeloUsuario.existeEmailUsuario(email)) {
@@ -124,7 +132,7 @@ public class EditarUsuario extends HttpServlet {
             
             // Validar numero único
             if (usuarioViejo.getNumero() != numero && modeloUsuario.existeUsuarioNumero(numero)) {
-                error(session, response, "Ya existe un usuario con el numero #" + numero + ".");
+                error(session, response, "Ya existe un usuario con el numero #" + numeroFormateado + ".");
                 return;
             }
 
@@ -150,7 +158,6 @@ public class EditarUsuario extends HttpServlet {
             }
 
             response.sendRedirect("usuariosAdmin.jsp");
-
         } catch (IOException e) {
             error(session, response, "Error inesperado: " + e.getMessage());
         }

@@ -52,8 +52,15 @@ BEGIN
     FROM productos;
 
     -- Insertar el producto
-    INSERT INTO productos(numero, nombre, descripcion, precio, stock, img, tipo)
-    VALUES (nuevoNumero, p_nombre, p_descripcion, p_precio, p_stock, p_img, p_tipo);
+    INSERT INTO productos(numero, nombre, descripcion, precio, stock, img, tipo) VALUES(
+		nuevoNumero, 
+        p_nombre, 
+        p_descripcion, 
+        p_precio, 
+        p_stock, 
+        p_img, 
+        p_tipo
+	);
 
     -- Devolver el número generado
     SET p_numero_generado = nuevoNumero;
@@ -109,6 +116,16 @@ BEGIN
 END$$
 DELIMITER ;
 
+# Obtener un usuario específico
+DELIMITER $$
+CREATE PROCEDURE getUsuario(
+	IN u_id INT
+) 
+BEGIN
+	SELECT * FROM usuarios WHERE id = u_id;
+END$$
+DELIMITER ;
+
 # Editar un usuario
 DELIMITER $$
 CREATE PROCEDURE editarUsuario(
@@ -138,17 +155,23 @@ DELIMITER ;
 # Insertar un usuario
 DELIMITER $$
 CREATE PROCEDURE insertarUsuario(
-    IN u_numero INT,
     IN u_nombre VARCHAR(50),
     IN u_apellidoPaterno VARCHAR(50),
     IN u_apellidoMaterno VARCHAR(50),
     IN u_email VARCHAR(50),
     IN u_rol ENUM('ADMIN', 'CLIENTE'),
-    IN u_contrasenia VARCHAR(20)
+    IN u_contrasenia VARCHAR(20),
+    OUT u_numero_generado INT
 )
 BEGIN
+	DECLARE nuevoNumero INT;
+
+    -- Obtener el siguiente número disponible
+    SELECT IFNULL(MAX(numero), 0) + 1 INTO nuevoNumero
+    FROM usuarios;
+
 	INSERT INTO usuarios(numero, nombre, apellidoPaterno, apellidoMaterno, email, rol, contrasenia) VALUES(
-		u_numero,
+		nuevoNumero,
         u_nombre,
         u_apellidoPaterno,
         u_apellidoMaterno,
@@ -156,6 +179,9 @@ BEGIN
         u_rol,
         u_contrasenia
     );
+    
+    -- Devolver el número generado
+    SET u_numero_generado = nuevoNumero;
 END$$
 DELIMITER ;
 
@@ -168,3 +194,64 @@ BEGIN
 	DELETE FROM usuarios WHERE id = u_id;
 END $$
 DELIMITER ;
+
+# Validar si existe un usuario con un numero específico
+DELIMITER $$
+CREATE FUNCTION existeUsuarioNumero(u_numero INT)
+RETURNS TINYINT
+DETERMINISTIC
+BEGIN
+    DECLARE existe TINYINT DEFAULT 0;
+
+    SELECT COUNT(*) INTO existe
+    FROM usuarios
+    WHERE numero = u_numero;
+
+    IF existe > 0 THEN
+        RETURN 1; -- Sí existe
+    ELSE
+        RETURN 0; -- No existe
+    END IF;
+END$$
+DELIMITER ;
+
+# Validar si ya existe un email
+DELIMITER $$
+CREATE FUNCTION existeEmailUsuario(u_email INT)
+RETURNS TINYINT
+DETERMINISTIC
+BEGIN
+    DECLARE existe TINYINT DEFAULT 0;
+
+    SELECT COUNT(*) INTO existe
+    FROM usuarios
+    WHERE email = u_email;
+
+    IF existe > 0 THEN
+        RETURN 1; -- Sí existe
+    ELSE
+        RETURN 0; -- No existe
+    END IF;
+END$$
+DELIMITER ;
+
+# Verificar si hay más de un usuario ADMIN en el sistema
+DELIMITER $$
+CREATE FUNCTION hayMasAdmins()
+RETURNS TINYINT
+DETERMINISTIC
+BEGIN
+    DECLARE total TINYINT DEFAULT 0;
+
+    SELECT COUNT(*) INTO total
+    FROM usuarios
+    WHERE rol = "ADMIN";
+
+    IF total > 1 THEN
+        RETURN 1; -- Sí hay más de 1
+    ELSE
+        RETURN 0; -- Es el único admin que queda
+    END IF;
+END$$
+DELIMITER ;
+
