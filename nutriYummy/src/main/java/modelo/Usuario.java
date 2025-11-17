@@ -33,16 +33,6 @@ public class Usuario {
         this.rol = rol;
         this.contrasenia = contrasenia;
     }
-    
-    public Usuario(int id, int numero, String nombre, String apellidoPaterno, String apellidoMaterno, String email, RolUsuario rol) {
-        this.id = id;
-        this.numero = numero;
-        this.nombre = nombre;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.email = email;
-        this.rol = rol;
-    }
 
     public Usuario(int numero, String nombre, String apellidoPaterno, String apellidoMaterno, String email, RolUsuario rol, String contrasenia) {
         this.numero = numero;
@@ -54,13 +44,13 @@ public class Usuario {
         this.contrasenia = contrasenia;
     }
 
-    public Usuario(int numero, String nombre, String apellidoPaterno, String apellidoMaterno, String email, RolUsuario rol) {
-        this.numero = numero;
+    public Usuario(String nombre, String apellidoPaterno, String apellidoMaterno, String email, RolUsuario rol, String contrasenia) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.email = email;
         this.rol = rol;
+        this.contrasenia = contrasenia;
     }
     
     public int getId() {

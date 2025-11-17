@@ -5,7 +5,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import modelo.ModeloProducto;
 import modelo.Producto;
 import modelo.enums.TipoProducto;
+import utils.Validador;
 
 /**
  *
@@ -32,32 +32,109 @@ public class EditarProducto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
 
         // Configurar codificación
+        response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+
+        HttpSession session = request.getSession();
         ModeloProducto modeloProducto = new ModeloProducto();
 
+        // Obtener valores
+        String idStr = request.getParameter("id");
+        String numeroStr = request.getParameter("numero");
+        String nombre = request.getParameter("nombre");
+        String descripcion = request.getParameter("descripcion");
+        String precioStr = request.getParameter("precio");
+        String stockStr = request.getParameter("stock");
+        String img = request.getParameter("img");
+        String tipo = request.getParameter("tipo");
+
+        // Validar campos
+        if (!Validador.esEnteroValido(idStr)) {
+            error(session, response, "ID inválido.");
+            return;
+        }
+
+        if (!Validador.esEnteroValido(numeroStr)) {
+            error(session, response, "Número de producto inválido.");
+            return;
+        }
+
+        if (Validador.estaVacio(nombre) || !Validador.tieneLongitudMinima(nombre, 2) || !Validador.tieneLongitudMaxima(nombre, 50)) {
+            error(session, response, "El nombre debe tener entre 2 y 50 caracteres.");
+            return;
+        }
+
+        if (Validador.estaVacio(descripcion) || !Validador.tieneLongitudMinima(descripcion, 2) || !Validador.tieneLongitudMaxima(descripcion, 100)) {
+            error(session, response, "La descripción debe tener entre 2 y 100 caracteres.");
+            return;
+        }
+
+        if (!Validador.esDecimalValido(precioStr)) {
+            error(session, response, "El precio no es válido.");
+            return;
+        }
+
+        double precio = Double.parseDouble(precioStr);
+        if (precio < 0) {
+            error(session, response, "El precio del producto no puede ser negativo.");
+            return;
+        }
+
+        if (!Validador.esEnteroValido(stockStr)) {
+            error(session, response, "El stock no es válido.");
+            return;
+        }
+
+        int stock = Integer.parseInt(stockStr);
+        if (stock < 0) {
+            error(session, response, "El stock del producto no puede ser negativo.");
+            return;
+        }
+
+        if (Validador.estaVacio(img) || !Validador.tieneLongitudMinima(img, 6) || !Validador.tieneLongitudMaxima(img, 255)) {
+            error(session, response, "La ruta de la imagen debe tener entre 6 y 255 caracteres.");
+            return;
+        }
+
+        if (Validador.estaVacio(tipo)) {
+            error(session, response, "El tipo de producto es obligatorio.");
+            return;
+        }
+
         try {
-            // Crear objeto Producto con los datos del formulario
+            int id = Integer.parseInt(idStr);
+            int numero = Integer.parseInt(numeroStr);
+
+            String numeroFormateado = String.format("%05d", numero);
+
+            Producto productoViejo = modeloProducto.getProducto(id);
+            
+            if (productoViejo == null) {
+                error(session, response, "No existe el producto #" + numeroFormateado + " para editar.");
+                return;
+            }
+            
+            if (productoViejo.getNumero() != numero && modeloProducto.existeProductoNumero(numero)) {
+                error(session, response, "Ya existe un producto con el número #" + numeroFormateado + ".");
+                return;
+            }
+
+            // Crear objeto
             Producto producto = new Producto(
-                    Integer.parseInt(request.getParameter("id")),
-                    Integer.parseInt(request.getParameter("numero")),
-                    request.getParameter("nombre"),
-                    request.getParameter("descripcion"),
-                    Double.parseDouble(request.getParameter("precio")),
-                    Integer.parseInt(request.getParameter("stock")),
-                    request.getParameter("img"),
-                    TipoProducto.valueOf(request.getParameter("tipo"))
+                    id,
+                    numero,
+                    nombre.trim(),
+                    descripcion.trim(),
+                    precio,
+                    stock,
+                    img.trim(),
+                    TipoProducto.valueOf(tipo)
             );
 
-            // Pasarlo al modelo
             boolean actualizado = modeloProducto.editarProducto(producto);
 
-            // Usar la sesión para almacenar mensajes
-            HttpSession session = request.getSession();
-     
             if (actualizado) {
                 session.setAttribute("mensajeExito", "Producto actualizado correctamente.");
             } else {
@@ -65,11 +142,15 @@ public class EditarProducto extends HttpServlet {
             }
 
             response.sendRedirect("productosAdmin.jsp");
-        } catch (NumberFormatException e) {
-            HttpSession session = request.getSession();
-            session.setAttribute("mensajeError", "Error al editar producto: " + e.getMessage());
-            response.sendRedirect("productosAdmin.jsp");
+
+        } catch (IOException | NumberFormatException e) {
+            error(session, response, "Error inesperado: " + e.getMessage());
         }
+    }
+
+    private void error(HttpSession session, HttpServletResponse response, String msg) throws IOException {
+        session.setAttribute("mensajeError", msg);
+        response.sendRedirect("productosAdmin.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

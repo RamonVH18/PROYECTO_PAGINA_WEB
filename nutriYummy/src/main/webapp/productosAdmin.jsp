@@ -187,27 +187,23 @@
                     <div class="modal-body">
                         <form action="AgregarProducto" method="POST">
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">Número</label>
-                                <input type="text" class="form-control" id="numero" name="numero" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre</label>
+                                <label for="nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="nombre" name="nombre" required>
                             </div>
                             <div class="mb-3">
-                                <label for="descripcion" class="form-label">Descripción</label>
+                                <label for="descripcion" class="form-label">Descripción <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="descripcion" name="descripcion" required>
                             </div>
                             <div class="mb-3">
-                                <label for="precio" class="form-label">Precio</label>
+                                <label for="precio" class="form-label">Precio <span class="text-danger">*</span></label>
                                 <input type="number" step="0.01" class="form-control" id="precio" name="precio" required>
                             </div>
                             <div class="mb-3">
-                                <label for="stock" class="form-label">Stock</label>
+                                <label for="stock" class="form-label">Stock <span class="text-danger">*</span></label>
                                 <input type="number" class="form-control" id="stock" name="stock" required>
                             </div>
                             <div class="mb-3">
-                                <label for="tipo" class="form-label">Tipo</label>
+                                <label for="tipo" class="form-label">Tipo <span class="text-danger">*</span></label>
                                 <select class="form-select" id="tipo" name="tipo" required>
                                     <option value="OBLEAS">Obleas</option>
                                     <option value="MAICITOS">Maicitos</option>
@@ -216,9 +212,10 @@
                                 </select>
                             </div>
                             <div class='mb-3'>
-                                <label class='form-label'>Imagen (nombre del archivo)</label>
+                                <label class='form-label'>Imagen (nombre del archivo) <span class="text-danger">*</span></label>
                                 <input type='text' name='img' id="img" class='form-control' required>
                             </div>
+                            <label class='form-label'><span class="text-danger">* Campos obligatorios</span></label>
                             <button type="submit" class="btn btn-success w-100">Guardar</button>
                         </form>
                     </div>

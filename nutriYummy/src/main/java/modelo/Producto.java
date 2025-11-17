@@ -43,6 +43,15 @@ public class Producto {
         this.img = img;
         this.tipo = tipo;
     }
+
+    public Producto(String nombre, String descripcion, double precio, int stock, String img, TipoProducto tipo) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.stock = stock;
+        this.img = img;
+        this.tipo = tipo;
+    }
     
     public int getId() {
         return id;

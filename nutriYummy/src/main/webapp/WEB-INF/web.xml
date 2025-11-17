@@ -20,6 +20,10 @@
         <servlet-name>EliminarUsuario</servlet-name>
         <servlet-class>servlet.EliminarUsuario</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AgregarUsuario</servlet-name>
+        <servlet-class>servlet.AgregarUsuario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditarProducto</servlet-name>
         <url-pattern>/EditarProducto</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>EliminarUsuario</servlet-name>
         <url-pattern>/EliminarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarUsuario</servlet-name>
+        <url-pattern>/AgregarUsuario</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

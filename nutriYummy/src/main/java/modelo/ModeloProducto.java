@@ -9,6 +9,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import static java.sql.Types.INTEGER;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.enums.TipoProducto;
@@ -57,6 +58,41 @@ public class ModeloProducto extends Conexion {
 
         return productos;
     }
+
+    public Producto getProducto(int id) {
+        String sql = "call getProducto(?)";
+        Producto producto = null;
+
+        try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql);) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+
+                    TipoProducto tipo = null;
+                    try {
+                        tipo = TipoProducto.valueOf(rs.getString("tipo").toUpperCase());
+                    } catch (IllegalArgumentException ex) {
+                        System.err.println("Tipo no válido: " + rs.getString("tipo"));
+                    }
+
+                    producto = new Producto(
+                            rs.getInt("id"),
+                            rs.getInt("numero"),
+                            rs.getString("nombre"),
+                            rs.getString("descripcion"),
+                            rs.getDouble("precio"),
+                            rs.getInt("stock"),
+                            rs.getString("img"),
+                            tipo
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener producto: " + e.getMessage());
+        }
+
+        return producto;
+    }
     
     public boolean editarProducto(Producto producto) {
         String sql = "call editarProducto(?, ?, ?, ?, ? ,?, ?, ?)";
@@ -98,26 +134,48 @@ public class ModeloProducto extends Conexion {
         }
     }
     
-    public boolean insertarProducto(Producto producto) {
+    public int insertarProducto(Producto producto) {
         String sql = "call insertarProducto(?, ?, ?, ?, ? ,?, ?)";
+        int numeroGenerado = 0;
 
         try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql);) {
             // Setear parámetros
-            pst.setInt(1, producto.getNumero());
-            pst.setString(2, producto.getNombre());
-            pst.setString(3, producto.getDescripcion());
-            pst.setDouble(4, producto.getPrecio());
-            pst.setInt(5, producto.getStock());
-            pst.setString(6, producto.getImg());
-            pst.setString(7, producto.getTipo().name());
+            pst.setString(1, producto.getNombre());
+            pst.setString(2, producto.getDescripcion());
+            pst.setDouble(3, producto.getPrecio());
+            pst.setInt(4, producto.getStock());
+            pst.setString(5, producto.getImg());
+            pst.setString(6, producto.getTipo().name());
+
+            pst.registerOutParameter(7, INTEGER);
 
             pst.execute();
-            
-            int filasAfectadas = pst.getUpdateCount();
-            return filasAfectadas > 0;
+
+            numeroGenerado = pst.getInt(7);
         } catch (SQLException e) {
             System.err.println("Error al insertar producto: " + e.getMessage());
+        }
+
+        return numeroGenerado;
+    }
+    
+    public boolean existeProductoNumero(int numero) {
+        String sql = "select existeProductoNumero(?) as existe";
+        boolean existe = false;
+
+        try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql);) {
+            pst.setInt(1, numero);
+            
+            ResultSet rs = pst.executeQuery();
+            
+            if (rs.next()) {
+                existe = rs.getInt("existe") == 1;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al verificar número: " + e.getMessage());
             return false;
         }
+        
+        return existe;
     }
 }

@@ -163,7 +163,6 @@
     padding: 15px 20px;
 }
 
-
 /* Asegura que el modal esté sobre cualquier sidebar o contenedor */
 .modal-backdrop.show {
     z-index: 1040 !important;

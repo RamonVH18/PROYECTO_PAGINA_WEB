@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modelo.ModeloProducto;
-import modelo.Producto;
-import modelo.enums.TipoProducto;
+import modelo.ModeloUsuario;
+import modelo.Usuario;
+import modelo.enums.RolUsuario;
 import utils.Validador;
 
 /**
  *
  * @author rocha
  */
-public class AgregarProducto extends HttpServlet {
+public class AgregarUsuario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,95 +32,107 @@ public class AgregarProducto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // Configurar codificación
-        request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
         HttpSession session = request.getSession();
-        ModeloProducto modeloProducto = new ModeloProducto();
+        ModeloUsuario modeloUsuario = new ModeloUsuario();
 
-        // Obtener valores
+        // Obtener parámetros
         String nombre = request.getParameter("nombre");
-        String descripcion = request.getParameter("descripcion");
-        String precioStr = request.getParameter("precio");
-        String stockStr = request.getParameter("stock");
-        String img = request.getParameter("img");
-        String tipo = request.getParameter("tipo");
+        String apellidoPaterno = request.getParameter("apellidoPaterno");
+        String apellidoMaterno = request.getParameter("apellidoMaterno");
+        String email = request.getParameter("email");
+        String rol = request.getParameter("rol");
+        String contrasenia = request.getParameter("contrasenia");
+        String confirmarContra = request.getParameter("confirmarContra");
         
-        // Validar los datos del formulario
+        // Validar campos
         if (Validador.estaVacio(nombre) || !Validador.tieneLongitudMinima(nombre, 2) || !Validador.tieneLongitudMaxima(nombre, 50)) {
             error(session, response, "El nombre debe tener entre 2 y 50 caracteres.");
             return;
         }
-        
-        if (Validador.estaVacio(descripcion) || !Validador.tieneLongitudMinima(descripcion, 2) || !Validador.tieneLongitudMaxima(descripcion, 100)) {
-            error(session, response, "La descripción debe tener entre 2 y 100 caracteres.");
-            return;
-        }
-        
-        if (!Validador.esDecimalValido(precioStr)) {
-            error(session, response, "El precio no es válido.");
+
+        if (Validador.estaVacio(apellidoPaterno) || !Validador.tieneLongitudMinima(apellidoPaterno, 2) || !Validador.tieneLongitudMaxima(apellidoPaterno, 50)) {
+            error(session, response, "El apellido paterno debe tener entre 2 y 50 caracteres.");
             return;
         }
 
-        double precio = Double.parseDouble(precioStr);
-        if (precio < 0) {
-            error(session, response, "El precio del producto no puede ser negativo.");
+        if (!Validador.estaVacio(apellidoMaterno)) {
+            if (!Validador.tieneLongitudMinima(apellidoMaterno, 2) || !Validador.tieneLongitudMaxima(apellidoMaterno, 50)) {
+                error(session, response, "El apellido materno debe tener entre 2 y 50 caracteres.");
+                return;
+            }
+        }
+    
+        if (Validador.estaVacio(email)) {
+            error(session, response, "El email es obligatorio.");
             return;
         }
         
-        if (!Validador.esEnteroValido(stockStr)) {
-            error(session, response, "El stock no es válido.");
+        if (!Validador.esEmailValido(email)) {
+            error(session, response, "El formato del email no es válido.");
+            return;
+        }
+      
+        if (Validador.estaVacio(rol)) {
+            error(session, response, "El rol es obligatorio.");
             return;
         }
 
-        int stock = Integer.parseInt(stockStr);
-        if (stock < 0) {
-            error(session, response, "El stock del producto no puede ser negativo.");
+        if (Validador.estaVacio(contrasenia)) {
+            error(session, response, "La contraseña es obligatoria.");
+            return;
+        }
+
+        if (Validador.estaVacio(confirmarContra)) {
+            error(session, response, "Debe confirmar la contraseña.");
             return;
         }
         
-        if (Validador.estaVacio(img) || !Validador.tieneLongitudMinima(img, 6) || !Validador.tieneLongitudMaxima(img, 255)) {
-            error(session, response, "La ruta de la imagen debe tener entre 6 y 255 caracteres.");
+        if (!contrasenia.equals(confirmarContra)) {
+            error(session, response, "Las contraseñas deben coincidir.");
             return;
         }
-
-        if (Validador.estaVacio(tipo)) {
-            error(session, response, "El tipo de producto es obligatorio.");
-            return;
-        }
-
+        
         try {
+            // Validar email único
+            if (modeloUsuario.existeEmailUsuario(email)) {
+                error(session, response, "Ya existe un usuario con el email " + email + ".");
+                return;
+            }
+
             // Crear objeto
-            Producto producto = new Producto(
-                    nombre,
-                    descripcion,
-                    precio,
-                    stock,
-                    img,
-                    TipoProducto.valueOf(tipo)
+            Usuario usuario = new Usuario(
+                    nombre.trim(),
+                    apellidoPaterno.trim(),
+                    (apellidoMaterno == null ? null : apellidoMaterno.trim()),
+                    email.trim(),
+                    RolUsuario.valueOf(rol),
+                    contrasenia
             );
 
             // Pasarlo al modelo
-            int numero = modeloProducto.insertarProducto(producto);
-
+            int numero = modeloUsuario.insertarUsuario(usuario);
+            
             if (numero != 0) {
                 String numeroFormateado = String.format("%05d", numero);
-                session.setAttribute("mensajeExito", "Producto #" + numeroFormateado + " agregado correctamente.");
+                session.setAttribute("mensajeExito", "Usuario #" + numeroFormateado + " agregado correctamente.");
             } else {
-                session.setAttribute("mensajeError", "No se pudo agregar el producto.");
+                session.setAttribute("mensajeError", "No se pudo agregar el usuario.");
             }
 
-            response.sendRedirect("productosAdmin.jsp");
-        } catch (NumberFormatException e) {
+            response.sendRedirect("usuariosAdmin.jsp");
+
+        } catch (IOException e) {
             error(session, response, "Error inesperado: " + e.getMessage());
         }
+        
     }
-
+    
     private void error(HttpSession session, HttpServletResponse response, String msg) throws IOException {
         session.setAttribute("mensajeError", msg);
-        response.sendRedirect("productosAdmin.jsp");
+        response.sendRedirect("usuariosAdmin.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

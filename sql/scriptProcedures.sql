@@ -36,25 +36,28 @@ DELIMITER ;
 # Insertar un producto
 DELIMITER $$
 CREATE PROCEDURE insertarProducto(
-    IN p_numero INT,
     IN p_nombre VARCHAR(50),
     IN p_descripcion VARCHAR(100),
     IN p_precio FLOAT,
     IN p_stock INT,
     IN p_img VARCHAR(255),
-    IN p_tipo ENUM('OBLEAS', 'MAICITOS', 'CHIPS', 'OTROS')
+    IN p_tipo ENUM('OBLEAS', 'MAICITOS', 'CHIPS', 'OTROS'),
+    OUT p_numero_generado INT
 )
 BEGIN
-	INSERT INTO productos(numero, nombre, descripcion, precio, stock, img, tipo) VALUES(
-		p_numero,
-        p_nombre,
-        p_descripcion,
-        p_precio,
-        p_stock,
-        p_img,
-        p_tipo
-    );
-END$$
+    DECLARE nuevoNumero INT;
+
+    -- Obtener el siguiente número disponible
+    SELECT IFNULL(MAX(numero), 0) + 1 INTO nuevoNumero
+    FROM productos;
+
+    -- Insertar el producto
+    INSERT INTO productos(numero, nombre, descripcion, precio, stock, img, tipo)
+    VALUES (nuevoNumero, p_nombre, p_descripcion, p_precio, p_stock, p_img, p_tipo);
+
+    -- Devolver el número generado
+    SET p_numero_generado = nuevoNumero;
+END $$
 DELIMITER ;
 
 # Eliminar un producto
@@ -75,6 +78,26 @@ CREATE PROCEDURE getProducto(
 BEGIN
 	SELECT * FROM productos WHERE id = p_id;
 END $$
+DELIMITER ;
+
+# Validar si existe un producto con un numero específico
+DELIMITER $$
+CREATE FUNCTION existeProductoNumero(p_numero INT)
+RETURNS TINYINT
+DETERMINISTIC
+BEGIN
+    DECLARE existe TINYINT DEFAULT 0;
+
+    SELECT COUNT(*) INTO existe
+    FROM productos
+    WHERE numero = p_numero;
+
+    IF existe > 0 THEN
+        RETURN 1; -- Sí existe
+    ELSE
+        RETURN 0; -- No existe
+    END IF;
+END$$
 DELIMITER ;
 
 # --------------- USUARIOS ---------------

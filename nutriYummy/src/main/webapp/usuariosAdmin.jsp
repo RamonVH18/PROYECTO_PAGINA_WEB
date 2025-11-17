@@ -184,32 +184,37 @@
                     <div class="modal-body">
                         <form action="AgregarUsuario" method="POST">
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre</label>
+                                <label for="nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="nombre" name="nombre" required>
                             </div>
                             <div class="mb-3">
-                                <label for="apellidoPaterno" class="form-label">Apellido paterno</label>
+                                <label for="apellidoPaterno" class="form-label">Apellido paterno <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno" required>
                             </div>
                             <div class="mb-3">
                                 <label for="apellidoMaterno" class="form-label">Apellido materno</label>
-                                <input type="text" class="form-control" id="apellidoMaterno" name="apellidoMaterno" required>
+                                <input type="text" class="form-control" id="apellidoMaterno" name="apellidoMaterno">
                             </div>
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
+                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                                 <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="mb-3">
-                                <label for="stock" class="form-label">Contraseña</label>
+                                <label for="stock" class="form-label">Contraseña <span class="text-danger">*</span></label>
                                 <input type="password" class="form-control" id="contrasenia" name="contrasenia" required>
                             </div>
                             <div class="mb-3">
-                                <label for="rol" class="form-label">Rol</label>
+                                <label for="stock" class="form-label">Confirmar contraseña <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="confirmarContra" name="confirmarContra" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rol" class="form-label">Rol <span class="text-danger">*</span></label>
                                 <select class="form-select" id="rol" name="rol" required>
                                     <option value="ADMIN">Administrador</option>
                                     <option value="CLIENTE">Cliente</option>
                                 </select>
                             </div>
+                            <label class='form-label'><span class="text-danger">* Campos obligatorios</span></label>
                             <button type="submit" class="btn btn-success w-100">Guardar</button>
                         </form>
                     </div>
