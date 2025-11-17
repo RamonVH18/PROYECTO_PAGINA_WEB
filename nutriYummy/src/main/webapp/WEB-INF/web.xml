@@ -12,6 +12,14 @@
         <servlet-name>AgregarProducto</servlet-name>
         <servlet-class>servlet.AgregarProducto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditarUsuario</servlet-name>
+        <servlet-class>servlet.EditarUsuario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarUsuario</servlet-name>
+        <servlet-class>servlet.EliminarUsuario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditarProducto</servlet-name>
         <url-pattern>/EditarProducto</url-pattern>
@@ -23,6 +31,14 @@
     <servlet-mapping>
         <servlet-name>AgregarProducto</servlet-name>
         <url-pattern>/AgregarProducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditarUsuario</servlet-name>
+        <url-pattern>/EditarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarUsuario</servlet-name>
+        <url-pattern>/EliminarUsuario</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

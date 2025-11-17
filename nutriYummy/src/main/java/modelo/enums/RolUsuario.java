@@ -8,7 +8,7 @@ package modelo.enums;
  *
  * @author rocha
  */
-public enum TipoUsuario {
+public enum RolUsuario {
     ADMIN,
     CLIENTE
 }

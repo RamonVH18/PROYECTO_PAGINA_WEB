@@ -5,21 +5,20 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modelo.ModeloProducto;
-import modelo.Producto;
-import modelo.enums.TipoProducto;
+import modelo.ModeloUsuario;
+import modelo.Usuario;
+import modelo.enums.RolUsuario;
 
 /**
  *
  * @author rocha
  */
-public class EditarProducto extends HttpServlet {
+public class EditarUsuario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,42 +32,41 @@ public class EditarProducto extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         // Configurar codificación
         request.setCharacterEncoding("UTF-8");
         
-        ModeloProducto modeloProducto = new ModeloProducto();
+        ModeloUsuario modeloUsuario = new ModeloUsuario();
 
         try {
-            // Crear objeto Producto con los datos del formulario
-            Producto producto = new Producto(
+            // Crear objeto Usuario con los datos del formulario
+            Usuario usuario = new Usuario(
                     Integer.parseInt(request.getParameter("id")),
                     Integer.parseInt(request.getParameter("numero")),
                     request.getParameter("nombre"),
-                    request.getParameter("descripcion"),
-                    Double.parseDouble(request.getParameter("precio")),
-                    Integer.parseInt(request.getParameter("stock")),
-                    request.getParameter("img"),
-                    TipoProducto.valueOf(request.getParameter("tipo"))
+                    request.getParameter("apellidoPaterno"),
+                    request.getParameter("apellidoMaterno"),
+                    request.getParameter("email"),
+                    RolUsuario.valueOf(request.getParameter("rol")),
+                    request.getParameter("contrasenia")
             );
 
             // Pasarlo al modelo
-            boolean actualizado = modeloProducto.editarProducto(producto);
+            boolean actualizado = modeloUsuario.editarUsuario(usuario);
 
             // Usar la sesión para almacenar mensajes
             HttpSession session = request.getSession();
      
             if (actualizado) {
-                session.setAttribute("mensajeExito", "Producto actualizado correctamente.");
+                session.setAttribute("mensajeExito", "Usuario actualizado correctamente.");
             } else {
-                session.setAttribute("mensajeError", "No se pudo actualizar el producto.");
+                session.setAttribute("mensajeError", "No se pudo actualizar el usuario.");
             }
 
-            response.sendRedirect("productosAdmin.jsp");
+            response.sendRedirect("usuariosAdmin.jsp");
         } catch (NumberFormatException e) {
             HttpSession session = request.getSession();
-            session.setAttribute("mensajeError", "Error al editar producto: " + e.getMessage());
-            response.sendRedirect("productosAdmin.jsp");
+            session.setAttribute("mensajeError", "Error al editar usuario: " + e.getMessage());
+            response.sendRedirect("usuariosAdmin.jsp");
         }
     }
 

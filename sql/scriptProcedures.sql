@@ -1,8 +1,9 @@
+# --------------- PRODUCTOS ---------------
 # Obtener todos los productos
 DELIMITER $$
 CREATE PROCEDURE getAllProductos() 
 BEGIN
-	SELECT * FROM productos;
+	SELECT * FROM productos ORDER BY numero;
 END$$
 DELIMITER ;
 
@@ -54,7 +55,6 @@ BEGIN
         p_tipo
     );
 END$$
-
 DELIMITER ;
 
 # Eliminar un producto
@@ -64,5 +64,84 @@ CREATE PROCEDURE eliminarProducto(
 )
 BEGIN
 	DELETE FROM productos WHERE id = p_id;
+END $$
+DELIMITER ;
+
+# Obtener un producto específico
+DELIMITER $$
+CREATE PROCEDURE getProducto(
+	IN p_id INT
+)
+BEGIN
+	SELECT * FROM productos WHERE id = p_id;
+END $$
+DELIMITER ;
+
+# --------------- USUARIOS ---------------
+# Obtener todos los usuarios
+DELIMITER $$
+CREATE PROCEDURE getAllUsuarios() 
+BEGIN
+	SELECT * FROM usuarios;
+END$$
+DELIMITER ;
+
+# Editar un usuario
+DELIMITER $$
+CREATE PROCEDURE editarUsuario(
+    IN u_id INT,
+    IN u_numero INT,
+    IN u_nombre VARCHAR(50),
+    IN u_apellidoPaterno VARCHAR(50),
+    IN u_apellidoMaterno VARCHAR(50),
+    IN u_email VARCHAR(50),
+    IN u_rol ENUM('ADMIN', 'CLIENTE'),
+    IN u_contrasenia VARCHAR(20)
+)
+BEGIN
+    UPDATE usuarios
+    SET
+        numero = u_numero,
+        nombre = u_nombre,
+        apellidoPaterno = u_apellidoPaterno,
+        apellidoMaterno = u_apellidoMaterno,
+        email = u_email,
+        rol = u_rol,
+        contrasenia = u_contrasenia
+    WHERE id = u_id;
+END $$
+DELIMITER ;
+
+# Insertar un usuario
+DELIMITER $$
+CREATE PROCEDURE insertarUsuario(
+    IN u_numero INT,
+    IN u_nombre VARCHAR(50),
+    IN u_apellidoPaterno VARCHAR(50),
+    IN u_apellidoMaterno VARCHAR(50),
+    IN u_email VARCHAR(50),
+    IN u_rol ENUM('ADMIN', 'CLIENTE'),
+    IN u_contrasenia VARCHAR(20)
+)
+BEGIN
+	INSERT INTO usuarios(numero, nombre, apellidoPaterno, apellidoMaterno, email, rol, contrasenia) VALUES(
+		u_numero,
+        u_nombre,
+        u_apellidoPaterno,
+        u_apellidoMaterno,
+        u_email,
+        u_rol,
+        u_contrasenia
+    );
+END$$
+DELIMITER ;
+
+# Eliminar un usuario
+DELIMITER $$
+CREATE PROCEDURE eliminarUsuario(
+	IN u_id INT
+)
+BEGIN
+	DELETE FROM usuarios WHERE id = u_id;
 END $$
 DELIMITER ;

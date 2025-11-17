@@ -6,10 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%@page import="controlador.ControladorProducto"%>
+<%@page import="controlador.ControladorUsuario"%>
 
 <%
-    ControladorProducto controladorProducto = new ControladorProducto();
+    ControladorUsuario controladorUsuario = new ControladorUsuario();
 %>
 
 <!DOCTYPE html>
@@ -18,7 +18,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Gestionar productos | Nutri Yummy</title>
+        <title>Gestionar usuarios | Nutri Yummy</title>
 
         <!-- Icono -->
         <link rel="icon" href="img/favicon.ico" type="image/x-icon">
@@ -88,12 +88,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link" href="productosAdmin.jsp">
                                 <i class="bi-bag-fill"></i> Productos
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="usuariosAdmin.jsp">
+                            <a class="nav-link active" href="#.jsp">
                                 <i class="bi-people-fill"></i> Usuarios
                             </a>
                         </li>
@@ -113,14 +113,14 @@
 
             <main class="main-content flex-grow-1 p-3 p-md-4">
 
-                <p class="lead mb-4">Gestionar productos en el sistema.</p>
+                <p class="lead mb-4">Gestionar usuarios en el sistema.</p>
 
-                <h2 class="mb-4">Listado de productos</h2>
+                <h2 class="mb-4">Listado de usuarios</h2>
 
                 <!-- Botón para agregar producto -->
                 <div class="mb-3">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarProductoModal">
-                        <i class="bi-plus-lg"></i> Agregar producto
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarUsuarioModal">
+                        <i class="bi-plus-lg"></i> Agregar usuario
                     </button>
                 </div>
 
@@ -149,75 +149,66 @@
                     }
                 %>
                 
-                <!-- Tabla de productos -->
+                <!-- Tabla de usuarios -->
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered align-middle">
                         <thead class="table-warning">
                             <tr>
                                 <th>Número</th>
-                                <th>Nombre</th>
-                                <th>Descripción</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Tipo</th>
-                                <th>Ruta (imagen)</th>
+                                <th>Nombre completo</th>
+                                <th>Email</th>
+                                <th>Rol</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <!-- Cargar productos desde controlador -->
-                            <%= controladorProducto.getAllProductosTabla()%>
+                            <!-- Cargar usuarios desde controlador -->
+                            <%= controladorUsuario.getAllUsuariosTabla()%>
                         </tbody>
                     </table>
                 </div>
             </main>
         </div>
 
-        <!-- Modal para agregar producto -->
-        <div class="modal fade" id="agregarProductoModal" tabindex="-1" aria-labelledby="agregarProductoModalLabel" aria-hidden="true">
+        <!-- Modal para agregar usuario -->
+        <div class="modal fade" id="agregarUsuarioModal" tabindex="-1" aria-labelledby="agregarUsuarioModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="agregarProductoModalLabel">Agregar nuevo producto</h5>
+                        <h5 class="modal-title" id="agregarUsuarioModalLabel">Agregar nuevo usuario</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
 
                     <div class="modal-body">
-                        <form action="AgregarProducto" method="POST">
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label">Número</label>
-                                <input type="text" class="form-control" id="numero" name="numero" required>
-                            </div>
+                        <form action="AgregarUsuario" method="POST">
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" name="nombre" required>
                             </div>
                             <div class="mb-3">
-                                <label for="descripcion" class="form-label">Descripción</label>
-                                <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+                                <label for="apellidoPaterno" class="form-label">Apellido paterno</label>
+                                <input type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno" required>
                             </div>
                             <div class="mb-3">
-                                <label for="precio" class="form-label">Precio</label>
-                                <input type="number" step="0.01" class="form-control" id="precio" name="precio" required>
+                                <label for="apellidoMaterno" class="form-label">Apellido materno</label>
+                                <input type="text" class="form-control" id="apellidoMaterno" name="apellidoMaterno" required>
                             </div>
                             <div class="mb-3">
-                                <label for="stock" class="form-label">Stock</label>
-                                <input type="number" class="form-control" id="stock" name="stock" required>
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="mb-3">
-                                <label for="tipo" class="form-label">Tipo</label>
-                                <select class="form-select" id="tipo" name="tipo" required>
-                                    <option value="OBLEAS">Obleas</option>
-                                    <option value="MAICITOS">Maicitos</option>
-                                    <option value="CHIPS">Chips</option>
-                                    <option value="OTROS">Otros</option>
+                                <label for="stock" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" id="contrasenia" name="contrasenia" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rol" class="form-label">Rol</label>
+                                <select class="form-select" id="rol" name="rol" required>
+                                    <option value="ADMIN">Administrador</option>
+                                    <option value="CLIENTE">Cliente</option>
                                 </select>
-                            </div>
-                            <div class='mb-3'>
-                                <label class='form-label'>Imagen (nombre del archivo)</label>
-                                <input type='text' name='img' id="img" class='form-control' required>
                             </div>
                             <button type="submit" class="btn btn-success w-100">Guardar</button>
                         </form>
