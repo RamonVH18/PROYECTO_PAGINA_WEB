@@ -6,10 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%@page import="controlador.ControladorProducto"%>
+<%@page import="controlador.ControladorUsuario"%>
 
 <%
-    ControladorProducto controladorProducto = new ControladorProducto();
+    ControladorUsuario controladorUsuario = new ControladorUsuario();
 %>
 
 <!DOCTYPE html>
@@ -18,7 +18,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Gestionar productos | Nutri Yummy</title>
+        <title>Mi perfil | Nutri Yummy</title>
 
         <!-- Icono -->
         <link rel="icon" href="img/favicon.ico" type="image/x-icon">
@@ -88,12 +88,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link" href="productosAdmin.jsp">
                                 <i class="bi-bag-fill"></i> Productos
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="usuariosAdmin.jsp">
+                            <a class="nav-link" href="#.jsp">
                                 <i class="bi-people-fill"></i> Usuarios
                             </a>
                         </li>
@@ -103,7 +103,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="perfilAdmin.jsp">
+                            <a class="nav-link active" href="perfilAdmin.jsp">
                                 <i class="bi bi-person-circle"></i> Mi perfil
                             </a>
                         </li>
@@ -118,16 +118,9 @@
 
             <main class="main-content flex-grow-1 p-3 p-md-4">
 
-                <p class="lead mb-4">Gestionar productos en el sistema.</p>
+                <p class="lead mb-4">Consulta los datos de tu perfil de administrador y cambia tu contraseña.</p>
 
-                <h2 class="mb-4">Listado de productos</h2>
-
-                <!-- Botón para agregar producto -->
-                <div class="mb-3">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarProductoModal">
-                        <i class="bi-plus-lg"></i> Agregar producto
-                    </button>
-                </div>
+                <h2 class="mb-4">Mi perfil</h2>
 
                 <!-- Mensajes de confirmación --> 
                 <%
@@ -153,58 +146,54 @@
                         }
                     }
                 %>
-
-                <!-- Tabla de productos -->
-                <div class="table-responsive">
-                    <!-- Cargar productos desde controlador -->
-                    <%= controladorProducto.getAllProductosTabla()%>
-                </div>
+                
+                <!-- Cargar la info del perfil --> 
+                
             </main>
         </div>
 
-        <!-- Modal para agregar producto -->
-        <div class="modal fade" id="agregarProductoModal" tabindex="-1" aria-labelledby="agregarProductoModalLabel" aria-hidden="true">
+        <!-- Modal para editar contraseña -->
+        <div class="modal fade" id="editarContraseniaModal" tabindex="-1" 
+             aria-labelledby="editarContraseniaLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="agregarProductoModalLabel">Agregar nuevo producto</h5>
+                        <h5 class="modal-title" id="editarContraseniaLabel">Cambiar contraseña</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
 
                     <div class="modal-body">
-                        <form action="AgregarProducto" method="POST">
+                        <form action="EditarContrasenia" method="POST">
+
+                            <!-- ID oculto del usuario en sesión -->
+                            <input type="hidden" name="idUsuario" value="">
+
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                <label class="form-label">Contraseña actual <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" 
+                                       name="contraseniaActual" required>
                             </div>
+
                             <div class="mb-3">
-                                <label for="descripcion" class="form-label">Descripción <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+                                <label class="form-label">Nueva contraseña <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" 
+                                       name="nuevaContrasenia" required>
                             </div>
+
                             <div class="mb-3">
-                                <label for="precio" class="form-label">Precio <span class="text-danger">*</span></label>
-                                <input type="number" step="0.01" class="form-control" id="precio" name="precio" required>
+                                <label class="form-label">Confirmar nueva contraseña <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" 
+                                       name="confirmarNueva" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="stock" class="form-label">Stock <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" id="stock" name="stock" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="tipo" class="form-label">Tipo <span class="text-danger">*</span></label>
-                                <select class="form-select" id="tipo" name="tipo" required>
-                                    <option value="OBLEAS">Obleas</option>
-                                    <option value="MAICITOS">Maicitos</option>
-                                    <option value="CHIPS">Chips</option>
-                                    <option value="OTROS">Otros</option>
-                                </select>
-                            </div>
-                            <div class='mb-3'>
-                                <label class='form-label'>Imagen (nombre del archivo) <span class="text-danger">*</span></label>
-                                <input type='text' name='img' id="img" class='form-control' required>
-                            </div>
-                            <label class='form-label'><span class="text-danger">* Campos obligatorios</span></label>
-                            <button type="submit" class="btn btn-success w-100">Guardar</button>
+
+                            <label class="form-label">
+                                <span class="text-danger">* Campos obligatorios</span>
+                            </label>
+
+                            <button type="submit" class="btn btn-primary w-100 mt-2">
+                                Guardar cambios
+                            </button>
                         </form>
                     </div>
 

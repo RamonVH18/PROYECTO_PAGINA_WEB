@@ -4,6 +4,7 @@
  */
 package controlador;
 
+import java.util.List;
 import modelo.ModeloProducto;
 import modelo.Producto;
 
@@ -20,9 +21,30 @@ public class ControladorProducto {
     }
 
     public String getAllProductosTabla() {
+        List<Producto> productos = modeloProducto.getAllProductos();
+
+        if (productos == null || productos.isEmpty()) {
+            return "<div class='alert alert-warning text-center'>No hay productos registrados.</div>";
+        }
+    
         StringBuilder html = new StringBuilder();
 
-        for (Producto producto : modeloProducto.getAllProductos()) {
+        html.append("<table class='table table-bordered table-striped'>")
+                .append("<thead class='table-warning'>")
+                .append("<tr>")
+                .append("<th>Número</th>")
+                .append("<th>Nombre</th>")
+                .append("<th>Descripción</th>")
+                .append("<th>Precio</th>")
+                .append("<th>Stock</th>")
+                .append("<th>Tipo</th>")
+                .append("<th>Ruta (imagen)</th>")
+                .append("<th>Acciones</th>")
+                .append("</tr>")
+                .append("</thead>")
+                .append("<tbody>");
+
+        for (Producto producto : productos) {
             // Fila de la tabla
             html.append("<tr>")
                     .append("<td>").append(String.format("%05d", producto.getNumero())).append("</td>")
@@ -109,6 +131,8 @@ public class ControladorProducto {
                     .append("</div>")
                     .append("</div>");
         }
+        
+        html.append("</tbody></table>");
 
         return html.toString();
     }

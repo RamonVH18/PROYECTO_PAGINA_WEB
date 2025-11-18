@@ -95,6 +95,11 @@
                             <i class="bi-receipt-cutoff"></i> Pedidos
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="perfilAdmin.jsp">
+                            <i class="bi bi-person-circle"></i> Mi perfil
+                        </a>
+                    </li>
                     <li class="nav-item d-lg-none">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal">
                             <i class="bi-box-arrow-right"></i> Cerrar Sesión
@@ -124,7 +129,7 @@
                         <div class="card-header bg-warning text-white">Gestionar usuarios</div>
                         <div class="card-body">
                             <p class="card-text">Administra cuentas, roles y accesos al sistema.</p>
-                            <a href="usuarios.jsp" class="custom-btn btn">Gestionar Usuarios</a>
+                            <a href="usuariosAdmin.jsp" class="custom-btn btn">Gestionar Usuarios</a>
                         </div>
                     </div>
                 </div>
@@ -147,7 +152,6 @@
                     <canvas id="templatemo-line-chart" height="120" class="w-100"></canvas>
                 </div>
             </div>
-
         </main>
     </div>
 

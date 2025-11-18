@@ -102,6 +102,11 @@
                                 <i class="bi-receipt-cutoff"></i> Pedidos
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="perfilAdmin.jsp">
+                                <i class="bi bi-person-circle"></i> Mi perfil
+                            </a>
+                        </li>
                         <li class="nav-item d-lg-none">
                             <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal">
                                 <i class="bi-box-arrow-right"></i> Cerrar Sesión

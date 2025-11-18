@@ -108,4 +108,10 @@ public class ControladorUsuario {
 
         return html.toString();
     }
+    
+    public String getPerfil(String numero) {
+        StringBuilder html = new StringBuilder();
+        
+        return null;
+    }
 }
