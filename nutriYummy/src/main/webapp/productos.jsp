@@ -5,6 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="controlador.ControladorProducto"%>
+<%
+    ControladorProducto controlador = new ControladorProducto();
+%>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -107,8 +112,7 @@
         </div>
     </nav>
 
-    <main>
-        <!-- Catálogo de productos -->
+   <main>
         <section class="section-padding" id="productos-todos">
             <div class="container">
                 <div class="row">
@@ -117,145 +121,14 @@
                         <h2>Todos nuestros productos</h2>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 col-12 mb-4">
-                        <div class="custom-block-wrap">
-                            <img src="img/obleas1.jpeg" class="custom-block-image img-fluid" alt="Obleas de Amaranto">
-
-                            <div class="custom-block">
-                                <div class="custom-block-body">
-                                    <h5 class="mb-3">Coco obleas</h5>
-
-                                    <p>Deliciosas obleas rellenas de coco, bajas en calorías.</p>
-
-                                    <div class="d-flex align-items-center my-2">
-                                        <p class="mb-0">
-                                            <strong>Precio:</strong>
-                                            <span class="text-success">$50.00 MXN</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <a href="#" class="custom-btn btn">Ver más</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 col-12 mb-4">
-                        <div class="custom-block-wrap">
-                            <img src="img/chips1.jpeg" class="custom-block-image img-fluid" alt="Chips de Zanahoria">
-
-                            <div class="custom-block">
-                                <div class="custom-block-body">
-                                    <h5 class="mb-3">Chips de camote adobado</h5>
-
-                                    <p>Chips de camote deshidratado con un toque de adobo. El snack crujiente perfecto.
-                                    </p>
-
-                                    <div class="d-flex align-items-center my-2">
-                                        <p class="mb-0">
-                                            <strong>Precio:</strong>
-                                            <span class="text-success">$35.00 MXN</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <a href="#" class="custom-btn btn">Ver más</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 col-12 mb-4">
-                        <div class="custom-block-wrap">
-                            <img src="img/maicitos1.jpeg" class="custom-block-image img-fluid" alt="Maicitos con Chile">
-
-                            <div class="custom-block">
-                                <div class="custom-block-body">
-                                    <h5 class="mb-3">Maicitos salsa negra</h5>
-
-                                    <p>Maíz inflado, sin conservadores ni grasas añadidas.</p>
-
-                                    <div class="d-flex align-items-center my-2">
-                                        <p class="mb-0">
-                                            <strong>Precio:</strong>
-                                            <span class="text-success">$30.00 MXN</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <a href="#" class="custom-btn btn">Ver más</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 col-12 mb-4">
-                        <div class="custom-block-wrap">
-                            <img src="img/obleas2.jpeg" class="custom-block-image img-fluid"
-                                alt="Obleas de chispas saludables">
-
-                            <div class="custom-block">
-                                <div class="custom-block-body">
-                                    <h5 class="mb-3">Choco obleas</h5>
-
-                                    <p>Obleas de amaranto rellenas de chocolate. Con delicioso sabor y saludables,
-                                        ¡pruébalas!</p>
-
-                                    <div class="d-flex align-items-center my-2">
-                                        <p class="mb-0">
-                                            <strong>Precio:</strong>
-                                            <span class="text-success">$50.00 MXN</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <a href="#" class="custom-btn btn">Ver más</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 col-12 mb-4">
-                        <div class="custom-block-wrap">
-                            <img src="img/chips2.jpeg" class="custom-block-image img-fluid" alt="Chips de Camote">
-
-                            <div class="custom-block">
-                                <div class="custom-block-body">
-                                    <h5 class="mb-3">Chips de taro adobado</h5>
-
-                                    <p>Chips de taro adobado, naturalmente dulces y deliciosamente crujientes.</p>
-
-                                    <div class="d-flex align-items-center my-2">
-                                        <p class="mb-0">
-                                            <strong>Precio:</strong>
-                                            <span class="text-success">$35.00 MXN</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <a href="#" class="custom-btn btn">Ver más</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 col-12 mb-4">
-                        <div class="custom-block-wrap">
-                            <img src="img/otros1.jpeg" class="custom-block-image img-fluid" alt="Nuez con chocolate">
-
-                            <div class="custom-block">
-                                <div class="custom-block-body">
-                                    <h5 class="mb-3">Nueces con chocolate</h5>
-
-                                    <p>Nueces cubiertas con chocolate amargo, sin azúcar.</p>
-
-                                    <div class="d-flex align-items-center my-2">
-                                        <p class="mb-0">
-                                            <strong>Precio:</strong>
-                                            <span class="text-success">$55.00 MXN</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <a href="#" class="custom-btn btn">Ver más</a>
-                            </div>
-                        </div>
-                    </div>
+                     
+                    <%= controlador.getProductosPublicosHtml() %>
+                    
+                   
 
                 </div>
             </div>
         </section>
-
     </main>
 
     <!-- Footer -->

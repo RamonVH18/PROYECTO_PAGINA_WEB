@@ -136,4 +136,37 @@ public class ControladorProducto {
 
         return html.toString();
     }
+    
+    public String getProductosPublicosHtml() {
+        StringBuilder html = new StringBuilder();
+
+        // Obtiene los productos de la BD (del Modelo)
+        for (Producto producto : modeloProducto.getAllProductos()) {
+            
+            // Este es el HTML de las tarjetas de productos.jsp
+            html.append("<div class='col-lg-4 col-md-6 col-12 mb-4'>");
+            html.append("  <div class='custom-block-wrap'>");
+            
+            // Inserta datos dinámicos
+            html.append("    <img src='img/").append(producto.getImg()).append("' class='custom-block-image img-fluid' alt='").append(producto.getNombre()).append("'>");
+            
+            html.append("    <div class='custom-block'>");
+            html.append("      <div class='custom-block-body'>");
+            html.append("        <h5 class='mb-3'>").append(producto.getNombre()).append("</h5>");
+            html.append("        <p>").append(producto.getDescripcion()).append("</p>");
+            html.append("        <div class='d-flex align-items-center my-2'>");
+            
+            String precioFormateado = String.format("%.2f", producto.getPrecio());
+            html.append("          <p class='mb-0'><strong>Precio:</strong> <span class='text-success'>$").append(precioFormateado).append(" MXN</span></p>");
+            
+            html.append("        </div>");
+            html.append("      </div>");
+            html.append("      <a href='#' class='custom-btn btn'>Ver más</a>"); 
+            html.append("    </div>");
+            html.append("  </div>");
+            html.append("</div>");
+        }
+
+        return html.toString();
+    }
 }
