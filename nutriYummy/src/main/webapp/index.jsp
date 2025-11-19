@@ -94,7 +94,7 @@
                                aria-expanded="false">Productos</a>
 
                             <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                                <li><a class="dropdown-item" href="productos.html">Ver todos</a></li>
+                                <li><a class="dropdown-item" href="productos.jsp">Ver todos</a></li>
                                 <li><a class="dropdown-item" href="#">Chips</a></li>
                                 <li><a class="dropdown-item" href="#">Maicitos</a></li>
                                 <li><a class="dropdown-item" href="#">Obleas</a></li>
@@ -102,7 +102,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="contacto.html">Contacto</a>
+                            <a class="nav-link click-scroll" href="contacto.jsp">Contacto</a>
                         </li>
                     </ul>
                 </div>
@@ -258,7 +258,7 @@
                         </div>
 
                         <div class="col-lg-5 col-12">
-                            <a href="productos.html" class="custom-btn btn smoothscroll">Ver todos los productos</a>
+                            <a href="productos.jsp" class="custom-btn btn smoothscroll">Ver todos los productos</a>
                         </div>
 
                     </div>
