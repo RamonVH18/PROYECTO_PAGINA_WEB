@@ -98,7 +98,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="pedidos.jsp">
+                            <a class="nav-link" href="pedidosAdmin.jsp">
                                 <i class="bi-receipt-cutoff"></i> Pedidos
                             </a>
                         </li>

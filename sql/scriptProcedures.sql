@@ -255,3 +255,36 @@ BEGIN
 END$$
 DELIMITER ;
 
+# --------------- VENTAS ---------------
+# Obtener todos los productos
+DELIMITER $$
+CREATE PROCEDURE getAllVentas() 
+BEGIN
+    SELECT 
+        v.id,
+        v.folio,
+        v.fechaHora,
+        v.idUsuario,
+
+        d.id AS idDetalle,
+        d.idProducto,
+        d.cantidad,
+        d.precio AS precioUnitario,
+        d.iva,
+
+        -- Total del detalle: subtotal + IVA (ambos son dinero)
+        (d.cantidad * d.precio) + d.iva AS totalDetalle,
+
+        -- Total de toda la venta, sumando todos los detalles
+        (
+            SELECT SUM((d2.cantidad * d2.precio) + d2.iva)
+            FROM detalles_ventas d2
+            WHERE d2.idVenta = v.id
+        ) AS totalVenta
+
+    FROM ventas AS v
+    INNER JOIN detalles_ventas AS d
+        ON v.id = d.idVenta
+    ORDER BY v.id, d.id;
+END$$
+DELIMITER ;
