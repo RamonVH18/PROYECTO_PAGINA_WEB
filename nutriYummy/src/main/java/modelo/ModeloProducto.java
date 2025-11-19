@@ -175,14 +175,14 @@ public class ModeloProducto extends Conexion {
             System.err.println("Error al verificar número: " + e.getMessage());
             return false;
         }
-        
+       
         return existe;
     }
-    
+
     public List<Producto> getMejoresVendidos() {
         List<Producto> productos = new ArrayList<>();
         String sql = "call getMejoresVendidos()";
-        
+
         try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql); ResultSet rs = pst.executeQuery();) {
             while (rs.next()) {
                 Producto producto = new Producto(
@@ -196,6 +196,46 @@ public class ModeloProducto extends Conexion {
 
         } catch (SQLException e) {
             System.err.println("Error al obtener productos mejores vendidos: " + e.getMessage());
+        }
+
+        return productos;
+    }
+
+    public List<Producto> getProductosPorTipo(String tipoStr) {
+        List<Producto> productos = new ArrayList<>();
+
+        String sql = "call getProductosPorTipo(?)";
+
+        try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql);) {
+            pst.setString(1, tipoStr);
+            
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+
+                    TipoProducto tipo = null;
+                    try {
+                        tipo = TipoProducto.valueOf(rs.getString("tipo").toUpperCase());
+                    } catch (IllegalArgumentException ex) {
+                        System.err.println("Tipo no válido: " + rs.getString("tipo"));
+                    }
+
+                    Producto producto = new Producto(
+                            rs.getInt("id"),
+                            rs.getInt("numero"),
+                            rs.getString("nombre"),
+                            rs.getString("descripcion"),
+                            rs.getDouble("precio"),
+                            rs.getInt("stock"),
+                            rs.getString("img"),
+                            tipo
+                    );
+
+                    productos.add(producto);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al obtener productos por tipo: " + e.getMessage());
         }
 
         return productos;

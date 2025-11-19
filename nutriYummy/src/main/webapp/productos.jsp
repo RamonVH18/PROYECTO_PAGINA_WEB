@@ -10,6 +10,10 @@
     ControladorProducto controlador = new ControladorProducto();
 %>
 
+<%
+    String categoria = request.getParameter("categoria"); // puede ser null
+%>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -88,7 +92,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="index.html">Inicio</a>
+                        <a class="nav-link click-scroll" href="index.jsp">Inicio</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -97,11 +101,11 @@
                             aria-expanded="false">Productos</a>
 
                         <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                            <li><a class="dropdown-item" href="productos.html">Ver todos</a></li>
-                            <li><a class="dropdown-item" href="#">Chips</a></li>
-                            <li><a class="dropdown-item" href="#">Maicitos</a></li>
-                            <li><a class="dropdown-item" href="#">Obleas</a></li>
-                            <li><a class="dropdown-item" href="#">Otros</a></li>
+                            <li><a class="dropdown-item" href="productos.jsp">Ver todos</a></li>
+                            <li><a class="dropdown-item" href="productos.jsp?categoria=chips">Chips</a></li>
+                            <li><a class="dropdown-item" href="productos.jsp?categoria=maicitos">Maicitos</a></li>
+                            <li><a class="dropdown-item" href="productos.jsp?categoria=obleas">Obleas</a></li>
+                            <li><a class="dropdown-item" href="productos.jsp?categoria=otros">Otros</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -120,12 +124,8 @@
                     <div class="col-lg-12 col-12 text-center mb-4">
                         <h2>Todos nuestros productos</h2>
                     </div>
-
-                     
-                    <%= controlador.getProductosPublicosHtml() %>
                     
-                   
-
+                    <%= controlador.getProductosPublicosHtml(categoria) %>
                 </div>
             </div>
         </section>

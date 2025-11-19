@@ -4,9 +4,11 @@
  */
 package controlador;
 
+import java.util.ArrayList;
 import java.util.List;
 import modelo.ModeloProducto;
 import modelo.Producto;
+import modelo.enums.TipoProducto;
 
 /**
  *
@@ -137,11 +139,23 @@ public class ControladorProducto {
         return html.toString();
     }
     
-    public String getProductosPublicosHtml() {
+    public String getProductosPublicosHtml(String categoria) {
         StringBuilder html = new StringBuilder();
+        List<Producto> productos;
+      
+        if (categoria == null) {
+            productos = modeloProducto.getAllProductos();
+        } else {
+            productos = modeloProducto.getProductosPorTipo(categoria.toUpperCase());
+        }
 
+        
+        if (productos == null || productos.isEmpty()) {
+            return "<div class='alert alert-warning text-center'>No hay productos para mostrar.</div>";
+        }
+        
         // Obtiene los productos de la BD (del Modelo)
-        for (Producto producto : modeloProducto.getAllProductos()) {
+        for (Producto producto : productos) {
             
             // Este es el HTML de las tarjetas de productos.jsp
             html.append("<div class='col-lg-4 col-md-6 col-12 mb-4'>");

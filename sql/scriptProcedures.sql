@@ -87,6 +87,16 @@ BEGIN
 END $$
 DELIMITER ;
 
+# Obtener productos de un tipo específico
+DELIMITER $$
+CREATE PROCEDURE getProductosPorTipo(
+	IN p_tipo ENUM("OBLEAS", "MAICITOS", "CHIPS", "OTROS")
+)
+BEGIN
+	SELECT * FROM productos WHERE tipo = p_tipo;
+END $$
+DELIMITER ;
+
 # Validar si existe un producto con un numero específico
 DELIMITER $$
 CREATE FUNCTION existeProductoNumero(p_numero INT)
@@ -106,6 +116,26 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
+
+# Obtener los productos mejores vendidos
+DELIMITER $$
+CREATE PROCEDURE getMejoresVendidos()
+BEGIN
+	SELECT
+		p.id,
+        p.nombre, 
+        p.descripcion,
+        p.img
+    FROM productos AS p
+    INNER JOIN detalles_ventas AS d
+        ON p.id = d.idProducto
+    GROUP BY p.id, p.nombre, p.descripcion
+    ORDER BY SUM(d.cantidad) DESC
+    LIMIT 3;
+END $$
+DELIMITER ;
+
+
 
 # --------------- USUARIOS ---------------
 # Obtener todos los usuarios
@@ -287,22 +317,4 @@ BEGIN
         ON v.id = d.idVenta
     ORDER BY v.id, d.id;
 END$$
-DELIMITER ;
-
-# Obtener los productos mejores vendidos
-DELIMITER $$
-CREATE PROCEDURE getMejoresVendidos()
-BEGIN
-	SELECT
-		p.id,
-        p.nombre, 
-        p.descripcion,
-        p.img
-    FROM productos AS p
-    INNER JOIN detalles_ventas AS d
-        ON p.id = d.idProducto
-    GROUP BY p.id, p.nombre, p.descripcion
-    ORDER BY SUM(d.cantidad) DESC
-    LIMIT 3;
-END $$
 DELIMITER ;
