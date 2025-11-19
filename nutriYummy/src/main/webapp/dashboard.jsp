@@ -91,7 +91,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pedidos.jsp">
+                        <a class="nav-link" href="pedidosAdmin.jsp">
                             <i class="bi-receipt-cutoff"></i> Pedidos
                         </a>
                     </li>
@@ -139,17 +139,10 @@
 
                             <div class="card-header bg-warning text-white">Pedidos</div>
                         <div class="card-body">
-                            <p class="card-text">Gestiona el historial de pedidos</p>
-                            <a href="pedidos.jsp" class="custom-btn btn">Ir a Pedidos</a>
+                            <p class="card-text">Consulta el historial de pedidos</p>
+                            <a href="pedidosAdmin.jsp" class="custom-btn btn">Ir a Pedidos</a>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="card border-info shadow-sm">
-                <div class="card-header bg-warning text-white">Ventas Semanales 📈</div>
-                <div class="card-body">
-                    <canvas id="templatemo-line-chart" height="120" class="w-100"></canvas>
                 </div>
             </div>
         </main>

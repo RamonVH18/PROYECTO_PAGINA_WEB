@@ -16,6 +16,8 @@ import modelo.Usuario;
 import modelo.Venta;
 
 /**
+ * Controlador encargado de obtener y construir la tabla HTML para mostrar
+ * todas las ventas, así como los modales con los detalles de cada venta.
  *
  * @author rocha
  */
@@ -25,22 +27,32 @@ public class ControladorVenta {
     private final ModeloUsuario modeloUsuario;
     private final ModeloProducto modeloProducto;
 
+    /**
+     * Constructor que inicializa los modelos utilizados por el controlador.
+     */
     public ControladorVenta() {
         this.modeloVenta = new ModeloVenta();
         this.modeloUsuario = new ModeloUsuario();
         this.modeloProducto = new ModeloProducto();
     }
 
+    /**
+     * Genera el código HTML de una tabla que contiene todas las ventas
+     * registradas, además de construir los modales de detalles para cada una.
+     *
+     * @return String con el HTML completo de la tabla y los modales.
+     */
     public String getAllVentasTabla() {
         List<Venta> ventas = modeloVenta.getAllVentas();
 
+        // Si no existen ventas, se muestra una alerta
         if (ventas == null || ventas.isEmpty()) {
             return "<div class='alert alert-warning text-center'>No hay pedidos registrados.</div>";
         }
 
-        // 1. StringBuilder para la TABLA
+        // StringBuilder para la tabla
         StringBuilder htmlTabla = new StringBuilder();
-        // 2. StringBuilder para los MODALES (fuera de la tabla)
+        // StringBuilder para los modales
         StringBuilder htmlModals = new StringBuilder();
 
         // Encabezado de la tabla
@@ -52,7 +64,6 @@ public class ControladorVenta {
                 .append("<th>Total</th>")
                 .append("<th># de usuario</th>")
                 .append("<th>Ver detalles</th>")
-                .append("<th>Acciones</th>")
                 .append("</tr>")
                 .append("</thead>")
                 .append("<tbody>");
@@ -60,7 +71,7 @@ public class ControladorVenta {
         for (Venta venta : ventas) {
             Usuario usuario = modeloUsuario.getUsuario(venta.getIdUsuario());
 
-            // --- AQUI CONSTRUIMOS LA FILA (TR) ---
+            // Fila
             htmlTabla.append("<tr>")
                     .append("<td>").append(venta.getFolio()).append("</td>")
                     .append("<td>").append(formatearFecha(venta.getFechaHora().toString())).append("</td>")
@@ -70,16 +81,10 @@ public class ControladorVenta {
                     // Botón detalles
                     .append("<button class='btn btn-light btn-sm' data-bs-toggle='modal' data-bs-target='#detallesVentaModal")
                     .append(venta.getId()).append("'><i class='bi bi-eye'></i></button>")
-                    .append("</td>")
-                    .append("<td>")
-                    // Botón editar
-                    .append("<button class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editarVentaModal")
-                    .append(venta.getId()).append("'><i class='bi-pencil'></i></button>")
-                    .append("</td>")
-                    .append("</tr>");
+                    .append("</td>");
 
-            // --- AQUI CONSTRUIMOS LOS MODALES (DIVS) PARA ESTA VENTA ---
-            // 1. Modal de Detalles
+            // Modales para la fila
+            // Modal de detalles
             htmlModals.append("<div class='modal fade' id='detallesVentaModal").append(venta.getId())
                     .append("' tabindex='-1' aria-labelledby='detallesVentaModalLabel").append(venta.getId())
                     .append("' aria-hidden='true'>")
@@ -92,7 +97,7 @@ public class ControladorVenta {
                     .append("</div>")
                     .append("<div class='modal-body'>");
 
-            // Tabla interna del modal (Detalles)
+            // Tabla interna del modal de detalles
             htmlModals.append("<table class='table table-bordered'>")
                     .append("<thead class='table-secondary'>")
                     .append("<tr>")
@@ -123,43 +128,22 @@ public class ControladorVenta {
             htmlModals.append("</tbody></table>")
                     .append("</div>") // modal-body
                     .append("</div></div></div>"); // fin modal detalles
-
-            // 2. Modal de Editar
-            htmlModals.append("<div class='modal fade' id='editarVentaModal").append(venta.getId())
-                    .append("' tabindex='-1' aria-labelledby='editarVentaModalLabel").append(venta.getId())
-                    .append("' aria-hidden='true'>")
-                    .append("<div class='modal-dialog'>")
-                    .append("<div class='modal-content'>")
-                    .append("<div class='modal-header'>")
-                    .append("<h5 class='modal-title' id='editarVentaModalLabel").append(venta.getId())
-                    .append("'>Editar venta ").append(venta.getFolio()).append("</h5>")
-                    .append("<button type='button' class='btn-close' data-bs-dismiss='modal'></button>")
-                    .append("</div>")
-                    .append("<div class='modal-body'>")
-                    .append("<form action='EditarVenta' method='POST'>")
-                    .append("<input type='hidden' name='id' value='").append(venta.getId()).append("'>")
-                    .append("<div class='mb-3'><label class='form-label'>Folio:</label>")
-                    .append("<input type='text' name='folio' class='form-control' value='").append(venta.getFolio()).append("' required></div>")
-                    .append("<div class='mb-3'><label class='form-label'>Fecha y hora:</label>")
-                    .append("<input type='text' name='fechaHora' class='form-control' value=\"").append(venta.getFechaHora()).append("\" required></div>")
-                    .append("<div class='mb-3'><label class='form-label'>Total:</label>")
-                    .append("<input type='number' step='0.01' name='total' class='form-control' value='").append(venta.getTotal()).append("' required></div>")
-                    .append("<div class='mb-3'><label class='form-label'>Número de usuario:</label>")
-                    .append("<input type='number' name='usuarioId' class='form-control' value='").append(usuario.getNumero()).append("' required></div>")
-                    .append("<button type='submit' class='btn btn-success w-100'>Guardar cambios</button>")
-                    .append("</form>")
-                    .append("</div>") // modal-body
-                    .append("</div></div></div>"); // fin modal editar
         }
 
-        // Cerramos la tabla principal
         htmlTabla.append("</tbody></table>");
 
-        // CONCATENAMOS: Primero la tabla completa, y al final todos los modales
+        // Concatenar la tabla completa y al final todos los modales
         return htmlTabla.toString() + htmlModals.toString();
 
     }
 
+    /**
+     * Convierte una fecha ISO-8601 (ej. 2025-11-18T18:24:29)
+     * a formato amigable: dd/MM/yyyy hh:mm a
+     *
+     * @param fechaISO cadena en formato ISO (LocalDateTime.toString())
+     * @return fecha formateada o cadena vacía si hay error.
+     */
     private String formatearFecha(String fechaISO) {
         if (fechaISO == null || fechaISO.isEmpty()) {
             return "";

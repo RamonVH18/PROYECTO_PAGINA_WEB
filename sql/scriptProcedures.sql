@@ -256,7 +256,7 @@ END$$
 DELIMITER ;
 
 # --------------- VENTAS ---------------
-# Obtener todos los productos
+# Obtener todas las ventas junto con sus detalles
 DELIMITER $$
 CREATE PROCEDURE getAllVentas() 
 BEGIN
@@ -287,4 +287,21 @@ BEGIN
         ON v.id = d.idVenta
     ORDER BY v.id, d.id;
 END$$
+DELIMITER ;
+
+# Obtener los productos mejores vendidos
+DELIMITER $$
+CREATE PROCEDURE getMejoresVendidos()
+BEGIN
+	SELECT
+		p.id,
+        p.nombre, 
+        p.descripcion
+    FROM productos AS p
+    INNER JOIN detalles_ventas AS d
+        ON p.id = d.idProducto
+    GROUP BY p.id, p.nombre, p.descripcion
+    ORDER BY SUM(d.cantidad) DESC
+    LIMIT 3;
+END $$
 DELIMITER ;

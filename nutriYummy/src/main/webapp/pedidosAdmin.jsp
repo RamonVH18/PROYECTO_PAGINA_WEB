@@ -118,41 +118,9 @@
 
             <main class="main-content flex-grow-1 p-3 p-md-4">
 
-                <p class="lead mb-4">Gestionar pedidos en el sistema.</p>
+                <p class="lead mb-4">Ver los pedidos en el sistema.</p>
 
                 <h2 class="mb-4">Listado de pedidos</h2>
-
-                <!-- Botón para agregar producto -->
-                <div class="mb-3">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarProductoModal">
-                        <i class="bi-plus-lg"></i> Agregar pedido
-                    </button>
-                </div>
-
-                <!-- Mensajes de confirmación --> 
-                <%
-                    if (session != null) {
-                        if (session.getAttribute("mensajeExito") != null) {
-                %>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <%= session.getAttribute("mensajeExito")%>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                </div>
-                <%
-                        session.removeAttribute("mensajeExito");
-                    }
-
-                    if (session.getAttribute("mensajeError") != null) {
-                %>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <%= session.getAttribute("mensajeError")%>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                </div>
-                <%
-                            session.removeAttribute("mensajeError");
-                        }
-                    }
-                %>
 
                 <!-- Tabla de pedidos -->
                 <div class="table-responsive">
@@ -160,56 +128,6 @@
                     <%= controladorVenta.getAllVentasTabla()%>
                 </div>
             </main>
-        </div>
-
-        <!-- Modal para agregar pedido -->
-        <div class="modal fade" id="agregarProductoModal" tabindex="-1" aria-labelledby="agregarProductoModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="agregarProductoModalLabel">Agregar nueva venta</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <form action="AgregarProducto" method="POST">
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="descripcion" class="form-label">Descripción <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="descripcion" name="descripcion" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="precio" class="form-label">Precio <span class="text-danger">*</span></label>
-                                <input type="number" step="0.01" class="form-control" id="precio" name="precio" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="stock" class="form-label">Stock <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" id="stock" name="stock" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="tipo" class="form-label">Tipo <span class="text-danger">*</span></label>
-                                <select class="form-select" id="tipo" name="tipo" required>
-                                    <option value="OBLEAS">Obleas</option>
-                                    <option value="MAICITOS">Maicitos</option>
-                                    <option value="CHIPS">Chips</option>
-                                    <option value="OTROS">Otros</option>
-                                </select>
-                            </div>
-                            <div class='mb-3'>
-                                <label class='form-label'>Imagen (nombre del archivo) <span class="text-danger">*</span></label>
-                                <input type='text' name='img' id="img" class='form-control' required>
-                            </div>
-                            <label class='form-label'><span class="text-danger">* Campos obligatorios</span></label>
-                            <button type="submit" class="btn btn-success w-100">Guardar</button>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
         </div>
 
         <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
