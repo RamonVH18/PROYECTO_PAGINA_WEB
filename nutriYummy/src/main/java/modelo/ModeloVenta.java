@@ -13,11 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Clase encargada de gestionar todas las operaciones relacionadas con
+ * las ventas en la base de datos. 
+ *
+ * Extiende la clase Conexion para obtener el acceso directo a la conexión
+ * con la base de datos.
  *
  * @author rocha
  */
 public class ModeloVenta extends Conexion {
     
+    /**
+     * Obtiene todas las ventas almacenadas en la base de datos, junto con sus detalles.
+     * @return Lista de ventas, cada una con sus detalles cargados.
+     */
     public List<Venta> getAllVentas() {
         List<Venta> ventas = new ArrayList<>();
 
@@ -47,15 +56,15 @@ public class ModeloVenta extends Conexion {
                 }
 
                 // Crear detalle
-                DetallesVenta det = new DetallesVenta();
-                det.setId(rs.getInt("idDetalle"));
-                det.setIdProducto(rs.getInt("idProducto"));
-                det.setCantidad(rs.getInt("cantidad"));
-                det.setPrecio(rs.getDouble("precioUnitario"));
-                det.setIva(rs.getDouble("iva"));   // IVA en dinero
-                det.setTotal(rs.getDouble("totalDetalle"));
+                DetallesVenta detalle = new DetallesVenta();
+                detalle.setId(rs.getInt("idDetalle"));
+                detalle.setIdProducto(rs.getInt("idProducto"));
+                detalle.setCantidad(rs.getInt("cantidad"));
+                detalle.setPrecio(rs.getDouble("precioUnitario"));
+                detalle.setIva(rs.getDouble("iva"));   // IVA en dinero
+                detalle.setTotal(rs.getDouble("totalDetalle"));
 
-                ventaActual.getDetalles().add(det);
+                ventaActual.getDetalles().add(detalle);
             }
 
         } catch (SQLException e) {

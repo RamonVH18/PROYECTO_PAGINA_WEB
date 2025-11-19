@@ -188,6 +188,7 @@
 
                     <div class="modal-body">
                         <form action="AgregarUsuario" method="POST">
+                            <input type="hidden" name="origen" value="usuariosAdmin">
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="nombre" name="nombre" required>

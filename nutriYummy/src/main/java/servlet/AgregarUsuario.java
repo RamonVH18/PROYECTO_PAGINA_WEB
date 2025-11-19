@@ -122,17 +122,37 @@ public class AgregarUsuario extends HttpServlet {
                 session.setAttribute("mensajeError", "No se pudo agregar el usuario.");
             }
 
-            response.sendRedirect("usuariosAdmin.jsp");
-
+            // Redirección dinámica
+            String origen = request.getParameter("origen");
+            redirigirSegunOrigen(origen, response);
         } catch (IOException e) {
             error(session, response, "Error inesperado: " + e.getMessage());
         }
-        
+
     }
-    
+
     private void error(HttpSession session, HttpServletResponse response, String msg) throws IOException {
         session.setAttribute("mensajeError", msg);
         response.sendRedirect("usuariosAdmin.jsp");
+    }
+
+    private void redirigirSegunOrigen(String origen, HttpServletResponse response) throws IOException {
+        if (origen == null) {
+            response.sendRedirect("index.jsp"); // fallback
+            return;
+        }
+
+        switch (origen) {
+            case "usuariosAdmin":
+                response.sendRedirect("usuariosAdmin.jsp");
+                break;
+
+            case "registrarse":
+                response.sendRedirect("index.jsp");
+                break;
+            default:
+                response.sendRedirect("index.jsp"); // fallback por seguridad
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

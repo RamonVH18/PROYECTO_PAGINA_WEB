@@ -296,7 +296,8 @@ BEGIN
 	SELECT
 		p.id,
         p.nombre, 
-        p.descripcion
+        p.descripcion,
+        p.img
     FROM productos AS p
     INNER JOIN detalles_ventas AS d
         ON p.id = d.idProducto

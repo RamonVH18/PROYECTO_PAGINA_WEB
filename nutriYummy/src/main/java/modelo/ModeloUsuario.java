@@ -16,11 +16,21 @@ import java.util.List;
 import modelo.enums.RolUsuario;
 
 /**
+ * Clase encargada de gestionar todas las operaciones relacionadas con
+ * los usuarios en la base de datos. 
+ *
+ * Extiende la clase Conexion para obtener el acceso directo a la conexión
+ * con la base de datos.
  *
  * @author rocha
  */
 public class ModeloUsuario extends Conexion {
     
+    /**
+     * Obtiene todos los usuarios registrados en la base de datos.
+     *
+     * @return Lista de objetos Usuario con toda la información cargada.
+     */
     public List<Usuario> getAllUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
         String sql = "call getAllUsuarios()";
@@ -56,6 +66,12 @@ public class ModeloUsuario extends Conexion {
         return usuarios;
     }
     
+    /**
+     * Obtiene un usuario por su ID.
+     *
+     * @param id ID del usuario buscado.
+     * @return Objeto Usuario si existe; null si no se encontró.
+     */
     public Usuario getUsuario(int id) {
         String sql = "call getUsuario(?)";
         Usuario usuario = null;
@@ -91,6 +107,12 @@ public class ModeloUsuario extends Conexion {
         return usuario;
     }
     
+    /**
+     * Edita un usuario existente.
+     *
+     * @param usuario Usuario con los datos actualizados.
+     * @return true si se modificó al menos un registro; false en caso contrario.
+     */
     public boolean editarUsuario(Usuario usuario) {
         String sql = "call editarUsuario(?, ?, ?, ?, ? ,?, ?, ?)";
 
@@ -115,6 +137,12 @@ public class ModeloUsuario extends Conexion {
         }
     }
     
+    /**
+     * Inserta un nuevo usuario.
+     *
+     * @param usuario Objeto usuario que se desea insertar.
+     * @return Número único generado para el usuario.
+     */
     public int insertarUsuario(Usuario usuario) {
         String sql = "call insertarUsuario(?, ?, ?, ?, ? ,?, ?)";
         int numeroGenerado = 0;
@@ -140,6 +168,12 @@ public class ModeloUsuario extends Conexion {
         return numeroGenerado;
     }
     
+     /**
+     * Elimina el registro de un usuario específico.
+     *
+     * @param id ID del usuario a eliminar.
+     * @return true si se eliminó correctamente.
+     */
     public boolean eliminarUsuario(int id) {
         String sql = "call eliminarUsuario(?)";
         
@@ -156,6 +190,12 @@ public class ModeloUsuario extends Conexion {
         }
     }
     
+    /**
+     * Verifica si un email ya está asociado a un usuario.
+     *
+     * @param email Email a verificar.
+     * @return true si existe; false si no.
+     */
     public boolean existeEmailUsuario(String email) {
         String sql = "select existeEmailUsuario(?) as existe";
         boolean existe = false;
@@ -176,6 +216,12 @@ public class ModeloUsuario extends Conexion {
         return existe;
     }
     
+    /**
+     * Verifica si un número de usuario ya existe en el sistema.
+     *
+     * @param numero Número único asignado a un usuario.
+     * @return true si existe; false en caso contrario.
+     */
     public boolean existeUsuarioNumero(int numero) {
         String sql = "select existeUsuarioNumero(?) as existe";
         boolean existe = false;
@@ -196,6 +242,11 @@ public class ModeloUsuario extends Conexion {
         return existe;
     }
     
+    /**
+     * Verifica si existen más administradores en el sistema.
+     *
+     * @return true si hay más admins; false si no o si hubo error.
+     */
     public boolean hayMasAdmins() {
         String sql = "select hayMasAdmins() as total";
         boolean resultado = false;

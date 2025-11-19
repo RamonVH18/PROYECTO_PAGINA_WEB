@@ -16,8 +16,11 @@ import modelo.Usuario;
 import modelo.Venta;
 
 /**
- * Controlador encargado de obtener y construir la tabla HTML para mostrar
- * todas las ventas, así como los modales con los detalles de cada venta.
+ * Controlador encargado de gestionar la información de los pedidos/ventas
+ * y generar el HTML correspondiente para mostrarlos en tablas y modales.
+ * 
+ * Este controlador utiliza el ModeloVenta, ModeloUsuario y ModeloProducto para obtener la información
+ * desde la base de datos y construir dinámicamente la interfaz.
  *
  * @author rocha
  */
@@ -115,7 +118,7 @@ public class ControladorVenta {
                 for (DetallesVenta detalle : venta.getDetalles()) {
                     Producto producto = modeloProducto.getProducto(detalle.getIdProducto());
                     htmlModals.append("<tr>")
-                            .append("<td>").append(producto.getNumero()).append("</td>")
+                            .append("<td>").append(String.format("%05d", producto.getNumero())).append("</td>")
                             .append("<td>").append(producto.getNombre()).append("</td>")
                             .append("<td>").append(detalle.getCantidad()).append("</td>")
                             .append("<td>$").append(String.format("%.2f", detalle.getPrecio())).append("</td>")

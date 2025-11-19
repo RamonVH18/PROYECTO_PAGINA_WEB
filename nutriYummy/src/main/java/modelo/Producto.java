@@ -52,6 +52,12 @@ public class Producto {
         this.img = img;
         this.tipo = tipo;
     }
+
+    public Producto(String nombre, String descripcion, String img) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.img = img;
+    }
     
     public int getId() {
         return id;

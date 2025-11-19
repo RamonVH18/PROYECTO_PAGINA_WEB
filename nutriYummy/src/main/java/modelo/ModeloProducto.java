@@ -178,4 +178,26 @@ public class ModeloProducto extends Conexion {
         
         return existe;
     }
+    
+    public List<Producto> getMejoresVendidos() {
+        List<Producto> productos = new ArrayList<>();
+        String sql = "call getMejoresVendidos()";
+        
+        try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql); ResultSet rs = pst.executeQuery();) {
+            while (rs.next()) {
+                Producto producto = new Producto(
+                        rs.getString("nombre"),
+                        rs.getString("descripcion"),
+                        rs.getString("img")
+                );
+
+                productos.add(producto);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al obtener productos mejores vendidos: " + e.getMessage());
+        }
+
+        return productos;
+    }
 }

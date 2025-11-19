@@ -8,6 +8,11 @@ import modelo.ModeloUsuario;
 import modelo.Usuario;
 
 /**
+ * Controlador encargado de gestionar la información de los usuarios
+ * y generar el HTML correspondiente para mostrarlos en tablas y modales.
+ *
+ * Este controlador utiliza el ModeloUsuario para obtener la información
+ * desde la base de datos y construir dinámicamente la interfaz.
  *
  * @author rocha
  */
@@ -15,10 +20,20 @@ public class ControladorUsuario {
     
     private final ModeloUsuario modeloUsuario;
 
+    /**
+     * Constructor que inicializa el modelo utilizado por el controlador.
+     */
     public ControladorUsuario() {
         this.modeloUsuario = new ModeloUsuario();
     }
     
+    /**
+     * Genera la tabla HTML con todos los usuarios registrados,
+     * incluyendo los botones para editar y eliminar, así como
+     * los modales necesarios para cada una de estas acciones.
+     *
+     * @return Código HTML con la tabla completa y los modales.
+     */
     public String getAllUsuariosTabla() {
         StringBuilder html = new StringBuilder();
 
