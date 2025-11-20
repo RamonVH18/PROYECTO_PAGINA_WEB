@@ -24,6 +24,10 @@
         <servlet-name>AgregarUsuario</servlet-name>
         <servlet-class>servlet.AgregarUsuario</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AutenticarUsuario</servlet-name>
+        <servlet-class>servlet.AutenticarUsuario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditarProducto</servlet-name>
         <url-pattern>/EditarProducto</url-pattern>
