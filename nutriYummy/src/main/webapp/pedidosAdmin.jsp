@@ -129,24 +129,8 @@
                 </div>
             </main>
         </div>
-
-        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmModalLabel">¿Cerrar sesión?</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-footer">
-                        <a href="index.jsp" class="btn btn-primary">Sí</a>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+                
+        <jsp:include page="modalCerrarSesion.jsp" />
 
         <!-- Scripts necesarios para Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

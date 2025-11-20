@@ -6,8 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="controlador.ControladorProducto"%>
+
 <%
     ControladorProducto controlador = new ControladorProducto();
+    HttpSession sesion = request.getSession(false);
 %>
 
 <%
@@ -24,12 +26,13 @@
     <meta name="description" content="Tienda Online, Comida, Snacks, Saludables, Productos, Catálogo">
     <meta name="author" content="Nutri Yummy">
 
-    <title>Todos los productos - Nutri Yummy</title>
+    <title>Productos - Nutri Yummy</title>
     <!-- Icono -->
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <!-- CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -65,25 +68,6 @@
                             <a href="mailto:nutriyummy25@gmail.com" target="_blank" class="social-icon-link"><img
                                     src="img/gmail.png" alt="Gmail"></a>
                         </li>
-                        <%
-                                HttpSession sesion = request.getSession(false);
-                                if (sesion.getAttribute("usuario") == null) {
-                            %>
-                            <li class="social-icon-item">
-                                <a href="inicioSesion.jsp" class="social-icon-link"><img
-                                        src="img/usuario.png" alt="Gmail"></a>
-                            </li>
-                            <%
-                            } else {
-                            %>
-                            <li class="social-icon-item">
-                                <a href="perfil.jsp" class="btn text-white" style="border-radius: 20px; padding: 5px 15px; background-color:#f5b729">
-                                    Perfil
-                                </a>
-                            </li>
-                            <%
-                                }
-                            %>
                     </ul>
                 </div>
             </div>
@@ -130,12 +114,37 @@
                     <li class="nav-item">
                         <a class="nav-link click-scroll" href="contacto.jsp">Contacto</a>
                     </li>
+                    <%
+                        if (sesion.getAttribute("usuario") == null) {
+                    %>
+                    <li class="nav-item">
+                        <a href="inicioSesion.jsp" class="nav-link click-scroll"><i class="bi bi-person-circle text-dark"></i> Iniciar sesión</a>
+                    </li>
+                    <%
+                    } else {
+                    %>
+                    <li class="nav-item">
+                        <a href="perfil.jsp" class="nav-link click-scroll"><i class="bi bi-person-circle text-dark"></i> Mi perfil</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="carrito.jsp" class="nav-link click-scroll"><i class="bi bi-cart3 text-dark"></i> Mi carrito</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                            <i class="bi-box-arrow-right"></i> Cerrar sesión
+                        </a>
+                    </li>
+                    <%
+                        }
+                    %>
                 </ul>
             </div>
         </div>
     </nav>
 
-   <main>
+    <main>
         <section class="section-padding" id="productos-todos">
             <div class="container">
                 <div class="row">
@@ -143,90 +152,18 @@
                     <div class="col-lg-12 col-12 text-center mb-4">
                         <h2>Todos nuestros productos</h2>
                     </div>
-                    
-                    <%= controlador.getProductosPublicosHtml(categoria) %>
+
+                    <%= controlador.getProductosPublicosHtml(categoria)%>
                 </div>
             </div>
         </section>
     </main>
 
+    <jsp:include page="modalCerrarSesion.jsp" />
+
     <!-- Footer -->
     <footer class="site-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-12 mb-4">
-                    <img src="img/logo.png" class="logo img-fluid" alt="Logo">
-                </div>
-
-                <div class="col-lg-4 col-md-6 col-12 mb-4">
-                    <h5 class="site-footer-title mb-3">Enlaces</h5>
-
-                    <ul class="footer-menu">
-                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Inicio</a></li>
-
-                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Nuestros productos</a></li>
-
-                        <li class="footer-menu-item"><a href="contacto.html" class="footer-menu-link">Contacto</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-4 col-md-6 col-12 mx-auto">
-                    <h5 class="site-footer-title mb-3">Nosotros</h5>
-
-                    <p class="d-flex mb-2">
-                        <i class="bi-telephone me-2"></i>
-
-                        <a href="tel: 526442566695" class="site-footer-link">
-                            6442566695
-                        </a>
-                    </p>
-
-                    <p class="d-flex">
-                        <i class="bi-envelope me-2"></i>
-
-                        <a href="mailto:nutriyummy25@gmail.com" class="site-footer-link">
-                            nutriyummy25@gmail.com
-                        </a>
-                    </p>
-
-                    <p class="d-flex mt-3">
-                        <i class="bi-geo-alt me-2"></i>
-                        Ciudad Obregón, Sonora.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="site-footer-bottom">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-6 col-md-7 col-12">
-                        <p class="copyright-text mb-0">Nutri Yummy 2025 Copyright © Todos los derechos reservados</p>
-                    </div>
-
-                    <div class="col-lg-6 col-md-5 col-12 d-flex justify-content-center align-items-center mx-auto">
-                        <ul class="social-icon">
-                            <li class="social-icon-item">
-                                <a href="https://www.facebook.com/p/NutriYummy-61575913104823/"
-                                    class="social-icon-link"><img src="img/facebook.png" alt="Facebook"></a>
-                            </li>
-
-                            <li class="social-icon-item">
-                                <a href="https://www.instagram.com/nutri.yummymx/" class="social-icon-link"><img
-                                        src="img/instagram.png" alt="Instagram"></a>
-                            </li>
-
-                            <li class="social-icon-item">
-                                <a href="mailto:nutriyummy25@gmail.com" class="social-icon-link"><img
-                                        src="img/gmail.png" alt="Gmail"></a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+        <jsp:include page="footer.jsp" />
     </footer>
 </body>
 
