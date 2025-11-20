@@ -108,11 +108,35 @@
 
         <section class="volunteer-section section-padding" id="section_4">
             <div class="container">
-                <div class="row">
+                <div class="row justify-content-center">
 
                     <div class="col-lg-6 col-12">
+                        <!-- Mensajes de confirmación --> 
+                        <%
+                            if (session != null) {
+                                if (session.getAttribute("mensajeExito") != null) {
+                        %>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <%= session.getAttribute("mensajeExito")%>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                        </div>
+                        <%
+                                session.removeAttribute("mensajeExito");
+                            }
 
-                        <form class="custom-form volunteer-form mb-5 mb-lg-0" action="AutenticarUsuario" method="post" role="form">
+                            if (session.getAttribute("mensajeError") != null) {
+                        %>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <%= session.getAttribute("mensajeError")%>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                        </div>
+                        <%
+                                    session.removeAttribute("mensajeError");
+                                }
+                            }
+                        %>
+                        <form class="custom-form volunteer-form mb-5 mb-lg-0" action="AgregarUsuario" method="post" role="form">
+
                             <h3 class="mb-4">REGISTRAR USUARIO</h3>
 
                             <div class="row">
@@ -122,29 +146,48 @@
                                 </div>
 
                                 <div class="col-lg-6 col-12">
-                                    <input type="password" name="contrasenia" id="contrasenia" 
-                                           class="form-control" placeholder="Contraseña" required>
+                                    <input type="text" name="apellidoPaterno" id="apellidoPaterno" 
+                                           class="form-control" placeholder="Apellido Paterno" required>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-lg-6 col-12">
-                                    <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" 
-                                           class="form-control" placeholder="Correo" required>
+                                    <input type="text" name="apellidoMaterno" id="apellidoMaterno" 
+                                           class="form-control" placeholder="Apellido Materno" required>
                                 </div>
 
+                                <div class="col-lg-12 col-12">
+                                    <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" 
+                                           class="form-control" placeholder="Correo Electrónico" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="col-lg-6 col-12">
                                     <input type="password" name="contrasenia" id="contrasenia" 
                                            class="form-control" placeholder="Contraseña" required>
                                 </div>
+                                <div class="col-lg-6 col-12">
+                                    <input type="password" name="confirmarContra" id="confirmarContra" 
+                                           class="form-control" placeholder="Confirmar Contraseña" required>
+                                </div>
                             </div>
-                            <button type="submit" class="form-control">Iniciar Sesion</button>
+
+
+                            <button type="submit" class="form-control">Registrar</button>
+
+                            <p class="text-center mt-3" style="color: gray;">
+                                ¿Ya tienes una cuenta? 
+                                <a href="inicioSesion.jsp" style="color: #5bc1ac; font-weight: bold;">Inicia Sesión aquí</a>
+                            </p>
                         </form>
                     </div>
 
                 </div>
             </div>
         </section>
-        
+
         <footer class="site-footer">
             <div class="container">
                 <div class="row">

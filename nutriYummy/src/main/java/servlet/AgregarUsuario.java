@@ -148,7 +148,7 @@ public class AgregarUsuario extends HttpServlet {
                 break;
 
             case "registrarse":
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("inicioSesion.jsp");
                 break;
             default:
                 response.sendRedirect("index.jsp"); // fallback por seguridad

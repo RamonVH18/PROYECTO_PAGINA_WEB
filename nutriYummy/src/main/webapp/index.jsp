@@ -63,6 +63,11 @@
                                 <a href="mailto:nutriyummy25@gmail.com" target="_blank" class="social-icon-link"><img
                                         src="img/gmail.png" alt="Gmail"></a>
                             </li>
+                            
+                            <li class="social-icon-item">
+                                <a href="inicioSesion.jsp" class="social-icon-link"><img
+                                        src="img/gmail.png" alt="Gmail"></a>
+                            </li>
                         </ul>
                     </div>
 

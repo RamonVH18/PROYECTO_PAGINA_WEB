@@ -108,7 +108,7 @@
 
         <section class="volunteer-section section-padding" id="section_4">
             <div class="container">
-                <div class="row">
+                <div class="row justify-content-center">
 
                     <div class="col-lg-6 col-12">
                         
@@ -140,17 +140,22 @@
                             <h3 class="mb-4">INICIO SESION</h3>
 
                             <div class="col-12">
-                                <div class="col-lg-6 col-12">
+                                <div class="col-lg-12 col-12">
                                     <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" 
                                            class="form-control" placeholder="Correo" required>
                                 </div>
 
-                                <div class="col-lg-6 col-12">
+                                <div class="col-lg-12 col-12">
                                     <input type="password" name="contrasenia" id="contrasenia" 
                                            class="form-control" placeholder="Contraseña" required>
                                 </div>
                             </div>
                             <button type="submit" class="form-control">Iniciar Sesion</button>
+                            
+                            <p class="text-center mt-3" style="color: gray;">
+                                ¿Aun no tienes cuenta? 
+                                <a href="registroUsuario.jsp" style="color: #5bc1ac; font-weight: bold;">Registrese aqui</a>
+                            </p>
                         </form>
                     </div>
 
