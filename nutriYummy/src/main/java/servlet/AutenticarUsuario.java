@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.ModeloUsuario;
+import modelo.Usuario;
 import utils.Validador;
 
 /**
@@ -52,11 +53,16 @@ public class AutenticarUsuario extends HttpServlet {
             return;
         }
         
-        if (Validador.estaVacio(contrasenia) ) {
+        if (Validador.estaVacio(contrasenia)) {
             error(session, response, "Debe ingresar una contraseña");
             return;
         }
-        if (modeloUsuario.autenticacionUsuario(email, contrasenia)) {
+        
+        Usuario u = modeloUsuario.autenticacionUsuario(email, contrasenia);
+        HttpSession objSesion = request.getSession(true);
+        objSesion.setAttribute("usuario", u);        
+        
+        if (u != null) {
             response.sendRedirect("index.jsp");
         } else {
             error(session, response, "Email o contraseña incorrectos");

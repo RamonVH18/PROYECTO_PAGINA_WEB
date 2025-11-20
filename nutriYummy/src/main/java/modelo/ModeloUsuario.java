@@ -8,6 +8,7 @@ import controlador.Conexion;
 import static controlador.Conexion.getConexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import static java.sql.Types.INTEGER;
@@ -16,41 +17,51 @@ import java.util.List;
 import modelo.enums.RolUsuario;
 
 /**
- * Clase encargada de gestionar todas las operaciones relacionadas con
- * los usuarios en la base de datos. 
+ * Clase encargada de gestionar todas las operaciones relacionadas con los
+ * usuarios en la base de datos.
  *
- * Extiende la clase Conexion para obtener el acceso directo a la conexión
- * con la base de datos.
+ * Extiende la clase Conexion para obtener el acceso directo a la conexión con
+ * la base de datos.
  *
  * @author rocha
  */
 public class ModeloUsuario extends Conexion {
-    
+
     /**
-     * Autentica al usuario al momento de iniciar sesion, verifica que exista un 
+     * Autentica al usuario al momento de iniciar sesion, verifica que exista un
+     *
      * @param email
      * @param contrasenia
-     * @return Valor booleano que confirma si existe el usuario en la base de datos o si la contraseña es correcta
+     * @return Valor booleano que confirma si existe el usuario en la base de
+     * datos o si la contraseña es correcta
      */
-    public boolean autenticacionUsuario(String email, String contrasenia) {
-        String sql = "Select * from usuario where email=? and contrasenia=?";
-        
-        try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql); ResultSet rs = pst.executeQuery();) {
-            while (rs.next()) {
-                pst.setString(1, email);
-                pst.setString(2, contrasenia);
-                
-                if (rs.absolute(1)) {
-                    return true;
+    public Usuario autenticacionUsuario(String email, String contrasenia) {
+        String sql = "SELECT * FROM usuarios WHERE email = ? AND contrasenia = ?";
+
+        try (Connection conn = getConexion(); PreparedStatement pst = conn.prepareStatement(sql)) {
+
+            pst.setString(1, email);
+            pst.setString(2, contrasenia);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    Usuario u = new Usuario();
+                    u.setNombre(rs.getString("nombre"));
+                    u.setEmail(rs.getString("email"));
+                    u.setApellidoPaterno(rs.getString("apellidoPaterno"));
+                    u.setApellidoMaterno(rs.getString("apellidoMaterno"));
+                    
+                    return u;
                 }
             }
+
         } catch (SQLException e) {
-            System.err.println("Error al autenticar usuarios: " + e.getMessage());
+            System.err.println("Error al autenticar usuario: " + e.getMessage());
         }
-        
-        return false;
+
+        return null;
     }
-    
+
     /**
      * Obtiene todos los usuarios registrados en la base de datos.
      *
@@ -59,7 +70,7 @@ public class ModeloUsuario extends Conexion {
     public List<Usuario> getAllUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
         String sql = "call getAllUsuarios()";
-        
+
         try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql); ResultSet rs = pst.executeQuery();) {
             while (rs.next()) {
 
@@ -87,10 +98,10 @@ public class ModeloUsuario extends Conexion {
         } catch (SQLException e) {
             System.err.println("Error al obtener usuarios: " + e.getMessage());
         }
-        
+
         return usuarios;
     }
-    
+
     /**
      * Obtiene un usuario por su ID.
      *
@@ -131,12 +142,13 @@ public class ModeloUsuario extends Conexion {
 
         return usuario;
     }
-    
+
     /**
      * Edita un usuario existente.
      *
      * @param usuario Usuario con los datos actualizados.
-     * @return true si se modificó al menos un registro; false en caso contrario.
+     * @return true si se modificó al menos un registro; false en caso
+     * contrario.
      */
     public boolean editarUsuario(Usuario usuario) {
         String sql = "call editarUsuario(?, ?, ?, ?, ? ,?, ?, ?)";
@@ -161,7 +173,7 @@ public class ModeloUsuario extends Conexion {
             return false;
         }
     }
-    
+
     /**
      * Inserta un nuevo usuario.
      *
@@ -180,20 +192,20 @@ public class ModeloUsuario extends Conexion {
             pst.setString(4, usuario.getEmail());
             pst.setString(5, usuario.getRol().name());
             pst.setString(6, usuario.getContrasenia());
-            
+
             pst.registerOutParameter(7, INTEGER);
 
             pst.execute();
-            
+
             numeroGenerado = pst.getInt(7);
         } catch (SQLException e) {
             System.err.println("Error al insertar usuario: " + e.getMessage());
         }
-        
+
         return numeroGenerado;
     }
-    
-     /**
+
+    /**
      * Elimina el registro de un usuario específico.
      *
      * @param id ID del usuario a eliminar.
@@ -201,7 +213,7 @@ public class ModeloUsuario extends Conexion {
      */
     public boolean eliminarUsuario(int id) {
         String sql = "call eliminarUsuario(?)";
-        
+
         try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql);) {
             // Setear parámetros
             pst.setInt(1, id);
@@ -214,7 +226,7 @@ public class ModeloUsuario extends Conexion {
             return false;
         }
     }
-    
+
     /**
      * Verifica si un email ya está asociado a un usuario.
      *
@@ -227,9 +239,9 @@ public class ModeloUsuario extends Conexion {
 
         try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql);) {
             pst.setString(1, email);
-            
+
             ResultSet rs = pst.executeQuery();
-            
+
             if (rs.next()) {
                 existe = rs.getInt("existe") == 1;
             }
@@ -237,10 +249,10 @@ public class ModeloUsuario extends Conexion {
             System.err.println("Error al verificar email: " + e.getMessage());
             return false;
         }
-        
+
         return existe;
     }
-    
+
     /**
      * Verifica si un número de usuario ya existe en el sistema.
      *
@@ -253,9 +265,9 @@ public class ModeloUsuario extends Conexion {
 
         try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql);) {
             pst.setInt(1, numero);
-            
+
             ResultSet rs = pst.executeQuery();
-            
+
             if (rs.next()) {
                 existe = rs.getInt("existe") == 1;
             }
@@ -263,10 +275,10 @@ public class ModeloUsuario extends Conexion {
             System.err.println("Error al verificar número: " + e.getMessage());
             return false;
         }
-        
+
         return existe;
     }
-    
+
     /**
      * Verifica si existen más administradores en el sistema.
      *
@@ -275,10 +287,10 @@ public class ModeloUsuario extends Conexion {
     public boolean hayMasAdmins() {
         String sql = "select hayMasAdmins() as total";
         boolean resultado = false;
-        
+
         try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql);) {
             ResultSet rs = pst.executeQuery();
-            
+
             if (rs.next()) {
                 resultado = rs.getInt("total") == 1;
             }
@@ -286,7 +298,7 @@ public class ModeloUsuario extends Conexion {
             System.err.println("Error al verificar si hay más administradores en el sistema: " + e.getMessage());
             return false;
         }
-        
+
         return resultado;
     }
 }
