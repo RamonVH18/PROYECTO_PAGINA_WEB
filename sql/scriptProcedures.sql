@@ -140,6 +140,20 @@ DELIMITER ;
 
 
 # --------------- USUARIOS ---------------
+#Cambiar la contraseña de un usuario
+DELIMITER $$
+CREATE PROCEDURE cambiarContrasenia(
+    IN u_email VARCHAR(50),
+    IN u_nuevaContrasenia VARCHAR(70)
+)
+BEGIN 
+    UPDATE usuarios
+    SET
+        contrasenia = u_nuevaContrasenia
+    WHERE email = u_email;
+END $$
+DELIMITER ;
+
 # Obtener todos los usuarios
 DELIMITER $$
 CREATE PROCEDURE getAllUsuarios() 

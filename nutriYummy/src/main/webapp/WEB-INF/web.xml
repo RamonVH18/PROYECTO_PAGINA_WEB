@@ -40,6 +40,10 @@
         <servlet-name>CerrarSesion</servlet-name>
         <servlet-class>servlet.CerrarSesion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CambiarContra</servlet-name>
+        <servlet-class>servlet.CambiarContra</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditarProducto</servlet-name>
         <url-pattern>/EditarProducto</url-pattern>
@@ -76,6 +80,11 @@
         <servlet-name>CerrarSesion</servlet-name>
         <url-pattern>/CerrarSesion</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CambiarContra</servlet-name>
+        <url-pattern>/CambiarContra</url-pattern>
+    </servlet-mapping>
+   
    
     <session-config>
         <session-timeout>

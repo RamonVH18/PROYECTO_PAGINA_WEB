@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import static java.sql.Types.INTEGER;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.enums.RolUsuario;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -68,6 +70,27 @@ public class ModeloUsuario extends Conexion {
         }
 
         return null;
+    }
+    /**
+     * Cambia la contraseña de un usuario ya existente
+     * @param email
+     * @param nuevaContrasenia
+     * @return 
+     */
+    public boolean cambiarContraseña(String email, String nuevaContrasenia) {
+        String sql = "call cambiarContrasenia(?,?)";
+        
+        try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql)) {
+            pst.setString(1, email);
+            pst.setString(2, nuevaContrasenia);
+            
+            int filasAfectadas = pst.executeUpdate();
+            
+            return filasAfectadas > 0;
+        } catch (SQLException ex) {
+            System.err.println();
+            return false;
+        }
     }
 
     /**
