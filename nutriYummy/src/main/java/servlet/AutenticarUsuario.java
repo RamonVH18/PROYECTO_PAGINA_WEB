@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.ModeloUsuario;
 import modelo.Usuario;
+import modelo.enums.RolUsuario;
 import utils.Validador;
 
 /**
@@ -62,8 +63,10 @@ public class AutenticarUsuario extends HttpServlet {
         HttpSession objSesion = request.getSession(true);
         objSesion.setAttribute("usuario", u);        
         
-        if (u != null) {
+        if (u != null && u.getRol() == RolUsuario.CLIENTE) {
             response.sendRedirect("index.jsp");
+        } else if (u != null && u.getRol() == RolUsuario.ADMIN) {
+            response.sendRedirect("dashboard.jsp");
         } else {
             error(session, response, "Email o contraseña incorrectos");
         }
