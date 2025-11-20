@@ -41,7 +41,6 @@ public class RegistrarVenta extends HttpServlet {
         
         HttpSession session = request.getSession();
         ArrayList<Articulo> carrito = (ArrayList<Articulo>) session.getAttribute("carrito");
-        System.out.println(carrito);
 
         if (carrito == null || carrito.isEmpty()) {
             error(session, response, "El carrito está vacío. No se puede registrar una venta.");
@@ -54,7 +53,9 @@ public class RegistrarVenta extends HttpServlet {
        
         try {
             String folioVenta = generarFolioVenta();
-            int idUsuario = 1;
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+            System.out.println(usuario);
+            int idUsuario = usuario.getId();
             
             Venta venta = new Venta(folioVenta, idUsuario);
           
@@ -62,7 +63,7 @@ public class RegistrarVenta extends HttpServlet {
             int idVenta = modeloVenta.insertarVenta(venta);
 
             if (idVenta <= 0) {
-                error(session, response, "Ocurrió un error al registrar la venta. No fue posible terminar el proceso.");
+                error(session, response, "Ocurrió un error al registrar la venta. No fue posible terminar el proceso." + usuario.toString());
                 return;
             }
             
