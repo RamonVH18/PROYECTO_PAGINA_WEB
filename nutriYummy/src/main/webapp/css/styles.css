@@ -352,6 +352,10 @@ strong {
   font-weight: var(--font-weight-bold);
 }
 
+.navbar-brand .nav-link i {
+    margin-right: 10px !important;
+}
+
 .dropdown-menu {
   background: var(--white-color);
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);

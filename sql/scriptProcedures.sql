@@ -1,3 +1,5 @@
+USE nutriyummy;
+
 # --------------- PRODUCTOS ---------------
 # Obtener todos los productos
 DELIMITER $$
@@ -190,7 +192,7 @@ CREATE PROCEDURE insertarUsuario(
     IN u_apellidoMaterno VARCHAR(50),
     IN u_email VARCHAR(50),
     IN u_rol ENUM('ADMIN', 'CLIENTE'),
-    IN u_contrasenia VARCHAR(20),
+    IN u_contrasenia VARCHAR(80),
     OUT u_numero_generado INT
 )
 BEGIN

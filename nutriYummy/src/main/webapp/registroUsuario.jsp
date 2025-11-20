@@ -137,49 +137,48 @@
                         %>
                         <form class="custom-form volunteer-form mb-5 mb-lg-0" action="AgregarUsuario" method="post" role="form">
 
-                            <h3 class="mb-4">REGISTRAR USUARIO</h3>
+                            <h3 class="mb-4">Registrarse</h3>
 
-                            <div class="row">
-                                <div class="col-lg-6 col-12">
-                                    <input type="text" name="nombre" id="nombre" 
-                                           class="form-control" placeholder="Nombre" required>
+                            <input type="hidden" name="origen" value="registroUsuario">
+                            <input type="hidden" name="rol" value="CLIENTE">
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+                                    <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre" required>
                                 </div>
 
-                                <div class="col-lg-6 col-12">
-                                    <input type="text" name="apellidoPaterno" id="apellidoPaterno" 
-                                           class="form-control" placeholder="Apellido Paterno" required>
+                                <div class="mb-3">
+                                    <label for="apellidoPaterno" class="form-label">Apellido paterno <span class="text-danger">*</span></label>
+                                    <input type="text" name="apellidoPaterno" id="apellidoPaterno" class="form-control" placeholder="Apellido paterno" required>
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-6 col-12">
-                                    <input type="text" name="apellidoMaterno" id="apellidoMaterno" 
-                                           class="form-control" placeholder="Apellido Materno" required>
+                            
+                                <div class="mb-3">
+                                    <label for="apellidoMaterno" class="form-label">Apellido materno</label>
+                                    <input type="text" name="apellidoMaterno" id="apellidoMaterno" class="form-control" placeholder="Apellido materno">
                                 </div>
 
-                                <div class="col-lg-12 col-12">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                                     <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" 
-                                           class="form-control" placeholder="Correo Electrónico" required>
+                                           class="form-control" placeholder="Correo electrónico" required>
                                 </div>
-                            </div>
 
                             <div class="row">
                                 <div class="col-lg-6 col-12">
+                                    <label for="contrasenia" class="form-label">Contraseña <span class="text-danger">*</span></label>
                                     <input type="password" name="contrasenia" id="contrasenia" 
                                            class="form-control" placeholder="Contraseña" required>
                                 </div>
                                 <div class="col-lg-6 col-12">
+                                    <label for="confirmarContra" class="form-label">Confirmar contraseña <span class="text-danger">*</span></label>
                                     <input type="password" name="confirmarContra" id="confirmarContra" 
-                                           class="form-control" placeholder="Confirmar Contraseña" required>
+                                           class="form-control" placeholder="Confirmar contraseña" required>
                                 </div>
                             </div>
-
-
                             <button type="submit" class="form-control">Registrar</button>
 
-                            <p class="text-center mt-3" style="color: gray;">
+                            <p class="text-center mt-3 text-secondary">
                                 ¿Ya tienes una cuenta? 
-                                <a href="inicioSesion.jsp" style="color: #5bc1ac; font-weight: bold;">Inicia Sesión aquí</a>
+                                <a href="inicioSesion.jsp" class="text-warning"><strong>Inicia sesión aquí</strong></a>
                             </p>
                         </form>
                     </div>

@@ -104,6 +104,7 @@ public class AgregarUsuario extends HttpServlet {
             }
             // Se hashea la contraseña
             String hash = BCrypt.hashpw(contrasenia, BCrypt.gensalt());
+            
             // Crear objeto
             Usuario usuario = new Usuario(
                     nombre.trim(),
@@ -116,8 +117,9 @@ public class AgregarUsuario extends HttpServlet {
 
             // Pasarlo al modelo
             int numero = modeloUsuario.insertarUsuario(usuario);
+            boolean exito = numero != 0;
 
-            if (numero != 0) {
+            if (exito) {
                 String numeroFormateado = String.format("%05d", numero);
                 session.setAttribute("mensajeExito", "Usuario #" + numeroFormateado + " agregado correctamente.");
             } else {
@@ -126,7 +128,7 @@ public class AgregarUsuario extends HttpServlet {
 
             // Redirección dinámica
             String origen = request.getParameter("origen");
-            redirigirSegunOrigen(origen, response);
+            redirigirSegunOrigen(origen, response, exito);
         } catch (IOException e) {
             error(session, response, "Error inesperado: " + e.getMessage());
         }
@@ -138,7 +140,7 @@ public class AgregarUsuario extends HttpServlet {
         response.sendRedirect("usuariosAdmin.jsp");
     }
 
-    private void redirigirSegunOrigen(String origen, HttpServletResponse response) throws IOException {
+    private void redirigirSegunOrigen(String origen, HttpServletResponse response, boolean exito) throws IOException {
         if (origen == null) {
             response.sendRedirect("index.jsp"); // fallback
             return;
@@ -149,11 +151,14 @@ public class AgregarUsuario extends HttpServlet {
                 response.sendRedirect("usuariosAdmin.jsp");
                 break;
 
-            case "registrarse":
-                response.sendRedirect("inicioSesion.jsp");
+            case "registroUsuario":
+                if (exito) {
+                    response.sendRedirect("inicioSesion.jsp");
+                } else {
+                    response.sendRedirect("registroUsuario.jsp");
+                }
+                
                 break;
-            default:
-                response.sendRedirect("index.jsp"); // fallback por seguridad
         }
     }
 

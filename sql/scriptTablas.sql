@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     apellidoMaterno VARCHAR(50),
     email VARCHAR(50) UNIQUE NOT NULL,
     rol ENUM("ADMIN", "CLIENTE") NOT NULL DEFAULT "CLIENTE",
-    contrasenia VARCHAR(70) NOT NULL
+    contrasenia VARCHAR(80) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS ventas (

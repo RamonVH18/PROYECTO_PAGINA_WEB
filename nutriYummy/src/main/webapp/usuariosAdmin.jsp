@@ -206,11 +206,11 @@
                                 <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="mb-3">
-                                <label for="stock" class="form-label">Contraseña <span class="text-danger">*</span></label>
+                                <label for="contrasenia" class="form-label">Contraseña <span class="text-danger">*</span></label>
                                 <input type="password" class="form-control" id="contrasenia" name="contrasenia" required>
                             </div>
                             <div class="mb-3">
-                                <label for="stock" class="form-label">Confirmar contraseña <span class="text-danger">*</span></label>
+                                <label for="confirmarContra" class="form-label">Confirmar contraseña <span class="text-danger">*</span></label>
                                 <input type="password" class="form-control" id="confirmarContra" name="confirmarContra" required>
                             </div>
                             <div class="mb-3">
