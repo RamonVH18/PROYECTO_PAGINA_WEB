@@ -72,6 +72,11 @@ public class Venta {
         this.idUsuario = idUsuario;
     }
 
+    public Venta(String folio, int idUsuario) {
+        this.folio = folio;
+        this.idUsuario = idUsuario;
+    }
+
      /**
      * Obtiene el identificador de la venta.
      *

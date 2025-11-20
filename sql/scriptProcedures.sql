@@ -318,3 +318,40 @@ BEGIN
     ORDER BY v.id, d.id;
 END$$
 DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE insertarVenta(
+	IN v_folio VARCHAR(8),
+    IN v_idUsuario INT,
+    OUT id_venta INT
+)
+BEGIN
+	INSERT INTO ventas(folio, idUsuario) VALUES(
+		v_folio,
+        v_idUsuario
+	);
+    
+	-- Obtener el último id autogenerado
+    SET id_venta = LAST_INSERT_ID();
+END $$
+DELIMITER ;
+    
+DELIMITER $$
+CREATE PROCEDURE insertarDetallesVenta(
+	IN d_cantidad INT,
+    IN d_precio FLOAT,
+    IN d_iva FLOAT,
+    IN d_idProducto INT,
+    IN d_idVenta INT
+)
+BEGIN
+	INSERT INTO detalles_ventas(cantidad, precio, iva, idProducto, idVenta) VALUES(
+		d_cantidad,
+        d_precio,
+        d_iva,
+        d_idProducto,
+        d_idVenta
+	);
+END $$
+DELIMITER ;
+    

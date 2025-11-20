@@ -9,6 +9,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import static java.sql.Types.INTEGER;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +73,27 @@ public class ModeloVenta extends Conexion {
         }
 
         return ventas;
+    }
+    
+    public int insertarVenta(Venta venta) {
+        String sql = "call insertarVenta(?, ?, ?)";
+        int idVenta = 0;
+        
+        try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql);) {
+            // Setear parámetros
+            pst.setString(1, venta.getFolio());
+            pst.setInt(2, venta.getIdUsuario());
+
+            pst.registerOutParameter(3, INTEGER);
+
+            pst.execute();
+
+            idVenta = pst.getInt(3);
+        } catch (SQLException e) {
+            System.err.println("Error al insertar venta: " + e.getMessage());
+        }
+
+        return idVenta;
     }
 
 }

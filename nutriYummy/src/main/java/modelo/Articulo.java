@@ -4,11 +4,14 @@
  */
 package modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author rocha
  */
-public class Articulo {
+public class Articulo implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int idProducto;
     private int cantidad;
 

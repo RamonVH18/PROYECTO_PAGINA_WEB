@@ -71,6 +71,13 @@ public class DetallesVenta {
         this.idProducto = idProducto;
     }
 
+    public DetallesVenta(int cantidad, double iva, double precio, int idProducto) {
+        this.cantidad = cantidad;
+        this.iva = iva;
+        this.precio = precio;
+        this.idProducto = idProducto;
+    }
+
     /**
      * Obtiene el identificador del detalle de venta.
      *
