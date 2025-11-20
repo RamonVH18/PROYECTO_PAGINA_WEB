@@ -27,6 +27,31 @@ import modelo.enums.RolUsuario;
 public class ModeloUsuario extends Conexion {
     
     /**
+     * Autentica al usuario al momento de iniciar sesion, verifica que exista un 
+     * @param email
+     * @param contrasenia
+     * @return Valor booleano que confirma si existe el usuario en la base de datos o si la contraseña es correcta
+     */
+    public boolean autenticacionUsuario(String email, String contrasenia) {
+        String sql = "Select * from usuario where email=? and contrasenia=?";
+        
+        try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql); ResultSet rs = pst.executeQuery();) {
+            while (rs.next()) {
+                pst.setString(1, email);
+                pst.setString(2, contrasenia);
+                
+                if (rs.absolute(1)) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al autenticar usuarios: " + e.getMessage());
+        }
+        
+        return false;
+    }
+    
+    /**
      * Obtiene todos los usuarios registrados en la base de datos.
      *
      * @return Lista de objetos Usuario con toda la información cargada.

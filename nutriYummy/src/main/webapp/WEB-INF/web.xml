@@ -48,6 +48,10 @@
         <servlet-name>AgregarUsuario</servlet-name>
         <url-pattern>/AgregarUsuario</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AutenticarUsuario</servlet-name>
+        <url-pattern>/AutenticarUsuario</url-pattern>
+    </servlet-mapping>    
     <session-config>
         <session-timeout>
             30
