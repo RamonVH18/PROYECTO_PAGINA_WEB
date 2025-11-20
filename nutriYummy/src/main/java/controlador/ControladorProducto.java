@@ -175,7 +175,7 @@ public class ControladorProducto {
 
             html.append("        </div>");
             html.append("      </div>");
-            html.append("      <a href='#' class='custom-btn btn'>Ver más</a>");
+            html.append("      <a href='productosDetalles.jsp?id=").append(producto.getId()).append("' class='custom-btn btn'><i class='fa fa-shopping-cart'></i>Ver detalles</a>");
             html.append("    </div>");
             html.append("  </div>");
             html.append("</div>");
@@ -210,5 +210,9 @@ public class ControladorProducto {
         }
 
         return html.toString();
+    }
+    
+    public Producto getProducto(int id) {
+        return new ModeloProducto().getProducto(id);
     }
 }

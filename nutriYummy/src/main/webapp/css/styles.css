@@ -193,12 +193,16 @@ strong {
 /*---------------------------------------
   CUSTOM BLOCK               
 -----------------------------------------*/
-.custom-block-wrap {
+.custom-block-wrap, .custom-block-wrap-product-details {
   background: var(--white-color);
   border-radius: var(--border-radius-medium);
   position: relative;
   overflow: hidden;
   transition: all 0.5s;
+}
+
+.custom-block-wrap-product-details {
+    background-color: var(--section-bg-color);
 }
 
 .custom-block-wrap:hover {
@@ -209,7 +213,7 @@ strong {
   padding: 30px;
 }
 
-.custom-block-image {
+.custom-block-image, .card-img-top {
   display: block;
   width: 500px;
   height: 300px;

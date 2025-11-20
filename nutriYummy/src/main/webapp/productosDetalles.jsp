@@ -6,12 +6,15 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="controlador.ControladorProducto"%>
+<%@page import="modelo.Producto"%>
+
 <%
-    ControladorProducto controlador = new ControladorProducto();
+    ControladorProducto controladorProducto = new ControladorProducto();
 %>
 
 <%
-    String categoria = request.getParameter("categoria"); // puede ser null
+    int id = Integer.parseInt(request.getParameter("id"));
+    Producto producto = controladorProducto.getProducto(id);
 %>
 
 <!DOCTYPE html>
@@ -24,7 +27,7 @@
     <meta name="description" content="Tienda Online, Comida, Snacks, Saludables, Productos, Catálogo">
     <meta name="author" content="Nutri Yummy">
 
-    <title>Todos los productos - Nutri Yummy</title>
+    <title>Detalles del producto - Nutri Yummy</title>
     <!-- Icono -->
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
@@ -116,19 +119,59 @@
         </div>
     </nav>
 
-   <main>
-        <section class="section-padding" id="productos-todos">
-            <div class="container">
-                <div class="row">
+    <!-- CONTENIDO -->
+    <main class="container py-5">
+        <div class="row justify-content-center">
 
-                    <div class="col-lg-12 col-12 text-center mb-4">
-                        <h2>Todos nuestros productos</h2>
+            <div class="col-lg-6 col-md-8">
+
+                <div class="custom-block-wrap-product-details shadow-lg p-3 rounded-4">
+                    <br>
+                    <img src="img/<%= producto.getImg()%>" class="custom-block-image img-fluid rounded-4 d-block mx-auto" alt="<%= producto.getNombre()%>">
+
+                    <div class="custom-block">
+
+                        <div class="custom-block-body text-center">
+
+                            <h3 class="mb-3">
+                                <%= producto.getNombre()%>
+                            </h3>
+
+                            <p class="text-muted">
+                                <% String numeroFormateado = String.format("%05d", producto.getNumero());%>
+                                Número del producto: <%= numeroFormateado%>
+                            </p>
+
+                            <p class="mb-4">
+                                <%= producto.getDescripcion()%>
+                            </p>
+
+                            <h4 class="text-success fw-bold mb-4">
+                                $<%= producto.getPrecio()%> MXN
+                            </h4>
+
+                            <!-- Formulario agregar carrito -->
+                            <form action="AgregarProductoCarrito" method="POST" class="text-center">
+                                <label class="fw-bold d-block mb-2">Cantidad:</label>
+
+                                <input type="hidden" name="idProducto" value="<%= producto.getId()%>">
+
+                                <input type="number"
+                                       class="form-control w-50 mx-auto mb-3"
+                                       name="cantidad"
+                                       value="1"
+                                       min="1">
+
+                                <button type="submit" class="custom-btn btn w-100 py-2">
+                                    <i class="fa fa-shopping-cart me-2"></i>
+                                    Agregar al carrito
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                    
-                    <%= controlador.getProductosPublicosHtml(categoria) %>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
 
     <!-- Footer -->
