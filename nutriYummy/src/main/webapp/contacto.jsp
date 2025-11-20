@@ -58,6 +58,25 @@
                             <a href="mailto:nutriyummy25@gmail.com" target="_blank" class="social-icon-link"><img
                                     src="img/gmail.png" alt="Gmail"></a>
                         </li>
+                        <%
+                                HttpSession sesion = request.getSession(false);
+                                if (sesion.getAttribute("usuario") == null) {
+                            %>
+                            <li class="social-icon-item">
+                                <a href="inicioSesion.jsp" class="social-icon-link"><img
+                                        src="img/usuario.png" alt="Gmail"></a>
+                            </li>
+                            <%
+                            } else {
+                            %>
+                            <li class="social-icon-item">
+                                <a href="inicioSesion.jsp" class="btn text-white" style="border-radius: 20px; padding: 5px 15px; background-color:#f5b729">
+                                    Perfil
+                                </a>
+                            </li>
+                            <%
+                                }
+                            %>
                     </ul>
                 </div>
 
