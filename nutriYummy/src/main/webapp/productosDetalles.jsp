@@ -9,6 +9,7 @@
 <%@page import="modelo.Producto"%>
 
 <%
+    HttpSession sesion = request.getSession(false);
     ControladorProducto controladorProducto = new ControladorProducto();
 %>
 
@@ -69,7 +70,6 @@
                                         src="img/gmail.png" alt="Gmail"></a>
                             </li>
                             <%
-                                HttpSession sesion = request.getSession(false);
                                 if (sesion.getAttribute("usuario") == null) {
                             %>
                             <li class="social-icon-item">
@@ -80,7 +80,7 @@
                             } else {
                             %>
                             <li class="social-icon-item">
-                                <a href="inicioSesion.jsp" class="btn text-white" style="border-radius: 20px; padding: 5px 15px; background-color:#f5b729">
+                                <a href="perfil.jsp" class="btn text-white" style="border-radius: 20px; padding: 5px 15px; background-color:#f5b729">
                                     Perfil
                                 </a>
                             </li>
