@@ -5,6 +5,12 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="controlador.ControladorProducto"%>
+
+<%
+    ControladorProducto controlador = new ControladorProducto();
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -95,10 +101,10 @@
 
                             <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
                                 <li><a class="dropdown-item" href="productos.jsp">Ver todos</a></li>
-                                <li><a class="dropdown-item" href="#">Chips</a></li>
-                                <li><a class="dropdown-item" href="#">Maicitos</a></li>
-                                <li><a class="dropdown-item" href="#">Obleas</a></li>
-                                <li><a class="dropdown-item" href="#">Otros</a></li>
+                                <li><a class="dropdown-item" href="productos.jsp?categoria=chips">Chips</a></li>
+                                <li><a class="dropdown-item" href="productos.jsp?categoria=maicitos">Maicitos</a></li>
+                                <li><a class="dropdown-item" href="productos.jsp?categoria=obleas">Obleas</a></li>
+                                <li><a class="dropdown-item" href="productos.jsp?categoria=otros">Otros</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -196,55 +202,7 @@
             <section class="section-padding section-bg" id="section_2">
                 <div class="container">
                     <div class="row">
-
-                        <div class="col-lg-12 col-12 text-center mb-4">
-                            <h2>Mejores vendidos</h2>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                            <div class="custom-block-wrap">
-                                <img src="img/maicitos3.jpeg" class="custom-block-image img-fluid" alt="Maicitos flamin">
-
-                                <div class="custom-block">
-                                    <div class="custom-block-body">
-                                        <h5 class="mb-3">Maicitos flamin</h5>
-
-                                        <p>Deliciosos granos de maíz crujientes con un toque picante y especiado que te hará
-                                            querer más.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                            <div class="custom-block-wrap">
-                                <img src="img/otros1.jpeg" class="custom-block-image img-fluid" alt="Nuez con chocolate">
-
-                                <div class="custom-block">
-                                    <div class="custom-block-body">
-                                        <h5 class="mb-3">Nuez con chocolate</h5>
-
-                                        <p>¡Lo mejor de los dos mundos! El crunch de la nuez y el sabor irresistible del
-                                            chocolate se unen en un snack imposible de resistir.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 col-12">
-                            <div class="custom-block-wrap">
-                                <img src="img/chips4.jpeg" class="custom-block-image img-fluid" alt="">
-
-                                <div class="custom-block">
-                                    <div class="custom-block-body">
-                                        <h5 class="mb-3">Zanahoria adobada</h5>
-
-                                        <p>Chips de zanahoria adobada: un snack natural y saludable con adobo. ¡Perfecto
-                                            para cualquier antojo!</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <%= controlador.getMejoresVendidos()%>
                     </div>
                 </div>
             </section>

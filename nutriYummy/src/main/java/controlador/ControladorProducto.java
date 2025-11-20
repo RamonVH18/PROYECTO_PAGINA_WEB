@@ -169,16 +169,44 @@ public class ControladorProducto {
             html.append("        <h5 class='mb-3'>").append(producto.getNombre()).append("</h5>");
             html.append("        <p>").append(producto.getDescripcion()).append("</p>");
             html.append("        <div class='d-flex align-items-center my-2'>");
-            
+
             String precioFormateado = String.format("%.2f", producto.getPrecio());
             html.append("          <p class='mb-0'><strong>Precio:</strong> <span class='text-success'>$").append(precioFormateado).append(" MXN</span></p>");
-            
+
             html.append("        </div>");
             html.append("      </div>");
-            html.append("      <a href='#' class='custom-btn btn'>Ver más</a>"); 
+            html.append("      <a href='#' class='custom-btn btn'>Ver más</a>");
             html.append("    </div>");
             html.append("  </div>");
             html.append("</div>");
+        }
+
+        return html.toString();
+    }
+
+    public String getMejoresVendidos() {
+        StringBuilder html = new StringBuilder();
+        List<Producto> productos = modeloProducto.getMejoresVendidos();
+
+        if (productos == null || productos.isEmpty()) {
+            return html.toString();
+        }
+        
+        html.append("<div class='col-lg-12 col-12 text-center mb-4' <h2>Mejores vendidos</h2></div>");
+
+        for (Producto producto : productos) {
+
+            html.append("<div class='col-lg-4 col-md-6 col-12 mb-4 mb-lg-0'>")
+                    .append("<div class='custom-block-wrap'>")
+                    .append("<img src='img/").append(producto.getImg()).append("' class='custom-block-image img-fluid' alt='").append(producto.getNombre()).append("'>")
+                    .append("<div class='custom-block'>")
+                    .append("<div class='custom-block-body'>")
+                    .append("<h5 class='mb-3'>").append(producto.getNombre()).append("</h5>")
+                    .append("<p>").append(producto.getDescripcion()).append("</p>")
+                    .append("</div>")
+                    .append("</div>")
+                    .append("</div>")
+                    .append("</div>");
         }
 
         return html.toString();

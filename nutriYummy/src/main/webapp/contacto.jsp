@@ -86,20 +86,20 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="index.html">Inicio</a>
+                        <a class="nav-link click-scroll" href="index.jsp">Inicio</a>
                     </li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link click-scroll dropdown-toggle" href="#section_5"
-                            id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">Productos</a>
+                           id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">Productos</a>
 
                         <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                            <li><a class="dropdown-item" href="productos.html">Ver todos</a></li>
-                            <li><a class="dropdown-item" href="#">Chips</a></li>
-                            <li><a class="dropdown-item" href="#">Maicitos</a></li>
-                            <li><a class="dropdown-item" href="#">Obleas</a></li>
-                            <li><a class="dropdown-item" href="#">Otros</a></li>
+                            <li><a class="dropdown-item" href="productos.jsp">Ver todos</a></li>
+                            <li><a class="dropdown-item" href="productos.jsp?categoria=chips">Chips</a></li>
+                            <li><a class="dropdown-item" href="productos.jsp?categoria=maicitos">Maicitos</a></li>
+                            <li><a class="dropdown-item" href="productos.jsp?categoria=obleas">Obleas</a></li>
+                            <li><a class="dropdown-item" href="productos.jsp?categoria=otros">Otros</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -119,7 +119,7 @@
                     <h2 class="text-white mb-4">CONTACTANOS</h2>
 
                     <form class="custom-form volunteer-form mb-5 mb-lg-0" action="#" method="post" role="form">
-                        <h3 class="mb-4">Envia tus opiniones</h3>
+                        <h3 class="mb-4">Envía tus opiniones</h3>
 
                         <div class="row">
                             <div class="col-lg-6 col-12">
@@ -134,7 +134,7 @@
                         </div>
 
                         <textarea name="volunteer-message" rows="3" class="form-control" id="volunteer-message"
-                            placeholder="Comment"></textarea>
+                            placeholder="Escribe aquí..."></textarea>
 
                         <button type="submit" class="form-control">Enviar</button>
                     </form>
