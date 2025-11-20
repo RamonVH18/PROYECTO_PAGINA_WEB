@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import modelo.ModeloUsuario;
 import modelo.Usuario;
 import modelo.enums.RolUsuario;
+import org.mindrot.jbcrypt.BCrypt;
 import utils.Validador;
 
 /**
@@ -46,7 +47,7 @@ public class AgregarUsuario extends HttpServlet {
         String rol = request.getParameter("rol");
         String contrasenia = request.getParameter("contrasenia");
         String confirmarContra = request.getParameter("confirmarContra");
-        
+
         // Validar campos
         if (Validador.estaVacio(nombre) || !Validador.tieneLongitudMinima(nombre, 2) || !Validador.tieneLongitudMaxima(nombre, 50)) {
             error(session, response, "El nombre debe tener entre 2 y 50 caracteres.");
@@ -64,17 +65,17 @@ public class AgregarUsuario extends HttpServlet {
                 return;
             }
         }
-    
+
         if (Validador.estaVacio(email)) {
             error(session, response, "El email es obligatorio.");
             return;
         }
-        
+
         if (!Validador.esEmailValido(email)) {
             error(session, response, "El formato del email no es válido.");
             return;
         }
-      
+
         if (Validador.estaVacio(rol)) {
             error(session, response, "El rol es obligatorio.");
             return;
@@ -89,19 +90,20 @@ public class AgregarUsuario extends HttpServlet {
             error(session, response, "Debe confirmar la contraseña.");
             return;
         }
-        
+
         if (!contrasenia.equals(confirmarContra)) {
             error(session, response, "Las contraseñas deben coincidir.");
             return;
         }
-        
+
         try {
             // Validar email único
             if (modeloUsuario.existeEmailUsuario(email)) {
                 error(session, response, "Ya existe un usuario con el email " + email + ".");
                 return;
             }
-
+            // Se hashea la contraseña
+            String hash = BCrypt.hashpw(contrasenia, BCrypt.gensalt());
             // Crear objeto
             Usuario usuario = new Usuario(
                     nombre.trim(),
@@ -109,12 +111,12 @@ public class AgregarUsuario extends HttpServlet {
                     (apellidoMaterno == null ? null : apellidoMaterno.trim()),
                     email.trim(),
                     RolUsuario.valueOf(rol),
-                    contrasenia
+                    hash
             );
 
             // Pasarlo al modelo
             int numero = modeloUsuario.insertarUsuario(usuario);
-            
+
             if (numero != 0) {
                 String numeroFormateado = String.format("%05d", numero);
                 session.setAttribute("mensajeExito", "Usuario #" + numeroFormateado + " agregado correctamente.");

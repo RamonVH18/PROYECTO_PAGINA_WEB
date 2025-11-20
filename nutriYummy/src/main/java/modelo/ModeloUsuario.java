@@ -15,6 +15,7 @@ import static java.sql.Types.INTEGER;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.enums.RolUsuario;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * Clase encargada de gestionar todas las operaciones relacionadas con los
@@ -36,22 +37,26 @@ public class ModeloUsuario extends Conexion {
      * datos o si la contraseña es correcta
      */
     public Usuario autenticacionUsuario(String email, String contrasenia) {
-        String sql = "SELECT * FROM usuarios WHERE email = ? AND contrasenia = ?";
+        String sql = "SELECT * FROM usuarios WHERE email = ?";
 
         try (Connection conn = getConexion(); PreparedStatement pst = conn.prepareStatement(sql)) {
 
             pst.setString(1, email);
-            pst.setString(2, contrasenia);
 
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
-                    Usuario u = new Usuario();
-                    u.setNombre(rs.getString("nombre"));
-                    u.setEmail(rs.getString("email"));
-                    u.setApellidoPaterno(rs.getString("apellidoPaterno"));
-                    u.setApellidoMaterno(rs.getString("apellidoMaterno"));
-                    
-                    return u;
+
+                    String hashBD = rs.getString("contrasenia");
+
+                    if (BCrypt.checkpw(contrasenia, hashBD)) {
+                        Usuario u = new Usuario();
+                        u.setNombre(rs.getString("nombre"));
+                        u.setEmail(rs.getString("email"));
+                        u.setApellidoPaterno(rs.getString("apellidoPaterno"));
+                        u.setApellidoMaterno(rs.getString("apellidoMaterno"));
+
+                        return u;
+                    }
                 }
             }
 
