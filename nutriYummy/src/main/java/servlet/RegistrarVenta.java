@@ -50,23 +50,40 @@ public class RegistrarVenta extends HttpServlet {
         ModeloProducto modeloProducto = new ModeloProducto();
         ModeloVenta modeloVenta = new ModeloVenta();
         ModeloDetallesVenta modeloDetalles = new ModeloDetallesVenta();
-       
+     
         try {
+            // Validar stock de cada producto
+            for (Articulo articulo : carrito) {
+                Producto prod = modeloProducto.getProducto(articulo.getIdProducto());
+
+                if (prod == null) {
+                    error(session, response, "El producto con ID " + articulo.getIdProducto() + " no existe.");
+                    return;
+                }
+
+                if (articulo.getCantidad() > prod.getStock()) {
+                    error(session, response,
+                            "No hay suficiente stock para el producto: " + prod.getNombre()
+                            + ". Stock disponible: " + prod.getStock()
+                            + ", solicitado: " + articulo.getCantidad());
+                    return;
+                }
+            }
+
             String folioVenta = generarFolioVenta();
             Usuario usuario = (Usuario) session.getAttribute("usuario");
-            System.out.println(usuario);
             int idUsuario = usuario.getId();
-            
+
             Venta venta = new Venta(folioVenta, idUsuario);
-          
+
             // Registrar la venta
             int idVenta = modeloVenta.insertarVenta(venta);
 
             if (idVenta <= 0) {
-                error(session, response, "Ocurrió un error al registrar la venta. No fue posible terminar el proceso." + usuario.toString());
+                error(session, response, "Ocurrió un error al registrar la venta. No fue posible terminar el proceso.");
                 return;
             }
-            
+
             // Registrar cada detalle
             for (Articulo articulo : carrito) {
                 Producto producto = modeloProducto.getProducto(articulo.getIdProducto());
@@ -74,10 +91,10 @@ public class RegistrarVenta extends HttpServlet {
                 DetallesVenta detalle = new DetallesVenta(articulo.getCantidad(), precio * 0.16, precio, producto.getId());
                 modeloDetalles.insertarDetalleVenta(detalle, idVenta);
             }
-            
+
             // Limpiar carrito
             session.removeAttribute("carrito");
-            
+
             session.setAttribute("mensajeExito", "Compra realizada con éxito");
             response.sendRedirect("carrito.jsp");
         } catch (IOException e) {
@@ -89,7 +106,7 @@ public class RegistrarVenta extends HttpServlet {
         int numero = (int) (Math.random() * 100000000);
         return String.format("%08d", numero);
     }
-    
+
     private void error(HttpSession session, HttpServletResponse response, String msg) throws IOException {
         session.setAttribute("mensajeError", msg);
         response.sendRedirect("carrito.jsp");

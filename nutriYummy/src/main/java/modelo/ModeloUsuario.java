@@ -50,10 +50,13 @@ public class ModeloUsuario extends Conexion {
 
                     if (BCrypt.checkpw(contrasenia, hashBD)) {
                         Usuario u = new Usuario();
+                        u.setId(rs.getInt("id"));
+                        u.setNumero(rs.getInt("numero"));
                         u.setNombre(rs.getString("nombre"));
                         u.setEmail(rs.getString("email"));
                         u.setApellidoPaterno(rs.getString("apellidoPaterno"));
                         u.setApellidoMaterno(rs.getString("apellidoMaterno"));
+                        u.setRol(RolUsuario.valueOf(rs.getString("rol")));
 
                         return u;
                     }

@@ -321,6 +321,7 @@ BEGIN
 END$$
 DELIMITER ;
 
+# Insertar una venta nueva
 DELIMITER $$
 CREATE PROCEDURE insertarVenta(
 	IN v_folio VARCHAR(8),
@@ -337,7 +338,8 @@ BEGIN
     SET id_venta = LAST_INSERT_ID();
 END $$
 DELIMITER ;
-    
+   
+# Registrar los detalles de una venta
 DELIMITER $$
 CREATE PROCEDURE insertarDetallesVenta(
 	IN d_cantidad INT,
@@ -356,4 +358,22 @@ BEGIN
 	);
 END $$
 DELIMITER ;
-    
+
+# Trigger para actualizar stock despues de una venta
+DELIMITER $$
+CREATE TRIGGER actualizarStock
+AFTER INSERT ON detalles_ventas
+FOR EACH ROW
+BEGIN
+    -- Verificar que haya stock suficiente (opcional pero recomendable)
+    IF (SELECT stock FROM productos WHERE id = NEW.idProducto) < NEW.cantidad THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Stock insuficiente para registrar venta.';
+    END IF;
+
+    -- Restar la cantidad vendida del stock
+    UPDATE productos
+    SET stock = stock - NEW.cantidad
+    WHERE id = NEW.idProducto;
+END $$
+DELIMITER ;
