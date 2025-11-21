@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.ModeloUsuario;
 import modelo.Usuario;
+import modelo.enums.RolUsuario;
 import org.mindrot.jbcrypt.BCrypt;
 import utils.Validador;
 
@@ -77,13 +78,21 @@ public class CambiarContra extends HttpServlet {
                 return;
             }
 
+            Usuario usuario = modeloUsuario.autenticacionUsuario(email, contrasenia);
+       
             // Se hashea la contraseña nueva
             String hash = BCrypt.hashpw(nuevaContra, BCrypt.gensalt());
             boolean exito = modeloUsuario.cambiarContraseña(email, hash);
 
             if (exito) {
                 session.setAttribute("mensajeExito", "Contraseña modificada con éxito.");
-            } else {
+                
+                if (usuario.getRol() == RolUsuario.ADMIN) {
+                    response.sendRedirect("perfilAdmin.jsp");
+                    return;
+                } 
+            }
+            else {
                 error(session, response, "Error el modificar la contraseña.");
                 return;
             }

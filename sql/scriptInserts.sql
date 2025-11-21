@@ -47,5 +47,5 @@ INSERT INTO productos(numero, nombre, descripcion, precio, stock, img, tipo) VAL
     "Rocha",
     "nutriyummy1@gmail.com",
     "ADMIN",
-    "$2a$10$.IqzgkDym09JoB0qPUXb3eFsD8wiklFS9hUaTNuiYwpRPwBR7Z6LC"
+    "$2a$10$.IqzgkDym09JoB0qPUXb3eFsD8wiklFS9hUaTNuiYwpRPwBR7Z6LC" #admin123
  );
