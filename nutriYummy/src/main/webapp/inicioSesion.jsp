@@ -152,11 +152,11 @@
                                            class="form-control" placeholder="Contraseña" required>
                                 </div>
                             </div>
-                            <button type="submit" class="form-control">Iniciar Sesion</button>
+                            <button type="submit" class="form-control">Iniciar sesión</button>
                             
                             <p class="text-center mt-3 text-secondary">
                                 ¿Aun no tienes cuenta? 
-                                <a href="registroUsuario.jsp" class="text-warning"><strong>Registrese aqui</strong></a>
+                                <a href="registroUsuario.jsp" class="text-warning"><strong>Registrese aquí</strong></a>
                             </p>
                         </form>
                     </div>

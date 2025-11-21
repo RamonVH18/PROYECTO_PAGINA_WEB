@@ -44,42 +44,60 @@ public class CambiarContra extends HttpServlet {
         // Obtener valores
         String email = request.getParameter("email");
         String contrasenia = request.getParameter("contrasenia");
-        String nuevaContrasenia = request.getParameter("nuevaContrasenia");
-        
-        // Validar los datos del formulario
-        if (Validador.estaVacio(email) || !Validador.esEmailValido(email)) {
-            error(session, response, "Debe ingresar un correo");
-            return;
-        }
+        String nuevaContra = request.getParameter("nuevaContra");
+        String confirmarNuevaContra = request.getParameter("confirmarNuevaContra");
+
         if (Validador.estaVacio(contrasenia)) {
-            error(session, response, "Debe ingresar una contraseña");
+            error(session, response, "Debe ingresar una contraseña.");
             return;
         }
-        if (Validador.estaVacio(nuevaContrasenia)) {
-            error(session, response, "Debe ingresar una contraseña");
+
+        if (Validador.estaVacio(nuevaContra)) {
+            error(session, response, "Debe ingresar una nueva contraseña.");
             return;
         }
-        Usuario u = modeloUsuario.autenticacionUsuario(email, contrasenia);
-        if (nuevaContrasenia.equals(contrasenia)) {
-            error(session, response, "La contraseña actual y la nueva no pueden ser la misma");
+
+        if (Validador.estaVacio(confirmarNuevaContra)) {
+            error(session, response, "Debe confirmar la nueva contraseña.");
             return;
         }
-        
-        // Se hashea la contraseña
-        String hash = BCrypt.hashpw(contrasenia, BCrypt.gensalt());
-        boolean exito = modeloUsuario.cambiarContraseña(email, hash);
-        
-        if (exito) {
-            response.sendRedirect("iniciarSesion.jsp");
-        } else {
-            error(session, response, "Contraseña incorrectos");
+
+        try {
+            String hashAlmacenado = modeloUsuario.getContraseña(email);
+            
+            boolean coincide = BCrypt.checkpw(contrasenia, hashAlmacenado);
+
+            if (!coincide) {
+                error(session, response, "La contraseña actual ingresada no es correcta.");
+                return;
+            }
+
+            if (nuevaContra.equals(contrasenia)) {
+                error(session, response, "La contraseña actual y la nueva no pueden ser la misma.");
+                return;
+            }
+
+            // Se hashea la contraseña nueva
+            String hash = BCrypt.hashpw(nuevaContra, BCrypt.gensalt());
+            boolean exito = modeloUsuario.cambiarContraseña(email, hash);
+
+            if (exito) {
+                session.setAttribute("mensajeExito", "Contraseña modificada con éxito.");
+            } else {
+                error(session, response, "Error el modificar la contraseña.");
+                return;
+            }
+
+            response.sendRedirect("perfil.jsp");
+        } catch (IOException e) {
+            error(session, response, "Error inesperado: " + e.getMessage());
         }
-        
+
     }
-    
+
     private void error(HttpSession session, HttpServletResponse response, String msg) throws IOException {
         session.setAttribute("mensajeError", msg);
-        response.sendRedirect("inicioSesion.jsp");
+        response.sendRedirect("perfil.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

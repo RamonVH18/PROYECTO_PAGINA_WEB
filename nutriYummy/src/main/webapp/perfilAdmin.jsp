@@ -4,12 +4,24 @@
     Author     : rocha
 --%>
 
+<%@page import="modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import="controlador.ControladorUsuario"%>
 
 <%
     ControladorUsuario controladorUsuario = new ControladorUsuario();
+%>
+
+<%
+    // --- VERIFICACIÓN DE SEGURIDAD ---
+    HttpSession sesion = request.getSession();
+    Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+
+    if (usuario == null) {
+        response.sendRedirect("index.jsp");
+        return;
+    }
 %>
 
 <!DOCTYPE html>
@@ -93,7 +105,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#.jsp">
+                            <a class="nav-link" href="usuariosAdmin.jsp">
                                 <i class="bi-people-fill"></i> Usuarios
                             </a>
                         </li>
@@ -109,7 +121,7 @@
                         </li>
                         <li class="nav-item d-lg-none">
                             <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal">
-                                <i class="bi-box-arrow-right"></i> Cerrar Sesión
+                                <i class="bi-box-arrow-right"></i> Cerrar sesión
                             </a>
                         </li>
                     </ul>
@@ -119,8 +131,6 @@
             <main class="main-content flex-grow-1 p-3 p-md-4">
 
                 <p class="lead mb-4">Consulta los datos de tu perfil de administrador y cambia tu contraseña.</p>
-
-                <h2 class="mb-4">Mi perfil</h2>
 
                 <!-- Mensajes de confirmación --> 
                 <%
@@ -146,61 +156,75 @@
                         }
                     }
                 %>
-                
+
                 <!-- Cargar la info del perfil --> 
-                
+                <section class="section-padding">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8 col-md-10">
+
+                                <div class="card shadow-lg border-0 rounded-lg">
+
+                                    <div class="card-header bg-warning text-center py-4">
+                                        <h3 class="mb-0 text-white">Mi perfil</h3>
+                                    </div>
+
+                                    <div class="card-body p-5">
+
+                                        <div class="text-center mb-5">
+                                            <img src="img/usuario.png" alt="Foto Perfil" class="rounded-circle img-thumbnail mb-3" width="150">
+
+                                            <h2 class="fw-bold text-dark">
+                                                <%= usuario.getNombre()%> <%= usuario.getApellidoPaterno()%>
+                                            </h2>
+                                        </div>
+
+                                        <form>
+                                            <div class="row g-3"> <div class="col-md-6">
+                                                    <label class="form-label text-muted small">Nombre</label>
+                                                    <input type="text" class="form-control bg-white" value="<%= usuario.getNombre()%>" readonly>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="form-label text-muted small">Apellidos</label>
+                                                    <input type="text" class="form-control bg-white" value="<%= usuario.getApellidoPaterno()%> <%= usuario.getApellidoMaterno()%>" readonly>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="form-label text-muted small">Número de usuario</label>
+                                                    <%String numeroFormateado = String.format("%05d", usuario.getNumero());%>
+                                                    <input type="text" class="form-control bg-white" value="<%= numeroFormateado%>" readonly>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <label class="form-label text-muted small">Correo electrónico</label>
+                                                    <input type="text" class="form-control bg-white" value="<%= usuario.getEmail()%>" readonly>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <label class="form-label text-muted small">Rol</label>
+                                                    <input type="text" class="form-control bg-white" value="<%= usuario.getRol().name()%>" readonly>
+                                                </div>
+                                            </div>
+                                        </form><br>
+
+                                        <!-- Botón para cambiar contraseña -->
+                                        <div class="mb-3">
+                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#cambiarContraModal">
+                                                <i class="bi-pencil"></i> Cambiar contraseña
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </main>
         </div>
 
-        <!-- Modal para editar contraseña -->
-        <div class="modal fade" id="editarContraseniaModal" tabindex="-1" 
-             aria-labelledby="editarContraseniaLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
+        <jsp:include page="modalCambiarContra.jsp" />
 
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editarContraseniaLabel">Cambiar contraseña</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <form action="EditarContrasenia" method="POST">
-
-                            <!-- ID oculto del usuario en sesión -->
-                            <input type="hidden" name="idUsuario" value="">
-
-                            <div class="mb-3">
-                                <label class="form-label">Contraseña actual <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" 
-                                       name="contraseniaActual" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Nueva contraseña <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" 
-                                       name="nuevaContrasenia" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Confirmar nueva contraseña <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" 
-                                       name="confirmarNueva" required>
-                            </div>
-
-                            <label class="form-label">
-                                <span class="text-danger">* Campos obligatorios</span>
-                            </label>
-
-                            <button type="submit" class="btn btn-primary w-100 mt-2">
-                                Guardar cambios
-                            </button>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        
         <jsp:include page="modalCerrarSesion.jsp" />
 
         <!-- Scripts necesarios para Bootstrap -->

@@ -131,7 +131,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="carrito.jsp" class="nav-link click-scroll active"><i class="bi bi-cart3 text-dark"></i> Mi carrito</a>
+                        <a href="#.jsp" class="nav-link click-scroll active"><i class="bi bi-cart3 text-dark"></i> Mi carrito</a>
                     </li>
 
                     <li class="nav-item">
@@ -188,12 +188,9 @@
                     <h3 class="mb-4 fw-bold">Productos</h3>
 
                     <%
-                        double total = 0;
-
                         if (articulos != null) {
                             for (Articulo a : articulos) {
                                 Producto producto = controladorProducto.getProducto(a.getIdProducto());
-                                total += a.getCantidad() * producto.getPrecio();
                     %>
 
                     <!-- ITEM DEL CARRITO -->
@@ -242,6 +239,7 @@
                         </div>
 
                         <!-- ELIMINAR -->
+                        <!-- 
                         <div>
                             <form action="EliminarArticulo" method="POST">
                                 <input type="hidden" name="idProducto" value="<%= producto.getId()%>">
@@ -249,8 +247,7 @@
                                     <i class="fa fa-times"></i>
                                 </button>
                             </form>
-                        </div>
-
+                        </div>-->
                     </div>
                     <%      }
                         }
@@ -260,12 +257,32 @@
                     <h5 class="text-center mt-4">No hay artículos en el carrito</h5>
                     <% }%>
 
-                    <a class="btn btn-warning mt-3 text-light" href="javascript:history.back();">
+                    <a class="btn btn-warning mt-3 text-light" href="productos.jsp">
                         <i class="fa fa-arrow-left me-2"></i> Seguir comprando
                     </a>
 
                 </div>
             </div>
+
+            <%
+                double subtotal = 0;
+                double ivaTotal = 0;
+                double total = 0;
+
+                if (articulos != null) {
+                    for (Articulo a : articulos) {
+                        Producto producto = controladorProducto.getProducto(a.getIdProducto());
+
+                        double precioProducto = producto.getPrecio() * a.getCantidad();
+                        double ivaProducto = precioProducto * 0.16;  // IVA del 16%
+
+                        subtotal += precioProducto;
+                        ivaTotal += ivaProducto;
+                    }
+                }
+
+                total = subtotal + ivaTotal;
+            %>
 
 
             <!-- RESUMEN DE COMPRA -->
@@ -281,7 +298,7 @@
 
                     <div class="d-flex justify-content-between mb-2">
                         <span>IVA:</span>
-                        <span class="fw-bold">$0.00</span>
+                        <span class="fw-bold">$<%= String.format("%.2f", ivaTotal) %></span>
                     </div>
 
                     <div class="d-flex justify-content-between mb-3">

@@ -39,3 +39,13 @@ INSERT INTO productos(numero, nombre, descripcion, precio, stock, img, tipo) VAL
  100,
  'img/otros1.jpeg',
  'OTROS');
+ 
+ INSERT INTO usuarios(numero, nombre, apellidoPaterno, apellidoMaterno, email, rol, contrasenia) VALUES(
+	1,
+    "Isabel",
+    "Valenzuela",
+    "Rocha",
+    "nutriyummy1@gmail.com",
+    "ADMIN",
+    "$2a$10$.IqzgkDym09JoB0qPUXb3eFsD8wiklFS9hUaTNuiYwpRPwBR7Z6LC"
+ );

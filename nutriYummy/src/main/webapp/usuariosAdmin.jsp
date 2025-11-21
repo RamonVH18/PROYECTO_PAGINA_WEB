@@ -109,7 +109,7 @@
                         </li>
                         <li class="nav-item d-lg-none">
                             <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal">
-                                <i class="bi-box-arrow-right"></i> Cerrar Sesión
+                                <i class="bi-box-arrow-right"></i> Cerrar sesión
                             </a>
                         </li>
                     </ul>

@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import static java.sql.Types.INTEGER;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,8 +89,24 @@ public class ModeloUsuario extends Conexion {
             
             return filasAfectadas > 0;
         } catch (SQLException ex) {
-            System.err.println();
+            System.err.println("Error al actualizar contraseña: " + ex.getMessage());
             return false;
+        }
+    }
+
+    public String getContraseña(String email) {
+        String sql = "call getContrasenia(?, ?)";
+
+        try (Connection conn = getConexion(); CallableStatement pst = conn.prepareCall(sql)) {
+            pst.setString(1, email);
+            pst.registerOutParameter(2, Types.VARCHAR);
+
+            pst.execute();
+
+            return pst.getString(2); // devuelve la contraseña (hash)
+        } catch (SQLException ex) {
+            System.err.println("Error al obtener contraseña: " + ex.getMessage());
+            return null;
         }
     }
 

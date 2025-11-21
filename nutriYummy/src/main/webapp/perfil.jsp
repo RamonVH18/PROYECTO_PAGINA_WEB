@@ -151,8 +151,33 @@
             <section class="section-padding">
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-lg-8 col-md-10">
+                        
+                        <!-- Mensajes de confirmación --> 
+                        <%
+                            if (session != null) {
+                                if (session.getAttribute("mensajeExito") != null) {
+                        %>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <%= session.getAttribute("mensajeExito")%>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                        </div>
+                        <%
+                                session.removeAttribute("mensajeExito");
+                            }
 
+                            if (session.getAttribute("mensajeError") != null) {
+                        %>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <%= session.getAttribute("mensajeError")%>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                        </div>
+                        <%
+                                    session.removeAttribute("mensajeError");
+                                }
+                            }
+                        %>
+                        
+                        <div class="col-lg-8 col-md-10">
                             <div class="card shadow-lg border-0 rounded-lg">
 
                                 <div class="card-header bg-warning text-center py-4">
@@ -165,7 +190,7 @@
                                         <img src="img/usuario.png" alt="Foto Perfil" class="rounded-circle img-thumbnail mb-3" width="150">
 
                                         <h2 class="fw-bold text-dark">
-                                            <%= usuario.getNombre()%> <%= usuario.getApellidoPaterno()%>
+                                            <%= usuario.getNombreCompleto()%>
                                         </h2>
                                     </div>
 
@@ -180,37 +205,37 @@
                                                 <input type="text" class="form-control bg-white" value="<%= usuario.getApellidoPaterno()%> <%= usuario.getApellidoMaterno()%>" readonly>
                                             </div>
 
+                                            <div class="col-md-6">
+                                                <label class="form-label text-muted small">Número de usuario</label>
+                                                <%String numeroFormateado = String.format("%05d", usuario.getNumero());%>
+                                                <input type="text" class="form-control bg-white" value="<%= numeroFormateado%>" readonly>
+                                            </div>
+
                                             <div class="col-12">
-                                                <label class="form-label text-muted small">Correo Electrónico</label>
+                                                <label class="form-label text-muted small">Correo electrónico</label>
                                                 <input type="text" class="form-control bg-white" value="<%= usuario.getEmail()%>" readonly>
                                             </div>
-
-                                            <div class="col-12">
-                                                <label class="form-label text-muted small">Contraseña</label>
-                                                <input type="password" class="form-control bg-white" value="passwordfake123" readonly>
-                                            </div>
-                                            <p class="text-center mt-3 text-secondary">
-                                                Cambiar contraseña: 
-                                                <a href="cambioContrasenia.jsp" class="text-warning"><strong>Si</strong></a>
-                                            </p>
                                         </div>
-                                    </form>
+                                    </form><br>
 
-                                    <div class="d-grid gap-2 mt-5">
-                                        <a href="index.jsp" class="btn btn-link text-decoration-none text-muted text-center mt-2">
-                                            Volver al inicio
-                                        </a>
+                                    <!-- Botón para cambiar contraseña -->
+                                    <div class="mb-3">
+                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#cambiarContraModal">
+                                            <i class="bi-pencil"></i> Cambiar contraseña
+                                        </button>
                                     </div>
-
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </section>
         </main>
 
+        <!-- Modal para cambiar contraseña -->
+        <jsp:include page="modalCambiarContra.jsp" />
+
+        <!-- Modal para cerrar sesión -->
         <jsp:include page="modalCerrarSesion.jsp" />
 
         <!-- Footer -->

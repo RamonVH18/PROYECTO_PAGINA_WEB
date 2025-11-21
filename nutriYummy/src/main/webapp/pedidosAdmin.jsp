@@ -67,7 +67,7 @@
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal">
-                                <i class="bi-box-arrow-right"></i> Cerrar Sesión
+                                <i class="bi-box-arrow-right"></i> Cerrar sesión
                             </a>
                         </li>
                     </ul>
@@ -88,7 +88,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="productosAdmin.jsp">
+                            <a class="nav-link" href="productosAdmin.jsp">
                                 <i class="bi-bag-fill"></i> Productos
                             </a>
                         </li>
@@ -98,7 +98,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link active" href="#">
                                 <i class="bi-receipt-cutoff"></i> Pedidos
                             </a>
                         </li>

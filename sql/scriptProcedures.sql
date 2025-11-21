@@ -144,7 +144,7 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE cambiarContrasenia(
     IN u_email VARCHAR(50),
-    IN u_nuevaContrasenia VARCHAR(70)
+    IN u_nuevaContrasenia VARCHAR(80)
 )
 BEGIN 
     UPDATE usuarios
@@ -300,6 +300,23 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
+
+# Obtener la contraseña de un usuario
+DELIMITER $$
+CREATE PROCEDURE getContrasenia(
+	IN u_email VARCHAR(50),
+    OUT u_contrasenia VARCHAR(80)
+)
+BEGIN
+	DECLARE contra VARCHAR(80);
+    
+	SELECT contrasenia INTO contra FROM usuarios WHERE email = u_email;
+    
+    SET u_contrasenia = contra;
+END $$
+DELIMITER ;
+
+CALL getContrasenia("isa@gmail.com");
 
 # --------------- VENTAS ---------------
 # Obtener todas las ventas junto con sus detalles

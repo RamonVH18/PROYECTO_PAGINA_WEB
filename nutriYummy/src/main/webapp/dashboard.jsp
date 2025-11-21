@@ -56,12 +56,12 @@
                     aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal">
-                            <i class="bi-box-arrow-right"></i> Cerrar Sesión
+                            <i class="bi-box-arrow-right"></i> Cerrar sesión
                         </a>
                     </li>
                 </ul>
@@ -71,7 +71,7 @@
 
     <!-- EL D-FLEX CONTENEDOR ES AHORA EL QUE DEBE SER MOVIDO POR CSS -->
     <div class="d-flex" id="wrapper">
-        
+
         <!-- El sidebar ya no es 'collapse' porque el toggle se maneja por CSS -->
         <nav id="sidebarMenu" class="sidebar d-lg-block">
             <div class="position-sticky">
@@ -99,11 +99,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="perfilAdmin.jsp">
                             <i class="bi bi-person-circle"></i> Mi perfil
-                        </a>
-                    </li>
-                    <li class="nav-item d-lg-none">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal">
-                            <i class="bi-box-arrow-right"></i> Cerrar Sesión
                         </a>
                     </li>
                 </ul>
@@ -147,9 +142,13 @@
                 </div>
             </div>
         </main>
-        
-        <jsp:include page="modalCerrarSesion.jsp" />
     </div>
+
+    <jsp:include page="modalCerrarSesion.jsp" />
+    
+    <!-- Scripts necesarios para Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>
