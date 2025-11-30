@@ -175,7 +175,13 @@ public class ControladorProducto {
 
             html.append("        </div>");
             html.append("      </div>");
-            html.append("      <a href='productosDetalles.jsp?id=").append(producto.getId()).append("' class='custom-btn btn'><i class='fa fa-shopping-cart'></i>Ver detalles</a>");
+
+            // Botón según el stock
+            if (producto.getStock() > 0) {
+                html.append("<a href='productosDetalles.jsp?id=").append(producto.getId()).append("' class='custom-btn btn'><i class='fa fa-shopping-cart'></i> Ver detalles</a>");
+            } else {
+                html.append("<a class='custom-btn btn bg-secondary' disabled>Agotado</a>");
+            }
             html.append("    </div>");
             html.append("  </div>");
             html.append("</div>");

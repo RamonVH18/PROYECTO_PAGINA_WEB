@@ -179,6 +179,13 @@
                                     $<%= producto.getPrecio()%> MXN
                                 </h4>
 
+                                <% if (producto.getStock() <= 0) { %>
+                                <!-- Producto agotado -->
+                                <a class="custom-btn btn w-100 py-2 bg-secondary" disabled">
+                                    Agotado
+                                </a>
+
+                                <% } else {%>
                                 <!-- Formulario agregar carrito -->
                                 <form action="AgregarProductoCarrito" method="POST" class="text-center">
                                     <label class="fw-bold d-block mb-2">Cantidad:</label>
@@ -189,20 +196,22 @@
                                            class="form-control w-50 mx-auto mb-3"
                                            name="cantidad"
                                            value="1"
-                                           min="1">
+                                           min="1"
+                                           max="<%= producto.getStock()%>">
 
                                     <button type="submit" class="custom-btn btn w-100 py-2">
                                         <i class="fa fa-shopping-cart me-2"></i>
                                         Agregar al carrito
                                     </button>
                                 </form>
+                                <% }%>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
-                                    
+
         <jsp:include page="modalCerrarSesion.jsp" />
 
         <!-- Footer -->
