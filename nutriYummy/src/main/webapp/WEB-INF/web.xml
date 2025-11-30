@@ -44,6 +44,10 @@
         <servlet-name>CambiarContra</servlet-name>
         <servlet-class>servlet.CambiarContra</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ActualizarCantidadCarrito</servlet-name>
+        <servlet-class>servlet.ActualizarCantidadCarrito</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditarProducto</servlet-name>
         <url-pattern>/EditarProducto</url-pattern>
@@ -84,12 +88,13 @@
         <servlet-name>CambiarContra</servlet-name>
         <url-pattern>/CambiarContra</url-pattern>
     </servlet-mapping>
-   
-   
+    <servlet-mapping>
+        <servlet-name>ActualizarCantidadCarrito</servlet-name>
+        <url-pattern>/ActualizarCantidadCarrito</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-
 </web-app>

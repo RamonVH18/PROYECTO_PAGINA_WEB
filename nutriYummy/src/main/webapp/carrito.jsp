@@ -180,6 +180,9 @@
                 }
             %>
 
+            <!-- Mensajes dinámicos por AJAX -->
+            <div id="mensaje-js"></div>
+
             <!-- LISTA DE PRODUCTOS -->
             <div class="col-lg-7 col-md-12 mb-4">
 
@@ -222,32 +225,34 @@
                         <div class="text-center">
                             <div class="d-flex align-items-center">
 
-                                <a href="#" class="btn btn-outline-secondary btn-sm me-2">-</a>
+                                <a href="#" class="btn btn-outline-secondary btn-sm me-2" onclick="cambiarCantidad('<%= a.getIdProducto() %>', -1);">-</a>
 
                                 <input type="text"
-                                       class="form-control text-center"
+                                       class="form-control text-center cantidad-input" 
+                                       id="cantidad_<%= a.getIdProducto() %>"
                                        value="<%= a.getCantidad()%>"
-                                       style="width: 55px;">
+                                       min="1"
+                                       style="width: 55px;"
+                                       oninput="actualizarCantidad(<%= a.getIdProducto() %>)">
 
-                                <a href="#" class="btn btn-outline-secondary btn-sm ms-2">+</a>
+                                <a href="#" class="btn btn-outline-secondary btn-sm ms-2" onclick="cambiarCantidad('<%= a.getIdProducto() %>', 1);">+</a>
                             </div>
                         </div>
 
                         <!-- TOTAL -->
-                        <div class="text-end px-3 fw-bold">
+                        <div class="text-end px-3 fw-bold" id="totalProd_<%= a.getIdProducto()%>">
                             $<%= Math.round(producto.getPrecio() * a.getCantidad() * 100.0) / 100.0%>
                         </div>
 
                         <!-- ELIMINAR -->
-                        <!-- 
                         <div>
                             <form action="EliminarArticulo" method="POST">
                                 <input type="hidden" name="idProducto" value="<%= producto.getId()%>">
-                                <button class="btn btn-danger btn-sm">
-                                    <i class="fa fa-times"></i>
+                                <button class="btn btn-sm" title="Eliminar producto del carrito">
+                                    <i class='bi-trash'></i>
                                 </button>
                             </form>
-                        </div>-->
+                        </div>
                     </div>
                     <%      }
                         }
@@ -284,7 +289,6 @@
                 total = subtotal + ivaTotal;
             %>
 
-
             <!-- RESUMEN DE COMPRA -->
             <div class="col-lg-5 col-md-12">
                 <div class="shadow-lg rounded-4 p-4">
@@ -293,17 +297,17 @@
 
                     <div class="d-flex justify-content-between mb-2">
                         <span>Subtotal:</span>
-                        <span class="fw-bold">$<%= Math.round(total * 100.0) / 100.0%></span>
+                        <span class="fw-bold" id="subtotal">$<%= Math.round(total * 100.0) / 100.0%></span>
                     </div>
 
                     <div class="d-flex justify-content-between mb-2">
                         <span>IVA:</span>
-                        <span class="fw-bold">$<%= String.format("%.2f", ivaTotal) %></span>
+                        <span class="fw-bold" id="iva">$<%= String.format("%.2f", ivaTotal) %></span>
                     </div>
 
                     <div class="d-flex justify-content-between mb-3">
                         <span class="fw-bold fs-5">Total:</span>
-                        <span class="fw-bold fs-5 text-success">$<%= Math.round(total * 100.0) / 100.0%></span>
+                        <span class="fw-bold fs-5 text-success" id="total">$<%= Math.round(total * 100.0) / 100.0%></span>
                     </div>
 
                     <form action="RegistrarVenta" method="POST">
@@ -323,6 +327,9 @@
     <footer class="site-footer">
         <jsp:include page="footer.jsp" />
     </footer>
+    
+    <!-- Script js -->
+    <script src="js/carrito.js"></script>
 </body>
 
 </html>
