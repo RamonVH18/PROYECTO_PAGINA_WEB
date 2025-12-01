@@ -19,7 +19,7 @@ import modelo.Producto;
  *
  * @author rocha
  */
-public class ActualizarCantidadCarrito extends HttpServlet {
+public class EliminarProductoCarrito extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,76 +34,66 @@ public class ActualizarCantidadCarrito extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
 
-        HttpSession sesion = request.getSession();
-        ArrayList<Articulo> carrito = (ArrayList<Articulo>) sesion.getAttribute("carrito");
+        try {
+            HttpSession sesion = request.getSession();
+            ArrayList<Articulo> carrito = (ArrayList<Articulo>) sesion.getAttribute("carrito");
 
-        if (carrito == null) {
-            response.getWriter().write("{\"error\": \"No hay carrito activo\"}");
-            return;
-        }
-
-        int idProducto = Integer.parseInt(request.getParameter("idProducto"));
-        int cambio = Integer.parseInt(request.getParameter("cambio"));
-
-        if (cambio < 1) {
-            response.getWriter().write("{\"error\": \"Cantidad inválida\"}");
-            return;
-        }
-
-        ControladorProducto controlador = new ControladorProducto();
-        Producto producto = controlador.getProducto(idProducto);
-
-        if (producto == null) {
-            response.getWriter().write("{\"error\": \"Producto no encontrado\"}");
-            return;
-        }
-
-        int stock = producto.getStock();
-        if (cambio > stock) {
-            String numeroFormateado = String.format("%05d", producto.getNumero());
-            response.getWriter().write("{\"error\": \"Stock insuficiente para el producto #" + numeroFormateado + ". Solo hay " + stock + " piezas disponibles.\"}");
-            return;
-        }
-
-        // Total del producto modificado (precio * cantidad)
-        double totalProducto = producto.getPrecio() * cambio;
-
-        // Actualizar cantidad del artículo
-        for (Articulo a : carrito) {
-            if (a.getIdProducto() == idProducto) {
-                a.setCantidad(cambio);
-                break;
+            if (carrito == null) {
+                response.getWriter().write("{\"error\": \"No hay carrito activo\"}");
+                return;
             }
+
+            int idProducto = Integer.parseInt(request.getParameter("idProducto"));
+
+            ControladorProducto controlador = new ControladorProducto();
+            Producto producto = controlador.getProducto(idProducto);
+
+            if (producto == null) {
+                response.getWriter().write("{\"error\": \"Producto no encontrado\"}");
+                return;
+            }
+
+            // Eliminar el producto del carrito 
+            boolean eliminado = carrito.removeIf(a -> a.getIdProducto() == idProducto);
+
+            if (!eliminado) {
+                response.getWriter().write("{\"error\": \"El producto no está en el carrito\"}");
+                return;
+            }
+
+            // Recalcular totales
+            double subtotal = 0;
+            double ivaTotal = 0;
+
+            for (Articulo a : carrito) {
+                Producto p = controlador.getProducto(a.getIdProducto());
+                double precio = p.getPrecio() * a.getCantidad();
+                subtotal += precio;
+                ivaTotal += precio * 0.16;
+            }
+
+            double total = subtotal + ivaTotal;
+
+            sesion.setAttribute("carrito", carrito);
+
+            // Construcción del JSON
+            String json = String.format(
+                    "{"
+                    + "\"subtotal\":\"%.2f\","
+                    + "\"iva\":\"%.2f\","
+                    + "\"total\":\"%.2f\","
+                    + "\"totalProducto\":\"0.00\","
+                    + "\"carritoVacio\": %s"
+                    + "}",
+                    subtotal, ivaTotal, total,
+                    carrito.isEmpty() ? "true" : "false"
+            );
+
+            System.out.println(json);
+            response.getWriter().write(json);
+        } catch (IOException | NumberFormatException e) {
+            response.getWriter().write("{\"error\": \"Error en el servidor: " + e.getMessage().replace("\"", "'") + "\"}");
         }
-
-        // Calcular totales del carrito
-        double subtotal = 0;
-        double ivaTotal = 0;
-
-        for (Articulo a : carrito) {
-            Producto p = controlador.getProducto(a.getIdProducto());
-            double precio = p.getPrecio() * a.getCantidad();
-            subtotal += precio;
-            ivaTotal += precio * 0.16;
-        }
-
-        double total = subtotal + ivaTotal;
-
-        sesion.setAttribute("carrito", carrito);
-
-        String json = String.format(
-                "{"
-                + "\"subtotal\":\"%.2f\","
-                + "\"iva\":\"%.2f\","
-                + "\"total\":\"%.2f\","
-                + "\"totalProducto\":\"%.2f\""
-                + "}",
-                subtotal, ivaTotal, total, totalProducto
-        );
-
-        System.out.println(json);
-
-        response.getWriter().write(json);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

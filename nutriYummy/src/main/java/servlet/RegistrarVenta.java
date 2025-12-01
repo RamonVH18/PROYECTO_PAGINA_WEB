@@ -95,7 +95,7 @@ public class RegistrarVenta extends HttpServlet {
             // Limpiar carrito
             session.removeAttribute("carrito");
 
-            session.setAttribute("mensajeExito", "Compra realizada con éxito");
+            session.setAttribute("mensajeExito", "Compra con folio #" + folioVenta + " realizada con éxito");
             response.sendRedirect("carrito.jsp");
         } catch (IOException e) {
             error(session, response, "Error inesperado: " + e.getMessage());

@@ -198,7 +198,7 @@ public class ControladorProducto {
             return html.toString();
         }
         
-        html.append("<div class='col-lg-12 col-12 text-center mb-4' <h2>Mejores vendidos</h2></div>");
+        html.append("<div class='col-lg-12 col-12 text-center mb-4'><h2>Mejores vendidos</h2></div>");
 
         for (Producto producto : productos) {
 

@@ -34,14 +34,15 @@ function actualizarCantidad(idProducto) {
                 .then(data => {
                     if (data.error) {
                         mostrarMensajeError(data.error);
-                    } else {
-                        // Actualizar total del producto
-                        document.getElementById("totalProd_" + idProducto).innerText =
-                                "$" + data.totalProducto;
-                        
-                        // Actualizar resumen
-                        actualizarTotales(data);
+                        return;
                     }
+
+                    // Actualizar total del producto
+                    document.getElementById("totalProd_" + idProducto).innerText =
+                            "$" + data.totalProducto;
+
+                    // Actualizar resumen
+                    actualizarTotales(data);
                 });
     }, 350);
 }
@@ -54,6 +55,51 @@ function actualizarTotales(data) {
     document.getElementById("subtotal").innerText = "$" + subtotal.toFixed(2);
     document.getElementById("iva").innerText = "$" + iva.toFixed(2);
     document.getElementById("total").innerText = "$" + total.toFixed(2);
+}
+
+function eliminarArticulo(idProducto) {
+    fetch("EliminarProductoCarrito", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `idProducto=${encodeURIComponent(idProducto)}`
+    })
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    mostrarMensajeError(data.error);
+                    return;
+                }
+
+                // Eliminar el producto del DOM
+                const item = document.getElementById("item_" + idProducto);
+                if (item) {
+                    item.remove();
+                }
+
+                // Actualizar totales
+                document.getElementById("subtotal").innerText = "$" + data.subtotal;
+                document.getElementById("iva").innerText = "$" + data.iva;
+                document.getElementById("total").innerText = "$" + data.total;
+
+                // Si el carrito quedó vacío
+                if (data.carritoVacio) {
+                    document.getElementById("contenedor-carrito").innerHTML =
+                            `<h5 class="text-center mt-4 border-bottom pb-4">No hay artículos en el carrito</h5>
+        <a class="btn btn-warning mt-3 text-light" href="productos.jsp">
+                        <i class="fa fa-arrow-left me-2"></i> Seguir comprando
+                    </a>`;
+                    
+                    document.getElementById("btn-comprar").disabled = true;
+                } else {
+                    document.getElementById("btn-comprar").disabled = false;
+                }
+            })
+    .catch(err => {
+        mostrarMensajeError("Error inesperado al eliminar artículo.");
+        console.error(err);
+    });
 }
 
 function mostrarMensajeError(msg) {

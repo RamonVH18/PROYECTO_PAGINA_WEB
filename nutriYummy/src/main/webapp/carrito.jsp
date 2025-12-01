@@ -186,7 +186,7 @@
             <!-- LISTA DE PRODUCTOS -->
             <div class="col-lg-7 col-md-12 mb-4">
 
-                <div class="shadow-lg p-4 rounded-4">
+                <div class="shadow-lg p-4 rounded-4" id="contenedor-carrito">
 
                     <h3 class="mb-4 fw-bold">Productos</h3>
 
@@ -197,7 +197,7 @@
                     %>
 
                     <!-- ITEM DEL CARRITO -->
-                    <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
+                    <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3" id="item_<%= a.getIdProducto()%>">
 
                         <!-- IMAGEN -->
                         <div>
@@ -225,17 +225,17 @@
                         <div class="text-center">
                             <div class="d-flex align-items-center">
 
-                                <a href="#" class="btn btn-outline-secondary btn-sm me-2" onclick="cambiarCantidad('<%= a.getIdProducto() %>', -1);">-</a>
+                                <button class="btn btn-outline-secondary btn-sm me-2" onclick="cambiarCantidad('<%= a.getIdProducto()%>', -1);">-</button>
 
                                 <input type="text"
                                        class="form-control text-center cantidad-input" 
-                                       id="cantidad_<%= a.getIdProducto() %>"
+                                       id="cantidad_<%= a.getIdProducto()%>"
                                        value="<%= a.getCantidad()%>"
                                        min="1"
                                        style="width: 55px;"
-                                       oninput="actualizarCantidad(<%= a.getIdProducto() %>)">
+                                       oninput="actualizarCantidad(<%= a.getIdProducto()%>)">
 
-                                <a href="#" class="btn btn-outline-secondary btn-sm ms-2" onclick="cambiarCantidad('<%= a.getIdProducto() %>', 1);">+</a>
+                                <button class="btn btn-outline-secondary btn-sm ms-2" onclick="cambiarCantidad('<%= a.getIdProducto()%>', 1);">+</button>
                             </div>
                         </div>
 
@@ -246,20 +246,18 @@
 
                         <!-- ELIMINAR -->
                         <div>
-                            <form action="EliminarArticulo" method="POST">
-                                <input type="hidden" name="idProducto" value="<%= producto.getId()%>">
-                                <button class="btn btn-sm" title="Eliminar producto del carrito">
-                                    <i class='bi-trash'></i>
-                                </button>
-                            </form>
+                            <button class="btn btn-sm" title="Eliminar producto del carrito"
+                                    onclick="eliminarArticulo(<%= a.getIdProducto()%>)">
+                                <i class='bi-trash'></i>
+                            </button>
                         </div>
                     </div>
                     <%      }
                         }
                     %>
 
-                    <% if (articulos == null) { %>
-                    <h5 class="text-center mt-4">No hay artículos en el carrito</h5>
+                    <% if (articulos == null || articulos.isEmpty()) { %>
+                    <h5 class="text-center mt-4 border-bottom pb-4">No hay artículos en el carrito</h5>
                     <% }%>
 
                     <a class="btn btn-warning mt-3 text-light" href="productos.jsp">
@@ -311,7 +309,7 @@
                     </div>
 
                     <form action="RegistrarVenta" method="POST">
-                        <button type="submit" class="btn btn-success w-100">
+                        <button type="submit" class="btn btn-success w-100"  id="btn-comprar" <%= (articulos == null || articulos.isEmpty()) ? "disabled" : "" %>>
                             Finalizar compra
                         </button>
                     </form>

@@ -48,6 +48,10 @@
         <servlet-name>ActualizarCantidadCarrito</servlet-name>
         <servlet-class>servlet.ActualizarCantidadCarrito</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EliminarProductoCarrito</servlet-name>
+        <servlet-class>servlet.EliminarProductoCarrito</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditarProducto</servlet-name>
         <url-pattern>/EditarProducto</url-pattern>
@@ -91,6 +95,10 @@
     <servlet-mapping>
         <servlet-name>ActualizarCantidadCarrito</servlet-name>
         <url-pattern>/ActualizarCantidadCarrito</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarProductoCarrito</servlet-name>
+        <url-pattern>/EliminarProductoCarrito</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
