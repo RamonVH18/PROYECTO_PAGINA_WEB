@@ -178,19 +178,6 @@ strong {
 }
 
 /*---------------------------------------
-  REEL CARD             
------------------------------------------*/
-.reel-card img {
-  width: 350px;
-  height: 457px;
-  border-radius: 10px;
-  transition: transform 0.3s;
-}
-.reel-card img:hover {
-  transform: scale(1.05);
-}
-
-/*---------------------------------------
   CUSTOM BLOCK               
 -----------------------------------------*/
 .custom-block-wrap, .custom-block-wrap-product-details {

@@ -321,11 +321,14 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6 col-12 mb-5 mb-lg-0">
-                            <div class="reel-card text-center">
-                                <a href="https://www.instagram.com/reel/DHrKRk4STwh/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA=="
-                                   target="_blank">
-                                    <img src="img/receta1.png" alt="Reel Snack Adobado">
-                                </a>
+                            <div class="d-flex justify-content-center">
+                                <blockquote class="instagram-media" 
+                                            data-instgrm-permalink="https://www.instagram.com/reel/DHrKRk4STwh/"
+                                            data-instgrm-version="14">
+                                </blockquote>
+
+                                <!-- Script de instagram -->
+                                <script async src="//www.instagram.com/embed.js"></script>
                             </div>
                         </div>
 
