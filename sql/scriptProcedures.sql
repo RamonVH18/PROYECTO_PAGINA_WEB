@@ -182,7 +182,7 @@ CREATE PROCEDURE editarUsuario(
     IN u_apellidoMaterno VARCHAR(50),
     IN u_email VARCHAR(50),
     IN u_rol ENUM('ADMIN', 'CLIENTE'),
-    IN u_contrasenia VARCHAR(20)
+    IN u_contrasenia VARCHAR(80)
 )
 BEGIN
     UPDATE usuarios
