@@ -64,7 +64,7 @@
         <!-- Header -->
         <nav class="navbar navbar-expand-lg shadow-lg">
             <div class="container">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="index.jsp">
                     <img src="img/logo.png" class="logo img-fluid" alt="Nutri Yummy">
                     <span>
                         Nutri Yummy

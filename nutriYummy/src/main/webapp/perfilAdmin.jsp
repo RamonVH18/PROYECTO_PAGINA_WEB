@@ -61,7 +61,7 @@
                     <i class="bi-list fs-4"></i>
                 </label>
 
-                <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <a class="navbar-brand d-flex align-items-center" href="dashboard.jsp">
                     <img src="img/logo.png" class="logo img-fluid" alt="Nutri Yummy">
                     <span>
                         Nutri Yummy

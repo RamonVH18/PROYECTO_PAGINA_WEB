@@ -17,11 +17,10 @@
                 <h5 class="site-footer-title mb-3">Enlaces</h5>
 
                 <ul class="footer-menu">
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">Inicio</a></li>
+                    <li class="footer-menu-item"><a href="index.jsp" class="footer-menu-link">Inicio</a></li>
+                    <li class="footer-menu-item"><a href="productos.jsp" class="footer-menu-link">Nuestros productos</a></li>
 
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">Nuestros productos</a></li>
-
-                    <li class="footer-menu-item"><a href="contacto.html" class="footer-menu-link">Contacto</a></li>
+                    <li class="footer-menu-item"><a href="contacto.jsp" class="footer-menu-link">Contacto</a></li>
                 </ul>
             </div>
 
